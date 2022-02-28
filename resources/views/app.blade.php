@@ -221,7 +221,7 @@
           success: function(data) {
             console.log(data);
             for (let i = 0; i < data.length; i++) {
-              myChart.data.labels.push(data[i].dimension_id);
+              myChart.data.labels.push(data[i].dimension_name);
               myChart.data.datasets[0].data.push(data[i].dimension_value);
             }
             myChart.update();
