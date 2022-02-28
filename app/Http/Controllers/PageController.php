@@ -1,15 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use DB;
-use Illuminate\Support\Str;
+use App\Dimension;
+use App\Province;
 
 class PageController extends Controller
 {
-    public function index()
-    {
-        return view('home');
-    }
+  public function index()
+  {
+    $dimensi = Dimension::getAll();
+    $province = Province::getAll();
+
+    return view('home', compact('dimensi', 'province'));
+  }
+
+  public function dimensi($slug)
+  {
+    $dimensi = Dimension::getAll();
+    $data = Dimension::getDimensi($slug);
+    return view('dimensi.index', compact('data', 'dimensi'));
+  }
 }

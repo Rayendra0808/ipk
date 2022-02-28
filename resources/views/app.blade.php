@@ -30,17 +30,20 @@
 
   <title></title>
   <link rel="icon" href="" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Montserrat:400,500,700%7CRoboto+Slab:400,700">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700">
   <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
   <link rel="stylesheet" href="{{asset('assets/lib/owl/assets/owl.carousel.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/lib/owl/assets/owl.theme.default.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/lib/aos/aos.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/lib/leaflet/leaflet.css')}}">
+  <script src="{{asset('assets/lib/leaflet/leaflet.js')}}"></script>
 </head>
 
 <body>
   <div class="page">
     <header>
-      <nav class="navbar navbar-expand-lg navbar-white fixed-top bg-white">
+      <nav class="navbar navbar-expand-lg navbar-white fixed-top bg-white" id="mainNav">
         <div class="container-fluid">
           <a class="navbar-brand flex-grow-1" href="#"><img src="{{asset('assets/img/logo3.png')}}" class="img-fluid logo"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,19 +54,16 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ms-auto navbar-ipk mx-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Beranda</a>
+                <a class="nav-link" href="{{url('/')}}">Beranda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" style="cursor: pointer;">Tentang IPK</a>
+                <a class="nav-link" href="{{url('/')}}#about">Tentang IPK</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#klien">IPK Nasional</a>
+                <a class="nav-link" href="{{url('/')}}#nasional">IPK Nasional</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Simulasi IPK</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="{{url('/')}}#provinsi">IPK Provinsi</a>
               </li>
             </ul>
           </div>
@@ -112,12 +112,12 @@
       </div>
     </footer><!-- #footer -->
   </div>
-  <script src="assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script>
-    window.jQuery || document.write('<script src="assets/js/jquery-slim.min.js"><\/script>')
-  </script>
-  <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('assets/lib/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets/lib/owl/owl.carousel.min.js')}}"></script>
+  <script src="{{asset('assets/lib/wow/wow.js')}}"></script>
+  <script src="{{asset('assets/lib/aos/aos.js')}}"></script>
+  <script src="{{asset('assets/lib/chart/chart.js')}}"></script>
   <script>
     $('.owl-carousel').owlCarousel({
       center: false,
@@ -142,6 +142,108 @@
         }
       }
     })
+
+    window.addEventListener('DOMContentLoaded', event => {
+
+      // Activate Bootstrap scrollspy on the main nav element
+      const mainNav = document.body.querySelector('#mainNav');
+      if (mainNav) {
+        new bootstrap.ScrollSpy(document.body, {
+          target: '#mainNav',
+          offset: 74,
+        });
+      };
+
+      // Collapse responsive navbar when toggler is visible
+      const navbarToggler = document.body.querySelector('.navbar-toggler');
+      const responsiveNavItems = [].slice.call(
+        document.querySelectorAll('#navbarCollapsex .nav-link')
+      );
+      responsiveNavItems.map(function(responsiveNavItem) {
+        responsiveNavItem.addEventListener('click', () => {
+          if (window.getComputedStyle(navbarToggler).display !== 'none') {
+            navbarToggler.click();
+          }
+        });
+      });
+
+    });
+
+    var map = L.map('map').setView([-2.548926, 118.0148634], 5);
+    var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+      maxZoom: 20,
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1
+    }).addTo(map);
+
+    // create initial empty chart
+    var ctx_live = document.getElementById("profil-ipk-nasional");
+    var myChart = new Chart(ctx_live, {
+      type: 'radar',
+      data: {
+        labels: [],
+        datasets: [{
+          data: [],
+          borderWidth: 1,
+          borderColor: '#00c0ef',
+          label: '2020',
+        }]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "Profile Ipk Nasional",
+        },
+        legend: {
+          display: true
+        },
+        elements: {
+          line: {
+            borderWidth: 3
+          }
+        },
+      }
+    });
+
+    // this post id drives the example data
+    var postId = 1;
+    $(document).ready(function() {
+      // logic to get new data
+      const getDataAreaNasional = function() {
+        let urlAreaNasional = "{{route('getAreaNasionalByYear', ['2020'])}}";
+        let initYear = 2020;
+        $.ajax({
+          url: urlAreaNasional,
+          success: function(data) {
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+              myChart.data.labels.push(data[i].dimension_id);
+              myChart.data.datasets[0].data.push(data[i].dimension_value);
+            }
+            myChart.update();
+          }
+        });
+      };
+      getDataAreaNasional();
+    });
+
+
+
+    // window.onscroll = function() {
+    //   scrollFunction()
+    // };
+
+    // function scrollFunction() {
+    //   if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    //     document.getElementById("ipk-nav").style.padding = "5px";
+    //   } else {
+    //     document.getElementById("ipk-nav").style.padding = "10px";
+    //   }
+    // }
   </script>
 </body>
 
