@@ -17,7 +17,7 @@ class Dimension extends Model
 
   public static function getDimensi($slug)
   {
-    $data =  Dimension::where('slug', $slug)->first();
+    $data =  Dimension::where('dimension_slug', $slug)->first();
     return $data;
   }
 }
