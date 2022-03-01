@@ -169,8 +169,8 @@
 
     });
 
-    var map = L.map('map').setView([-2.548926, 118.0148634], 5);
-    var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    const map = L.map('map').setView([-2.548926, 118.0148634], 5);
+    const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
       maxZoom: 20,
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -180,11 +180,12 @@
     }).addTo(map);
 
     // create initial empty chart
-    var ctx_live = document.getElementById("profil-ipk-nasional");
-    var myChart = new Chart(ctx_live, {
+    const ctx_live = document.getElementById("profil-ipk-nasional");
+    const myChart = new Chart(ctx_live, {
       type: 'radar',
       data: {
         labels: [],
+        images: [],
         datasets: [{
           data: [],
           borderWidth: 1,
@@ -194,33 +195,75 @@
       },
       options: {
         responsive: true,
-        title: {
-          display: true,
-          text: "Profile Ipk Nasional",
-        },
-        legend: {
-          display: true
-        },
         elements: {
           line: {
             borderWidth: 3
           }
         },
-      }
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: {
+            fontColor: "#333",
+            fontSize: 24
+          }
+        }
+      },
+      plugins: [{
+        id: 'custom_labels',
+        options: {
+          legend: {
+            display: true,
+            position: "bottom",
+            labels: {
+              fontColor: "#333",
+              fontSize: 24
+            }
+          },
+        },
+        afterDraw: (chart, args) => {
+          const getLabel = chart.config._config.data.labels;
+          console.log(chart.config._config.data);
+          getLabel.forEach((value, i) => {
+            const scale = chart.scales.r;
+            drawTextAtIndex(scale, i, chart.config._config.data.images[i], value, chart.config._config.data.datasets[0].data[i]);
+          });
+        },
+      }]
     });
 
-    // this post id drives the example data
-    var postId = 1;
+    function drawTextAtIndex(scale, index, icon, text, value) {
+      const offset = 30;
+      const r = scale.drawingArea + offset;
+      const angle = scale.getIndexAngle(index) - Math.PI / 2;
+      const x = scale.xCenter + Math.cos(angle) * r;
+      const y = scale.yCenter + Math.sin(angle) * r;
+      const ctx = scale.ctx;
+      ctx.save();
+      ctx.translate(x, y);
+      //ctx.rotate(angle + Math.PI / 2);
+      ctx.textAlign = 'center';
+      const image = new Image();
+      image.src = icon;
+      ctx.fillStyle = 'blue';
+      ctx.font = '20px material-icons'
+      ctx.drawImage(image, -15, -20, 30, 30);
+
+      ctx.font = "12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+      ctx.fillStyle = 'gray';
+      // ctx.fillText(text, 0, -5);
+      ctx.restore();
+    }
+
     $(document).ready(function() {
       // logic to get new data
       const getDataAreaNasional = function() {
-        let urlAreaNasional = "{{route('getAreaNasionalByYear', ['2020'])}}";
-        let initYear = 2020;
+        const urlAreaNasional = "{{route('getAreaNasionalByYear', ['2020'])}}";
         $.ajax({
           url: urlAreaNasional,
           success: function(data) {
-            console.log(data);
             for (let i = 0; i < data.length; i++) {
+              myChart.data.images.push(data[i].dimension_icon);
               myChart.data.labels.push(data[i].dimension_name);
               myChart.data.datasets[0].data.push(data[i].dimension_value);
             }

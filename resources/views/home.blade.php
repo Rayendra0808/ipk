@@ -6,7 +6,7 @@
   #provinsi:before {
     display: block;
     content: "";
-    height: 65px;
+    height: 60px;
   }
 
   .leaflet-container {
@@ -66,8 +66,31 @@
 <section id="nasional">
   <div class="container">
     <h3 class="text-center text-primary mt-5">Profil IPK Nasional</h3>
-    <div class="chart">
-      <canvas id="profil-ipk-nasional"></canvas>
+    <div class="row">
+      <div class="col-md-4 p-3 mt-5">
+        <div class="mb-3 row border">
+          <label for="staticEmail" class="col-md-8 col-form-label">Tahun Data Terakhir: </label>
+          <div class="col-md-4 p-1">
+            <select name="year" class="form-control form-control-sm">
+              <option disabled>Pilih Tahun</option>
+              @foreach($year as $yearData)
+              <option value="{{$yearData}}">{{$yearData}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 row border">
+          <label for="staticEmail" class="col-md-8 col-form-label">IPK Nasional: </label>
+          <div class="col-md-4 mx-auto my-auto">
+            <span class="fs-2">56.8</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 offset-md-2">
+        <div class="chart">
+          <canvas id="profil-ipk-nasional"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </section>

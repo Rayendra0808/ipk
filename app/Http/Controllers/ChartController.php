@@ -1,14 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\DimensionValue;
+use App\Models\DimensionValue;
 
 class ChartController extends Controller
 {
   public function getAreaNasionalByYear($year)
   {
-    $dimensi = DimensionValue::getAll();
     $data = DimensionValue::getAreaNasionalByYear($year);
-    return response()->json($data, 200);
+    $result = [];
+     foreach ($data as $key => $value) {
+     $result [] = array(
+       'dimension_value' => $value['dimension_value'],
+       'dimension_icon' => asset('/assets/img').'/'.$value['dimension_icon'],
+       'dimension_name' => $value['dimension_name'],
+       'dimension_id' => $value['dimension_id'],
+     );
+    }
+    return response()->json($result, 200);
   }
 }

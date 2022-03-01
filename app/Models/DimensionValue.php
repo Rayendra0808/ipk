@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +17,7 @@ class DimensionValue extends Model
 
     public static function getAreaNasionalByYear($year)
     {
-        $data =  DimensionValue::select('dimensions.dimension_name', 'dimension_values.*')
+        $data =  DimensionValue::select('dimensions.dimension_name', 'dimensions.dimension_icon', 'dimension_values.*')
             ->join('dimensions', 'dimension_values.dimension_id', '=', 'dimensions.id')
             ->where('dimension_values.year', $year)
             ->where('dimension_values.province_id', '1001')

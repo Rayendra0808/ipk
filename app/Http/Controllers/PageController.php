@@ -1,17 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Dimension;
-use App\Province;
+use App\Models\Dimension;
+use App\Models\Province;
 
 class PageController extends Controller
 {
   public function index()
   {
     $dimensi = Dimension::getAll();
+    $year = Dimension::getYear();
     $province = Province::getAll();
 
-    return view('home', compact('dimensi', 'province'));
+    return view('home', compact('dimensi', 'province', 'year'));
   }
 
   public function dimensi($slug)
