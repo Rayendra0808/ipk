@@ -1,5 +1,20 @@
 @extends('app')
 @section('content')
+<style>
+  #about:before,
+  #nasional:before,
+  #provinsi:before {
+    display: block;
+    content: "";
+    height: 60px;
+  }
+
+  .leaflet-container {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
 <section id="intro" class="clearfix">
   <div class="container">
 
@@ -11,7 +26,7 @@
       <h2>Indeks<br><span>Pembangunan</span><br>Kebudayaan</h2>
       <div>
 
-        <a href="#hasil_hitung" class="btn-services scrollto">Hasil</a><a href="handbook_ipk.pdf" class="btn-services">Unduh Buku IPK</a>
+        <a href="#nasional" class="btn-services scrollto">Hasil</a><a href="handbook_ipk.pdf" class="btn-services">Unduh Buku IPK</a>
       </div>
     </div>
 
@@ -33,66 +48,75 @@
     </p>
     <div class="container pt-3">
       <div class="owl-carousel owl-theme">
+        @foreach($dimensi as $dataDimensi)
         <div class="item">
           <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/ekonomibudaya.png')}}" style="width: 100px !important;">
-            <span class="text-center">Ekonomi Budaya</span>
+            <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
+              <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+              <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+            </a>
           </p>
         </div>
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/pendidikan.png')}}" style="width: 100px !important;">
-            <span class="text-center">Pendidikan</span>
-          </p>
-        </div>
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/ketahanannasional.png')}}" style="width: 100px !important;">
-            <span class="text-center">Ketahanan Sosial Budaya</span>
-          </p>
-        </div>
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/warisanbudaya.png')}}" style="width: 100px !important;">
-            <span class="text-center">Warisan Budaya</span>
-          </p>
-        </div>
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/kebebasanbudaya.png')}}" style="width: 100px !important;">
-            <span class="text-center">Ekspresi Budaya</span>
-          </p>
-        </div>
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/literasibudaya.png')}}" style="width: 100px !important;">
-            <span class="text-center">Budaya Literasi</span>
-          </p>
-        </div>
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <img class="img-fluid img-center" src="{{asset('assets/img/gender.png')}}" style="width: 100px !important;">
-            <span class="text-center">Gender</span>
-          </p>
-        </div>
+        @endforeach
       </div>
       <hr>
     </div>
   </div>
+</section>
+<section id="nasional">
   <div class="container">
     <h3 class="text-center text-primary mt-5">Profil IPK Nasional</h3>
-    <div class="chart">
-      Chart goes Here
+    <div class="row">
+      <div class="col-md-4 p-3 mt-5">
+        <div class="mb-3 row border">
+          <label for="staticEmail" class="col-md-8 col-form-label">Tahun Data Terakhir: </label>
+          <div class="col-md-4 p-1">
+            <select name="year" class="form-control form-control-sm">
+              <option disabled>Pilih Tahun</option>
+              @foreach($year as $yearData)
+              <option value="{{$yearData}}">{{$yearData}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 row border">
+          <label for="staticEmail" class="col-md-8 col-form-label">IPK Nasional: </label>
+          <div class="col-md-4 mx-auto my-auto">
+            <span class="fs-2">56.8</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 offset-md-2">
+        <div class="chart">
+          <canvas id="profil-ipk-nasional"></canvas>
+        </div>
+      </div>
     </div>
   </div>
+</section>
+<section id="provinsi">
   <div class="container">
     <h3 class="text-center text-primary mt-5">Profil IPK Provinsi</h3>
     <p class="text-center">
       Klik wilayah pada peta untuk informasi lebih lanjut
     </p>
-    <div class="map">
-      Map goes Here
+    <dvi class="container-fluid">
+      <div id="map" style="width: 100%; height: 400px;"></div>
+    </dvi>
+    <div class="container-fluid">
+      <h2 class="text-center">Pokok Pikiran Provinsi</h2>
+      <div class="row d-flex justify-content-between">
+        @foreach($province as $provinceData)
+        <div class="col-md-3 p-3 border border-dark text-center m-3" style="max-width: 200px !important;">
+          <span id="province-list" class="order-{{$provinceData->id}}" data-province-id="{{$provinceData->id}}">{{$provinceData->province_name}}</span>
+        </div>
+        @endforeach
+      </div>
     </div>
   </div>
+  </div>
 </section>
+<!-- @push('script')
+
+@endpush -->
 @endsection
