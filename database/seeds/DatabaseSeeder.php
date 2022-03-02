@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvincesTableSeeder::class);
         $this->call(DimensionsTableSeeder::class);
         $this->call(DimensionQualitiesTableSeeder::class);
-        $this->call(DimensionValueNasionalTestTableSeeder::class);
+        $this->call(IndicatorsTableSeeder::class);
+        $this->call(DimensionValuesTableSeeder::class);
+        $this->call(DimensionTotalValueProvincesTableSeeder::class);
+        $this->call(DimensionTargetValuesTableSeeder::class);
     }
 }

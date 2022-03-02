@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DimensionValue extends Model
+class DimensionTargetValue extends Model
 {
-    protected $table = 'dimension_values';
+    protected $table = 'dimension_target_values';
     protected $primaryKey = 'id';
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Dimension;
 
 class DimensionsTableSeeder extends Seeder
 {
@@ -11,6 +12,9 @@ class DimensionsTableSeeder extends Seeder
    */
   public function run()
   {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    DB::table('dimensions')->truncate();
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     DB::table('dimensions')->insert(
       [
         ['dimension_name' => 'Ekonomi Budaya', 'dimension_slug' => 'ekonomi-budaya', 'dimension_code' => 'D1', 'dimension_icon' => 'ekonomibudaya.png', 'dimension_description' => 'Aktivitas ekonomi yang tercipta sebagai hasil dari pemanfaatan Objek Pemajuan Kebudayaan'],

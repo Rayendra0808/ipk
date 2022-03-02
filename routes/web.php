@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PageController@index')->name('home.index');
 Route::get('/dimensi/{slug}', 'PageController@dimensi')->name('dimensi.index');
-Route::get('/chart/area-nasional/{year}', 'ChartController@getAreaNasionalByYear')->name('getAreaNasionalByYear');
+Route::get('/chart/area-nasional/{year}/province-id/{province_id}', 'ChartController@getDimension')->name('chart.getDimension');
+Route::get('/chart/area-nasional/{year}/province-id/{province_id}/total', 'ChartController@getDimensionTotalProvince')->name('chart.getDimensionTotalProvince');
