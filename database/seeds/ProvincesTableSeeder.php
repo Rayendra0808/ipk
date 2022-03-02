@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use app\Models\Province;
 class ProvincesTableSeeder extends Seeder
 {
   /**
@@ -11,6 +11,9 @@ class ProvincesTableSeeder extends Seeder
    */
   public function run()
   {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    DB::table('provinces')->truncate();
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     DB::table('provinces')->insert(
       [
         ['id' => '11', 'province_name' => 'ACEH'],

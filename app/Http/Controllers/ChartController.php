@@ -1,22 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\DimensionValue;
-
+use App\Models\Dimension;
+use App\Models\DimensionTotalValueProvince;
+use App\Traits\TransformTrait;
 class ChartController extends Controller
 {
-  public function getAreaNasionalByYear($year)
+  use TransformTrait;
+  public function getDimension($year, $provinceId)
   {
-    $data = DimensionValue::getAreaNasionalByYear($year);
-    $result = [];
-     foreach ($data as $key => $value) {
-     $result [] = array(
-       'dimension_value' => $value['dimension_value'],
-       'dimension_icon' => asset('/assets/img').'/'.$value['dimension_icon'],
-       'dimension_name' => $value['dimension_name'],
-       'dimension_id' => $value['dimension_id'],
-     );
-    }
+    $data = Dimension::getDimensionData($year, $provinceId);
+    $result = $this->dimensionValueToChartResponse($data);
+    return response()->json($result, 200);
+  }
+
+  public function getDimensionTotalProvince($year, $provinceId)
+  {
+    $data = DimensionTotalValueProvince::getTotal($year, $provinceId);
+    $result = $this->dimensionTotalValueToChartResponse($data);
     return response()->json($result, 200);
   }
 }

@@ -19,6 +19,6 @@ class PageController extends Controller
   {
     $dimensi = Dimension::getAll();
     $data = Dimension::getDimensi($slug);
-    return view('dimensi.index', compact('data', 'dimensi'));
+    return view('dimension.index', compact('data', 'dimensi'));
   }
 }

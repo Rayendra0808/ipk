@@ -67,11 +67,11 @@
   <div class="container">
     <h3 class="text-center text-primary mt-5">Profil IPK Nasional</h3>
     <div class="row">
-      <div class="col-md-4 p-3 mt-5">
+      <div class="col-md-4 p-3 mx-auto my-auto">
         <div class="mb-3 row border">
           <label for="staticEmail" class="col-md-8 col-form-label">Tahun Data Terakhir: </label>
           <div class="col-md-4 p-1">
-            <select name="year" class="form-control form-control-sm">
+            <select name="year" id="change-year-nasional" class="form-control form-control-sm">
               <option disabled>Pilih Tahun</option>
               @foreach($year as $yearData)
               <option value="{{$yearData}}">{{$yearData}}</option>
@@ -82,7 +82,7 @@
         <div class="mb-3 row border">
           <label for="staticEmail" class="col-md-8 col-form-label">IPK Nasional: </label>
           <div class="col-md-4 mx-auto my-auto">
-            <span class="fs-2">56.8</span>
+            <span class="fs-2" id="total-value-nasional"></span>
           </div>
         </div>
       </div>
