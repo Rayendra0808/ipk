@@ -27,4 +27,45 @@ trait TransformTrait
     $result = ['total' => $data->total, 'year'=> $data->year];
     return $result;
   }
+
+  public function dimensionQualityAndIndicatorResponse($data) {
+    return $data;
+  }
+
+  public function dimensionProvinceResponse($data, $dataTarget) {
+    $data = $data->toArray();
+    $dataTarget = $dataTarget->toArray();
+    $result = [];
+    foreach ($data as $key => $value) {
+      $result[] = array(
+        'province_id'=>$value['province']['id'],
+        'province_name'=>$value['province']['province_name'],
+        'dimension_name'=>$value['dimension']['dimension_name'],
+        'dimension_value'=>$value['dimension_value'],
+        'dimension_target'=>0,
+        'year'=>$value['year'],
+      );
+      foreach ($dataTarget as $keyTarget => $valueTarget) {
+        if ($value['province']['id'] === $valueTarget['province_id'] 
+          && $value['dimension_id'] === $valueTarget['dimension_id']) 
+          $result[$key]['dimension_target'] = $valueTarget['dimension_target_value'];
+      }
+    }
+    return $result;
+  }
+
+  public function dimensionProvinceTargetResponse($data) {
+    $data = $data->toArray();
+    $result = [];
+    foreach ($data as $key => $value) {
+      $result[] = array(
+        'province_id'=>$value['province']['id'],
+        'province_name'=>$value['province']['province_name'],
+        'dimension_name'=>$value['dimension']['dimension_name'],
+        'dimension_value'=>$value['dimension_target_value'],
+        'year'=>$value['year'],
+      );
+    }
+    return $result;
+  }
 }

@@ -119,6 +119,7 @@
   <script src="{{asset('assets/lib/aos/aos.js')}}"></script>
   <script src="{{asset('assets/lib/chart/chart.js')}}"></script>
   @include('scripts.ipk-script')
+  @stack('custom-scripts')
 </body>
 
 </html>

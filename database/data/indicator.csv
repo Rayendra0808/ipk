@@ -1,32 +1,32 @@
-ID_DIM,KODE_IND,NAMA_IND,SOURCE_IND
-1,X1.1,Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni yang menjadikan keterlibatan sebagai sumber penghasilan (terhadap masyarakat 15 tahun ke atas),Susenas MSBP
-2,X2.1,Rata-rata Lama Sekolah (MYS) 25 tahun ke atas,Susenas KOR
-2,X2.2,Harapan Lama Sekolah (HLS),Susenas KOR
-2,X2.3,Angka Kesiapan Sekolah (AKS),Susenas KOR
-2,X2.4,Persentase Satuan Pendidikan yang mempunyai guru yang mengajar muatan lokal bahasa daerah dan/atau seni budaya,Kemendikbud (DAPODIK)
-2,X2.5,Persentase penduduk penyandang disabilitas usia 7-18 tahun yang bersekolah,Susenas KOR
-2,X2.6,Partisipasi pendidikan penduduk usia 7-18 tahun dengan kategori 40% termisikin,Susenas KOR
-3,X3.1,Persentase masyarakat yang setuju jika ada sekelompok orang dari agama lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal.,Susenas MSBP
-3,X3.2,Persentase masyarakat yang setuju jika ada sekelompok orang dari suku lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal.,Susenas MSBP
-3,X3.3,Persentase masyarakat yang setuju jika salah satu anggota rumah tangga Anda bersahabat dengan orang lain yang beda agama.,Susenas MSBP
-3,X3.4,Persentase masyarakat yang setuju jika salah satu anggota rumah tangga Anda bersahabat dengan orang lain yang berbeda suku.,Susenas MSBP
-3,X3.5,Persentase penduduk berumur 10 tahun ke atas yang mengikuti kegiatan sosial kemasyarakatan di lingkungan sekitar dalam tiga bulan terakhir,Susenas MSBP
-3,X3.6,Persentase penduduk usia 10 tahun ke atas yang mengikuti gotong royong,Susenas MSBP
-3,X3.7,Persentase rumah tangga yang merasa khawatir dengan keamanan saat berjalan kaki sendirian di malam hari dalam setahun terakhir,Susenas Hansos
-3,X3.8,Persentase masyarakat yang merasa aman di lingkungan tempat tinggal,Susenas Hansos
-4,X4.1,"Persentase benda, bangunan, struktur, dan situs cagar budaya yang telah ditetapkan terhadap total registrasi",Kemendikbud
-4,X4.2,Persentase warisan budaya takbenda yang telah ditetapkan terhadap total registrasi,Kemendikbud
-4,X4.3,Persentase penduduk usia 10 tahun ke atas yang menggunakan bahasa daerah di rumah atau dalam pergaulan sehari-hari,Susenas MSBP
-4,X4.4,Persentase penduduk usia 10 tahun ke atas yang menonton secara langsung pertunjukkan seni,Susenas MSBP
-4,X4.5,Persentase penduduk usia 10 tahun ke atas yang mengunjungi peninggalan sejarah/wardun,Susenas MSBP
-4,X4.6,Persentase masyarakat yang menggunakan produk tradisional,Susenas MSBP
-5,X5.1,Persentase penduduk usia 10 tahun ke atas yang memberikan saran atau pendapat dalam kegiatan rapat selama satu tahun terakhir,Susenas MSBP
-5,X5.2,Persentase penduduk usia 10 tahun ke atas yang aktif mengikuti kegiatan organisasi,Susenas MSBP
-5,X5.3,Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni,Susenas MSBP
-5,X5.4,Persentase rumah tangga yang menghadiri atau menyelenggarakan upacara adat,Susenas MSBP
-6,X6.1,Persentase penduduk usia 10 tahun ke atas yang membaca selain kitab suci baik cetak maupun elektronik dalam satu minggu terakhir,Susenas Kor
-6,X6.2,Persentase penduduk berumur 10 tahun ke atas yang mengakses internet dalam tiga bulan terakhir,Susenas Kor
-6,X6.3,Persentase penduduk usia 10 tahun ke atas yang mengunjungi perpustakaan/memanfaatkan taman bacaan masyarakat,Susenas MSBP
-7,X7.1,Rasio Tingkat partisipasi angkatan kerja usia 15 tahun ke atas perempuan terhadap laki-laki,Sakernas
-7,X7.2,Rasio penduduk 25 tahun ke atas perempuan terhadap laki-laki yang memiliki ijazah minimal SM/Sederajat,Susenas KOR
-7,X7.3,Rasio anggota parlemen perempuan terhadap anggota parlemen laki-laki,KPU BPS
+ID_DIM,KODE_IND,NAMA_IND,SOURCE_IND,min,max
+1,X1.1,Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni yang menjadikan keterlibatan sebagai sumber penghasilan (terhadap masyarakat 15 tahun ke atas),,0,1
+2,X2.1,Rata-rata Lama Sekolah (MYS) 25 tahun ke atas,Susenas KOR,0,15
+2,X2.2,Harapan Lama Sekolah (HLS),Susenas KOR,0,18
+2,X2.3,Angka Kesiapan Sekolah (AKS),Susenas KOR,0,100
+2,X2.4,Persentase Satuan Pendidikan yang mempunyai guru yang mengajar muatan lokal bahasa daerah dan/atau seni budaya,Kemendikbud (DAPODIK),0,45
+2,X2.5,Persentase penduduk penyandang disabilitas usia 7-18 tahun yang bersekolah,Susenas KOR,0,100
+2,X2.6,Partisipasi pendidikan penduduk usia 7-18 tahun dengan kategori 40% termisikin,Susenas KOR,0,100
+3,X3.1,Persentase masyarakat yang setuju jika ada sekelompok orang dari agama lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal.,Susenas MSBP,0,100
+3,X3.2,Persentase masyarakat yang setuju jika ada sekelompok orang dari suku lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal.,Susenas MSBP,0,100
+3,X3.3,Persentase masyarakat yang setuju jika salah satu anggota rumah tangga Anda bersahabat dengan orang lain yang beda agama.,Susenas MSBP,0,100
+3,X3.4,Persentase masyarakat yang setuju jika salah satu anggota rumah tangga Anda bersahabat dengan orang lain yang berbeda suku.,Susenas MSBP,0,100
+3,X3.5,Persentase penduduk berumur 10 tahun ke atas yang mengikuti kegiatan sosial kemasyarakatan di lingkungan sekitar dalam tiga bulan terakhir,Susenas MSBP,0,100
+3,X3.6,Persentase penduduk usia 10 tahun ke atas yang mengikuti gotong royong,Susenas MSBP,0,100
+3,X3.7,Persentase rumah tangga yang merasa khawatir dengan keamanan saat berjalan kaki sendirian di malam hari dalam setahun terakhir,Susenas Hansos,0,50
+3,X3.8,Persentase masyarakat yang merasa aman di lingkungan tempat tinggal,Susenas Hansos,0,100
+4,X4.1,"Persentase benda, bangunan, struktur, dan situs cagar budaya yang telah ditetapkan terhadap total registrasi",Kemendikbud,0,50
+4,X4.2,Persentase warisan budaya takbenda yang telah ditetapkan terhadap total registrasi,Kemendikbud,0,50
+4,X4.3,Persentase penduduk usia 10 tahun ke atas yang menggunakan bahasa daerah di rumah atau dalam pergaulan sehari-hari,Susenas MSBP,0,100
+4,X4.4,Persentase penduduk usia 10 tahun ke atas yang menonton secara langsung pertunjukkan seni,Susenas MSBP,0,70
+4,X4.5,Persentase penduduk usia 10 tahun ke atas yang mengunjungi peninggalan sejarah/wardun,Susenas MSBP,0,30
+4,X4.6,Persentase masyarakat yang menggunakan produk tradisional,Susenas MSBP,0,95
+5,X5.1,Persentase penduduk usia 10 tahun ke atas yang memberikan saran atau pendapat dalam kegiatan rapat selama satu tahun terakhir,Susenas MSBP,0,30
+5,X5.2,Persentase penduduk usia 10 tahun ke atas yang aktif mengikuti kegiatan organisasi,Susenas MSBP,0,20
+5,X5.3,Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni,Susenas MSBP,0,7
+5,X5.4,Persentase rumah tangga yang menghadiri atau menyelenggarakan upacara adat,Susenas MSBP,0,45
+6,X6.1,Persentase penduduk usia 10 tahun ke atas yang membaca selain kitab suci baik cetak maupun elektronik dalam satu minggu terakhir,Susenas Kor,0,70
+6,X6.2,Persentase penduduk berumur 10 tahun ke atas yang mengakses internet dalam tiga bulan terakhir,Susenas Kor,0,85
+6,X6.3,Persentase penduduk usia 10 tahun ke atas yang mengunjungi perpustakaan/memanfaatkan taman bacaan masyarakat,Susenas MSBP,0,25
+7,X7.1,Rasio Tingkat partisipasi angkatan kerja usia 15 tahun ke atas perempuan terhadap laki-laki,Sakernas,0,100
+7,X7.2,Rasio penduduk 25 tahun ke atas perempuan terhadap laki-laki yang memiliki ijazah minimal SM/Sederajat,Susenas KOR,0,100
+7,X7.3,Rasio anggota parlemen perempuan terhadap anggota parlemen laki-laki,KPU BPS,0,100

@@ -19,6 +19,8 @@ class CreateIndicatorsTable extends Migration
             $table->string('indicator_code');
             $table->longText('indicator_description');
             $table->string('indicator_source');
+            $table->float('min');
+            $table->float('max');
             $table->timestamps();
         });
     }

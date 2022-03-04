@@ -85,6 +85,10 @@
             <span class="fs-2" id="total-value-nasional"></span>
           </div>
         </div>
+        <div class="d-flex justify-content-end">
+          <a href="{{url('/nasional')}}" class="btn btn-md" style="background: #96c3ec;
+            border-radius: 25px;padding: 10px 30px 10px 30px;"> Selengkapnya </a>
+        </div>
       </div>
       <div class="col-md-6 offset-md-2">
         <div class="chart">

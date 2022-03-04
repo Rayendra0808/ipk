@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\Models\Dimension;
+use App\Models\DimensionValue;
 use App\Models\DimensionTotalValueProvince;
+use App\Models\DimensionTargetValue;
 use App\Traits\TransformTrait;
+use Illuminate\Http\Request;
+
 class ChartController extends Controller
 {
   use TransformTrait;
@@ -18,6 +22,21 @@ class ChartController extends Controller
   {
     $data = DimensionTotalValueProvince::getTotal($year, $provinceId);
     $result = $this->dimensionTotalValueToChartResponse($data);
+    return response()->json($result, 200);
+  }
+
+  public function getDimensionProvince(Request $request)
+  {
+    $data = DimensionValue::getDimensionProvince($request);
+    $dataTarget = DimensionTargetValue::getDimensionProvinceTarget($request);
+    $result = $this->dimensionProvinceResponse($data, $dataTarget);
+    return response()->json($result, 200);
+  }
+
+  public function getDimensionProvinceTarget(Request $request)
+  {
+    $data = DimensionTargetValue::getDimensionProvinceTarget($request);
+    $result = $this->dimensionProvinceTargetResponse($data);
     return response()->json($result, 200);
   }
 }

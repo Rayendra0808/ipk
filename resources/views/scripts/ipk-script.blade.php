@@ -142,7 +142,6 @@
             myChart.data.datasets[0].data.push(data[i].dimension_value);
           };
           myChart.update();
-          console.log(myChart);
         }
       });
     };
