@@ -36,8 +36,7 @@
   <link rel="stylesheet" href="{{asset('assets/lib/owl/assets/owl.carousel.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/lib/owl/assets/owl.theme.default.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/lib/aos/aos.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/lib/leaflet/leaflet.css')}}">
-  <script src="{{asset('assets/lib/leaflet/leaflet.js')}}"></script>
+  <link rel="stylesheet" href="{{asset('assets/jqvmap/jqvmap.css')}}">
 </head>
 
 <body>
