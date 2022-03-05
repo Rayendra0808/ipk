@@ -20,7 +20,6 @@ class DimensionValue extends Model
   public static function getDimensionProvince($param)
   {
     if (!$param->input('year') || !$param->input('dimension_id')) return [];
-    $condition = [];
     $data = DimensionValue::with(['province', 'dimension'])
       ->where('dimension_values.year', $param->input('year'))
       ->where('dimension_values.dimension_id', $param->input('dimension_id'))

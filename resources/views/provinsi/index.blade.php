@@ -224,7 +224,7 @@
     background-position-y: center; padding:60px;">
   <div class="d-flex">
     <div class="p-2 flex-grow-1">
-      <h1 class="title-page">IPK Nasional <br> <span class="sub-title"></span></h1>
+      <h1 class="title-page">IPK Provinsi <br> <span class="sub-title" style="text-transform:capitalize;">{{strtolower($provinsi->province_name)}}</span></h1>
     </div>
   </div>
 </div>
@@ -247,20 +247,20 @@
         </div>
       </div>
       <div class="col-md-4 offset-md-2 align-self-center">
-        <h4 class="text-primary">Nilai IPK Nasional</h4>
-        <h1 id="total-ipk-nasional"></h1>
+        <h4 class="text-primary">Nilai IPK Provinsi</h4>
+        <h1 id="total-ipk-provinsi"></h1>
+        <h6 class="text-primary">Nilai IPK Nasional <span id="total-ipk-nasional" style="color:#444;"></span></h6>
       </div>
     </div>
 </div>
 <div class="container">
-  <h3 class="text-primary text-center"> Rincian Nilai per Indikator </h3>
-  <h5 class="text-center"> Klik pada masing masing logo untuk melihat nilai per indikator</h5>
+  <h3 class="text-primary text-center"> Perbandingan Nilai per Dimensi </h3>
   <center>
     <div class="mb-3 row justify-content-center">
       <div for="staticEmail" class="col-md-2 col-form-label">Tahun: </div>
       <div class="col-md-2 p-1">
         <select name="year" id="change-year-nasional" class="form-control form-control-sm">
-          <option disabled>Pilih Tahun</option>
+          <optio100pxn disabled>Pilih Tahun</option>
           @foreach($year as $yearData)
           <option value="{{$yearData}}">{{$yearData}}</option>
           @endforeach
@@ -268,6 +268,10 @@
       </div>
     </div>
   </center>
+</div>
+<div class="container">
+  <h3 class="text-primary text-center"> Rincian Nilai per Indikator <span id="year-selected">2020</span> </h3>
+  <h5 class="text-center"> Klik pada masing masing logo untuk melihat nilai per indikator </h5>
   <div class="owl-carousel owl-theme">
     @foreach($dimensi as $dataDimensi)
     <div class="item">
@@ -280,25 +284,26 @@
     </div>
     @endforeach
   </div>
-  <div id="line-chart">
-    <div class="container border mb-5 mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <h3 id="title-line" class="mt-3"></h3>
-          <div id="description">
-            
-          </div>
+</div>
+<div id="line-chart">
+  <div class="container border mb-5 mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <h3 id="title-line" class="mt-3"></h3>
+        <div id="description">
+
         </div>
-        <div class="col-md-6">
-          <div class="d-flex justify-content-center">
-            <p class="p-2 text-primary">Nasional</p>
-            <p class="p-2 text-danger">Proyeksi 2024</p>
-          </div>
-          <div id="chart-line-custom"></div>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-center">
+          <p class="p-2 text-primary">Nasional</p>
+          <p class="p-2 text-danger">Proyeksi 2024</p>
         </div>
+        <div id="chart-line-custom" style="margin-top:-50px;"></div>
       </div>
     </div>
   </div>
+</div>
 </div>
 @endsection
 @push('custom-scripts');
@@ -306,7 +311,8 @@
   $(document).ready(function() {
     let labelYear = '2018';
     let initYear = '2018';
-    let initProvince = '1001';
+    let provinceNasional = '1001';
+    let provinceSelected = "{{$provinsi->id}}";
     let year = "{{$year[0]}}";
 
     function drawTextAtIndex(scale, index, icon, text, value) {
@@ -332,7 +338,7 @@
       ctx.restore();
     }
     // logic to get new data
-    const getDataAreaNasional = (year, provinceId) => {
+    const getDataAreaProvince = (year, provinceId) => {
       console.log(year);
       const urlAreaNasional = "{{url('/chart/area-nasional')}}";
       $.ajax({
@@ -447,6 +453,17 @@
         }
       });
     }
+    const getTotalAreaProvince = (year, provinceId) => {
+      const urlTotalAreaProvince = "{{url('/chart/area-nasional')}}";
+      $.ajax({
+        url: urlTotalAreaProvince + '/' + year + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-provinsi").text(data.total);
+          }
+        }
+      });
+    }
     $('#line-chart').hide();
     const getDimensionIndicator = (year, provinceId, dimensionId) => {
       const urlIndicatorProvince = "{{url('/chart/indicator-province')}}";
@@ -473,33 +490,17 @@
             $('#indicator-proyeksi').text(data[0].indicator_target_value);
             $('#indicator-max').text(data[0].max);
             $('#line-chart').show();
+
             function generateDescription(item) {
-              text += `<h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
-              text += `<p>${item.indicator_description}</p>`;
+              text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
+              if (item.indicator_description.length < 65) {
+                text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
+              }else{
+                text += `<p>${item.indicator_description}</p></div>`;
+              }
             }
+
             function generateChart(item, index) {
-            //   <li class='entry'>
-            //   <input checked='checked' class='radio' id='trigger1' name='trigger' type='radio'>
-            //   <span class='top-label'>Nilai Minimum</span>
-            //   <span class='bottom-label' id="indicator-min"></span>
-            //   <span class='circle-black'></span>
-            // </li>
-            // <li class='entry'>
-            //   <input class='radio' id='trigger2' name='trigger' type='radio'>
-            //   <span class='top-label' id="indicator-nasional"></span>
-            //   <span class='circle-blue'></span>
-            // </li>
-            // <li class='entry'>
-            //   <input class='radio' id='trigger3' name='trigger' type='radio'>
-            //   <span class='top-label' id="indicator-proyeksi"></span>
-            //   <span class='circle-red'></span>
-            // </li>
-            // <li class='entry'>
-            //   <input checked='checked' class='radio' id='trigger4' name='trigger' type='radio'>
-            //   <span class='top-label'>Nilai Maksimum</span>
-            //   <span class='bottom-label' id="indicator-max"></span>
-            //   <span class='circle-black'></span>
-            // </li>
               chartLine += `<ul id='timeline'><li class='entry'>
               <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
               <span class='top-label'>Nilai Minimum</span>
@@ -528,8 +529,9 @@
       });
 
     }
-    getDataAreaNasional('2018', initProvince);
-    getTotalAreaNasional('2018', initProvince);
+    getDataAreaProvince('2018', provinceSelected);
+    getTotalAreaNasional('2018', provinceNasional);
+    getTotalAreaProvince('2018', provinceSelected);
     $('#change-year-nasional').on('change', () => {
       year = $(this).find(":selected").val();
       $('#line-chart').hide();
@@ -544,7 +546,7 @@
       $('#title-line').text(dimensionName);
       $('.dimension-action').removeClass('text-success');
       $(this).addClass('text-success');
-      getDimensionIndicator(year, initProvince, dimensionId);
+      getDimensionIndicator(year, provinceSelected, dimensionId);
     });
   });
 </script>

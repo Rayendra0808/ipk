@@ -14,6 +14,10 @@
     max-width: 100%;
     max-height: 100%;
   }
+
+  a#province-list{
+    text-decoration: none !important;
+  }
 </style>
 <section id="intro" class="clearfix">
   <div class="container">
@@ -450,7 +454,7 @@
       <div class="row d-flex justify-content-between">
         @foreach($province as $provinceData)
         <div class="col-md-3 p-3 border border-dark text-center m-3" style="max-width: 200px !important;">
-          <span id="province-list" class="order-{{$provinceData->id}}" data-province-id="{{$provinceData->id}}">{{$provinceData->province_name}}</span>
+          <a href="{{route('provinsi.index', $provinceData->id)}}" id="province-list" class="order-{{$provinceData->id}}" data-province-id="{{$provinceData->id}}">{{$provinceData->province_name}}</a>
         </div>
         @endforeach
       </div>

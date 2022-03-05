@@ -68,4 +68,27 @@ trait TransformTrait
     }
     return $result;
   }
+
+  public function indicatorValueToChartResponse($data)
+  {
+    $data = $data->toArray();
+    $result = [];
+    foreach ($data as $keyIndicator => $value) {
+      $result[] = array(
+        'indicator_code' => $value['indicator_code'],
+        'indicator_description' => $value['indicator_description'],
+        'min' => $value['min'],
+        'max' => $value['max'],
+        'indicator_value' => 0,
+        'indicator_target_value' => 0,
+      );
+      foreach ($value['indicator_values'] as $indicatorValue ) {
+        $result[$keyIndicator]['indicator_value'] = $indicatorValue['indicator_value'];
+      }
+      foreach ($value['indicator_target_values'] as $indicatorTargetValue ) {
+        $result[$keyIndicator]['indicator_target_value'] = $indicatorTargetValue['indicator_target_value'];
+      }
+    }
+    return $result;
+  }
 }

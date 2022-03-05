@@ -33,4 +33,13 @@ class PageController extends Controller
     // $data = $this->dimensionQualityAndIndicatorResponse($dataIndicator);
     return view('nasional.index', compact('dimensi', 'year'));
   }
+
+  public function provinsi($provinceId)
+  {
+    $dimensi = Dimension::getAll();
+    $year = Dimension::getYear();
+    $provinsi = Province::find($provinceId);
+ 
+    return view('provinsi.index', compact('dimensi', 'year', 'provinsi'));
+  }
 }
