@@ -48,19 +48,7 @@
     });
 
   });
-
-  const map = L.map('map').setView([-2.548926, 118.0148634], 5);
-  const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    maxZoom: 20,
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1
-  }).addTo(map);
-
   let labelYear = '2020';
-
   function drawTextAtIndex(scale, index, icon, text, value) {
     const offset = -5;
     const r = scale.drawingArea + offset;
@@ -87,7 +75,6 @@
   $(document).ready(function() {
     let initYear = '2020';
     let initProvince = '1001';
-    // logic to get new data
     const getDataAreaNasional = (year, provinceId) => {
       console.log(year);
       const urlAreaNasional = "{{url('/chart/area-nasional')}}";
@@ -142,7 +129,6 @@
             myChart.data.datasets[0].data.push(data[i].dimension_value);
           };
           myChart.update();
-          console.log(myChart);
         }
       });
     };

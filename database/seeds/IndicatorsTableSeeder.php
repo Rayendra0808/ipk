@@ -20,12 +20,15 @@ class IndicatorsTableSeeder extends Seeder
 
     $firstline = true;
     while (($data = fgetcsv($csvFile, 200, ",")) !== FALSE) {
+      // @dump($data);
       if (!$firstline) {
         Indicator::create([
           "dimension_id" => $data[0],
           "indicator_code" => $data[1],
           "indicator_description" => $data[2],
           "indicator_source" => $data[3],
+          "min" => $data[4],
+          "max" => $data[5],
         ]);
       }
       $firstline = false;

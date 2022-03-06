@@ -15,6 +15,11 @@ class Dimension extends Model
     return $this->hasMany(DimensionQuality::class);
   }
 
+  public function dimensionIndicators()
+  {
+    return $this->hasMany(Indicator::class);
+  }
+
   public function dimensionValues()
   {
     return $this->hasMany(DimensionValue::class);
@@ -26,11 +31,12 @@ class Dimension extends Model
     return $data;
   }
 
-  public static function getDimensi($slug)
+  public static function getDimension($slug)
   {
     $data =  Dimension::where('dimension_slug', $slug)->first();
     return $data;
   }
+
   public static function getYear()
   {
     return ['2020', '2019', '2018'];
@@ -43,6 +49,12 @@ class Dimension extends Model
         ->where('dimension_values.year', $year);
     }, 'dimensionQualities'])
       ->get();
+    return $data;
+  }
+
+  public static function getDimensionWithIndicator($slug)
+  {
+    $data =  Dimension::with(['dimensionQualities', 'dimensionIndicators'])->where('dimension_slug', $slug)->first();
     return $data;
   }
 }

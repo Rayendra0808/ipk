@@ -11,7 +11,7 @@ class Province extends Model
   
   public static function getAll()
   {
-    $data =  Province::get();
+    $data =  Province::where('id', '!=', '1001')->get();
     return $data;
   }
 

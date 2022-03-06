@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDimensionTargetValuesTable extends Migration
+class CreateDimensionTotalTargetProvincesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateDimensionTargetValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dimension_target_values', function (Blueprint $table) {
+        Schema::create('dimension_total_target_provinces', function (Blueprint $table) {
             $table->id();
             $table->foreignId('province_id')->constrained('provinces');
-            $table->foreignId('dimension_id')->constrained('dimensions');
-            $table->float('dimension_target_value');
+            $table->float('total_target');
             $table->integer('year');
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ class CreateDimensionTargetValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dimension_target_values');
+        Schema::dropIfExists('dimension_total_target_provinces');
     }
 }
