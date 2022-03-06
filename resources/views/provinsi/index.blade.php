@@ -108,7 +108,11 @@
   }
 
   #indicator-nasional {
-    color: #267dfd;
+    color: #0dcaf0;
+  }
+
+  #indicator-provinsi {
+    color: #0d6efd;
   }
 
   #indicator-proyeksi {
@@ -132,8 +136,8 @@
     height: 10px;
     margin-left: -5px;
     background: #3f9cca;
-    border: 5px solid #267dfd;
-    color: #267dfd;
+    border: 5px solid #0dcaf0;
+    color: #0dcaf0;
     border-radius: 50%;
     position: absolute;
     top: -14px;
@@ -148,6 +152,19 @@
     border: 5px solid #f73e4f;
     border-radius: 50%;
     color: #f73e4f;
+    position: absolute;
+    top: -14px;
+    left: 50%;
+  }
+
+  .circle-info {
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    background: #3f9cca;
+    border: 5px solid #0d6efd;
+    border-radius: 50%;
+    color: #0d6efd;
     position: absolute;
     top: -14px;
     left: 50%;
@@ -207,18 +224,6 @@
   }
 </style>
 <div class="container pt-5 mt-5">
-  <!-- <div class="owl-carousel owl-theme">
-    @foreach($dimensi as $dataDimensi)
-    <div class="item">
-      <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-        <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
-          <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-          <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-        </a>
-      </p>
-    </div>
-    @endforeach
-  </div> -->
 </div>
 <div style="background: url({{asset('assets/img/bawah.png')}});
     background-position-y: center; padding:60px;">
@@ -232,13 +237,6 @@
 </div>
 <div class="container mb-5 mt-5">
   <h4 class="text-center">Pilih salah satu tahun data:</h3>
-    <!-- <div class="d-flex justify-content-center">
-      @foreach($year as $yearData)
-      <button id="btn-{{$yearData}}" class="btn btn-default btn-year btn-sm fs-4 text-primary border m-3" data-year="{{$yearData}}">
-        {{$yearData}}
-      </button>
-      @endforeach
-    </div> -->
     <div class="row">
       <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
       <div class="col-md-6">
@@ -248,8 +246,13 @@
       </div>
       <div class="col-md-4 offset-md-2 align-self-center">
         <h4 class="text-primary">Nilai IPK Provinsi</h4>
-        <h1 id="total-ipk-provinsi"></h1>
-        <h6 class="text-primary">Nilai IPK Nasional <span id="total-ipk-nasional" style="color:#444;"></span></h6>
+        <h6> Tahun 2018 :  <span class="text-primary" id="total-ipk-provinsi-2018"></span></h6>
+        <h6> Tahun 2019 :  <span class="text-primary" id="total-ipk-provinsi-2019"></span></h6>
+        <h6> Tahun 2020 :  <span class="text-primary" id="total-ipk-provinsi-2020"></span></h6>
+        <h4 class="text-primary">Nilai IPK Nasional</h4>
+        <h6> Tahun 2018 :  <span class="text-primary" id="total-ipk-nasional-2018"></span></h6>
+        <h6> Tahun 2019 :  <span class="text-primary" id="total-ipk-nasional-2019"></span></h6>
+        <h6> Tahun 2020 :  <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
       </div>
     </div>
 </div>
@@ -259,8 +262,8 @@
     <div class="mb-3 row justify-content-center">
       <div for="staticEmail" class="col-md-2 col-form-label">Tahun: </div>
       <div class="col-md-2 p-1">
-        <select name="year" id="change-year-nasional" class="form-control form-control-sm">
-          <optio100pxn disabled>Pilih Tahun</option>
+        <select name="year" id="change-year-dimensi" class="form-control form-control-sm">
+          <option disabled>Pilih Tahun</option>
           @foreach($year as $yearData)
           <option value="{{$yearData}}">{{$yearData}}</option>
           @endforeach
@@ -268,9 +271,27 @@
       </div>
     </div>
   </center>
+  <div class="col-md-12">
+    <div id="canvas-dimension">
+      <canvas id="dimension-bar"></canvas>
+    </div>
+  </div>
 </div>
-<div class="container">
-  <h3 class="text-primary text-center"> Rincian Nilai per Indikator <span id="year-selected">2020</span> </h3>
+<div class="container mt-5 pt-5">
+  <h3 class="text-primary text-center"> Rincian Nilai per Indikator </h3>
+  <center>
+    <div class="mb-3 row justify-content-center">
+      <div for="staticEmail" class="col-md-2 col-form-label">Tahun: </div>
+      <div class="col-md-2 p-1">
+        <select name="year" id="change-year-indicator" class="form-control form-control-sm">
+          <option disabled>Pilih Tahun</option>
+          @foreach($year as $yearData)
+          <option value="{{$yearData}}">{{$yearData}}</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
+  </center>
   <h5 class="text-center"> Klik pada masing masing logo untuk melihat nilai per indikator </h5>
   <div class="owl-carousel owl-theme">
     @foreach($dimensi as $dataDimensi)
@@ -296,7 +317,8 @@
       </div>
       <div class="col-md-6">
         <div class="d-flex justify-content-center">
-          <p class="p-2 text-primary">Nasional</p>
+          <p class="p-2" style="color:#0d6efd;">{{$provinsi->province_name}}</p>
+          <p class="p-2" style="color:#0dcaf0;">Nasional</p>
           <p class="p-2 text-danger">Proyeksi 2024</p>
         </div>
         <div id="chart-line-custom" style="margin-top:-50px;"></div>
@@ -306,7 +328,7 @@
 </div>
 </div>
 @endsection
-@push('custom-scripts');
+@push('custom-scripts')
 <script>
   $(document).ready(function() {
     let labelYear = '2018';
@@ -314,6 +336,7 @@
     let provinceNasional = '1001';
     let provinceSelected = "{{$provinsi->id}}";
     let year = "{{$year[0]}}";
+    let yearBar = "{{$year[0]}}";
 
     function drawTextAtIndex(scale, index, icon, text, value) {
       const offset = -5;
@@ -442,24 +465,56 @@
         }
       });
     };
-    const getTotalAreaNasional = (year, provinceId) => {
+    const getTotalAreaNasional = (provinceId) => {
       const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
       $.ajax({
-        url: urlTotalAreaNasional + '/' + year + '/province-id' + '/' + provinceId + '/total',
+        url: urlTotalAreaNasional + '/2018' + '/province-id' + '/' + provinceId + '/total',
         success: function(data) {
           if (data) {
-            $("#total-ipk-nasional").text(data.total);
+            $("#total-ipk-nasional-2018").text(data.total);
+          }
+        }
+      });
+      $.ajax({
+        url: urlTotalAreaNasional + '/2019' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-nasional-2019").text(data.total);
+          }
+        }
+      });
+      $.ajax({
+        url: urlTotalAreaNasional + '/2020' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-nasional-2020").text(data.total);
           }
         }
       });
     }
-    const getTotalAreaProvince = (year, provinceId) => {
+    const getTotalAreaProvince = (provinceId) => {
       const urlTotalAreaProvince = "{{url('/chart/area-nasional')}}";
       $.ajax({
-        url: urlTotalAreaProvince + '/' + year + '/province-id' + '/' + provinceId + '/total',
+        url: urlTotalAreaProvince + '/2018' + '/province-id' + '/' + provinceId + '/total',
         success: function(data) {
           if (data) {
-            $("#total-ipk-provinsi").text(data.total);
+            $("#total-ipk-provinsi-2018").text(data.total);
+          }
+        }
+      });
+      $.ajax({
+        url: urlTotalAreaProvince + '/2019' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-provinsi-2019").text(data.total);
+          }
+        }
+      });
+      $.ajax({
+        url: urlTotalAreaProvince + '/2020' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-provinsi-2020").text(data.total);
           }
         }
       });
@@ -475,21 +530,10 @@
           province_id: provinceId,
           dimension_id: dimensionId,
         },
-        success: function(data) {
-          if (data.length > 0) {
+        success: function(dataProvince) {
+          if (dataProvince.length > 0) {
             let text = '';
             let chartLine = '';
-            // $('#description-line').text(data[0].indicator_description);
-            // $('#subtitle-line').text('Indikator ' + data[0].indicator_code);
-            data.forEach(generateDescription);
-            data.forEach(generateChart);
-            document.getElementById("description").innerHTML = text;
-            document.getElementById("chart-line-custom").innerHTML = chartLine;
-            $('#indicator-min').text(data[0].min);
-            $('#indicator-nasional').text(data[0].indicator_value);
-            $('#indicator-proyeksi').text(data[0].indicator_target_value);
-            $('#indicator-max').text(data[0].max);
-            $('#line-chart').show();
 
             function generateDescription(item) {
               text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
@@ -509,13 +553,18 @@
               </li>`;
               chartLine += `<li class='entry'>
               <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-              <span class='top-label' id="indicator-nasional">${item.indicator_value}</span>
-              <span class='circle-black'></span>
+              <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+              <span class='circle-info'></span>
+              </li>`;
+              chartLine += `<li class='entry'>
+              <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+              <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+              <span class='circle-blue'></span>
               </li>`;
               chartLine += `<li class='entry'>
               <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
               <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-              <span class='circle-black'></span>
+              <span class='circle-red'></span>
               </li>`;
               chartLine += `<li class='entry'>
               <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
@@ -524,29 +573,151 @@
               <span class='circle-black'></span>
               </li></ul>`;
             }
+            $.ajax({
+              url: urlIndicatorProvince,
+              type: "get",
+              data: {
+                year,
+                province_id: '1001',
+                dimension_id: dimensionId,
+              }, 
+              success: function(dataNasional) {
+                dataNasional.forEach((n, j) => {
+                  const indexData = dataProvince.map(function(o) { return o.indicator_code; }).indexOf(n.indicator_code);
+                  if(indexData >= 0) {
+                    dataProvince[indexData].indicator_nasional = n.indicator_value;
+                  }
+                });
+                dataProvince.forEach(generateDescription);
+                dataProvince.forEach(generateChart);
+                document.getElementById("description").innerHTML = text;
+                document.getElementById("chart-line-custom").innerHTML = chartLine;
+                $('#line-chart').show();
+              }
+            });
           }
         }
       });
 
     }
     getDataAreaProvince('2018', provinceSelected);
-    getTotalAreaNasional('2018', provinceNasional);
-    getTotalAreaProvince('2018', provinceSelected);
-    $('#change-year-nasional').on('change', () => {
-      year = $(this).find(":selected").val();
+    getTotalAreaNasional( provinceNasional);
+    getTotalAreaProvince(provinceSelected);
+    $('#change-year-indicator').on('change', () => {
+      year = $('#change-year-indicator').find(":selected").val();
       $('#line-chart').hide();
       $('.dimension-action').removeClass('text-success');
-      console.log(year);
     });
 
     $('.dimension-action').on('click', function() {
       // change button
       let dimensionId = $(this).data('id');
       let dimensionName = 'Dimensi ' + $(this).data('name');
-      $('#title-line').text(dimensionName);
+      $('#title-line').text(dimensionName + ' ' + year);
       $('.dimension-action').removeClass('text-success');
       $(this).addClass('text-success');
       getDimensionIndicator(year, provinceSelected, dimensionId);
+    });
+
+    const getBarData = (yearBar, provinceId) => {
+      console.log(yearBar);
+      const urlIndicatorProvince = "{{url('/chart/dimension-province')}}";
+      $.ajax({
+        url: urlIndicatorProvince,
+        type: "get",
+        data: {
+          year: yearBar,
+          province_id: provinceId,
+        },
+        success: function (dataBar) {
+          $('#dimension-bar').remove();
+          $('#canvas-dimension').append('<canvas id="dimension-bar"><canvas>');
+          const resultData = dataBar;
+          const labelData = [];
+          const valueData = [];
+          const valueDataNasional = [];
+          const labelTargetData = [];
+          const valueTargetData = [];
+          const options = {
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: "Chart.js Bar Chart - Multi Axis"
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: true
+            },
+            scales: {
+              xAxes: [{
+                stacked: true
+              }],
+            }
+          }};
+          $.ajax({
+            url: urlIndicatorProvince,
+            type: "get",
+            data: {
+              year: yearBar,
+              province_id: provinceNasional,
+            },
+            success: function (dataBarNasional){
+              for (const i in resultData) {
+                
+                labelData.push(resultData[i].dimension_name);
+                valueData.push(resultData[i].dimension_value);
+                const indexData = dataBarNasional.map(function(o) { return o.dimension_name; }).indexOf(resultData[i].dimension_name);
+                if(indexData >= 0) {
+                  valueDataNasional.push(dataBarNasional[indexData].dimension_value);
+                }
+                valueDataNasional.push(resultData[i].dimension_value);
+                labelTargetData.push(resultData[i].dimension_name);
+                valueTargetData.push(resultData[i].dimension_target);
+              }
+              const dimensionBar = document.getElementById('dimension-bar');
+              // create bar
+              const dimensionChart = new Chart(dimensionBar, {
+                type: 'bar',
+                data: {
+                  labels: labelData,
+                  datasets: [
+                    {
+                      label: 'Proyeksi 2024',
+                      yAxisID: "y-axis-2",
+                      data: valueTargetData,
+                      type: 'line',
+                      backgroundColor: 'rgb(236 127 118)',
+                      borderColor: 'rgb(236 127 118)',
+                      fill: false
+                    },
+                    {
+                      label: 'Nilai Dimensi Nasional Tahun ' + yearBar,
+                      backgroundColor: '#0dcaf0',
+                      borderColor: '#0dcaf0;',
+                      data: valueDataNasional,
+                    },
+                    {
+                      label: 'Nilai Dimensi Provinsi {{$provinsi->province_name}} Tahun ' + yearBar,
+                      backgroundColor: '#0d6efd',
+                      borderColor: '#0d6efd;',
+                      data: valueData,
+                    },
+
+                  ]
+                },
+                options: options
+              });
+            },
+          })
+        }
+      });
+    };
+
+    getBarData(yearBar, provinceSelected);
+    $('#change-year-dimensi').on('change', () => {
+      let yearBarSelected = $('#change-year-dimensi').find(":selected").val();
+      getBarData(yearBarSelected, provinceSelected);
     });
   });
 </script>

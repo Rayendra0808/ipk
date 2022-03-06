@@ -18,12 +18,12 @@ class DimensionTargetValue extends Model
 
   public static function getDimensionProvinceTarget($param)
   {
-    if (!$param->input('year') && !$param->input('dimension_id')) return [];
+    if (!$param->input('year')) return [];
     $condition = [];
-    if ($year = $param->input('year')) $condition[] = ['year' => '2024'];
-    if ($dimensionId = $param->input('dimension_id')) $condition[] = ['dimension_id' => $dimensionId];
+    if ($year = $param->input('year')) $condition[] = ['year', '2024'];
+    if ($dimensionId = $param->input('dimension_id')) $condition[] = ['dimension_id', $dimensionId];
 
-    $data = DimensionTargetValue::with(['province', 'dimension'])->where([$condition])->orderBy('dimension_target_value', 'desc')->get();
+    $data = DimensionTargetValue::with(['province', 'dimension'])->where($condition)->orderBy('dimension_target_value', 'desc')->get();
     return $data;
   }
 }

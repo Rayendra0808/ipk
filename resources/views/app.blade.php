@@ -6,30 +6,38 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="">
-  <meta name="title" content="">
-  <meta name="author" content="">
-  <meta name="copyright" content="">
+  <meta name="description" content="Indeks Pembangunan Kebudayaan (IPK) disusun sebagai salah satu instrumen 
+  untuk memberikan gambaran kemajuan pembangunan kebudayaan yang dapat digunakan sebagai basis formulasi kebijakan 
+  bidang kebudayaan, serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan. Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan 
+  dan data yang berkaitan dengan pembangunan kebudayaan nasional.">
+  <meta name="title" content="Indeks Pembangunan Kebudayaan">
+  <meta name="author" content="Kemendikbud">
+  <meta name="copyright" content="{{date('Y')}}">
   <meta name="Classification" content="Business">
   <meta Content='Indonesia' Name='Geo.Placename' />
   <meta Content='Id' Name='Geo.Country' />
   <meta content='en' name='language' />
-  <meta name="og:title" content="" />
+  <meta name="og:title" content="Indeks Pembangunan Kebudayaan" />
   <meta name="og:type" content="Media" />
-  <meta name="og:url" content="" />
-  <meta name="og:image" content="" />
-  <meta name="og:site_name" content="" />
-  <meta name="og:description" content="" />
+  <meta name="og:url" content="{{url('/')}}" />
+  <meta name="og:image" content="{{asset('assets/img')}}/logo-dikbud.png" />
+  <meta name="og:site_name" content="Indeks Pembangunan Kebudayaan" />
+  <meta name="og:description" content="Indeks Pembangunan Kebudayaan (IPK) disusun sebagai salah satu instrumen 
+  untuk memberikan gambaran kemajuan pembangunan kebudayaan yang dapat digunakan sebagai basis formulasi kebijakan 
+  bidang kebudayaan, serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan. Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan 
+  dan data yang berkaitan dengan pembangunan kebudayaan nasional." />
   <meta property="twitter:card" content="">
-  <meta property="twitter:url" content="">
-  <meta property="twitter:title" content="">
-  <meta property="twitter:description" content="">
-  <meta property="twitter:image" content="">
-  <link rel="shortcut icon" href="" type="image/x-icon">
-  <link rel="icon" href="" type="image/x-icon">
+  <meta property="twitter:url" content="{{url('/')}}">
+  <meta property="twitter:title" content="Indeks Pembangunan Kebudayaan">
+  <meta property="twitter:description" content="Indeks Pembangunan Kebudayaan (IPK) disusun sebagai salah satu instrumen 
+  untuk memberikan gambaran kemajuan pembangunan kebudayaan yang dapat digunakan sebagai basis formulasi kebijakan 
+  bidang kebudayaan, serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan. Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan 
+  dan data yang berkaitan dengan pembangunan kebudayaan nasional.">
+  <meta property="twitter:image" content="{{asset('assets/img')}}/logo-dikbud.png">
+  <link rel="shortcut icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon">
 
-  <title></title>
-  <link rel="icon" href="" type="image/x-icon">
+  <title>Indeks Pembangunan Kebudayaan</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700">
   <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">

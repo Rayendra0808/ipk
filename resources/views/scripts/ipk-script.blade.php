@@ -48,9 +48,7 @@
     });
 
   });
-
   let labelYear = '2020';
-
   function drawTextAtIndex(scale, index, icon, text, value) {
     const offset = -5;
     const r = scale.drawingArea + offset;
@@ -77,7 +75,6 @@
   $(document).ready(function() {
     let initYear = '2020';
     let initProvince = '1001';
-    // logic to get new data
     const getDataAreaNasional = (year, provinceId) => {
       console.log(year);
       const urlAreaNasional = "{{url('/chart/area-nasional')}}";

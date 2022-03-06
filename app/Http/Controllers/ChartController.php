@@ -7,6 +7,7 @@ use App\Models\DimensionTotalValueProvince;
 use App\Models\DimensionTargetValue;
 use App\Traits\TransformTrait;
 use App\Models\Indicator;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
@@ -46,5 +47,10 @@ class ChartController extends Controller
     $data = Indicator::getIndicatorValues($request);
     $result = $this->indicatorValueToChartResponse($data);
     return response()->json($result, 200);
+  }
+
+  public function getProvince() {
+    $data = Province::getAll()->pluck('province_name', 'id');
+    return response()->json($data, 200);
   }
 }

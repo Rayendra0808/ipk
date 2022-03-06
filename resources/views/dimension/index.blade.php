@@ -95,7 +95,7 @@
     </div>
 </div>
 @endsection
-@push('custom-scripts');
+@push('custom-scripts')
 <script>
   const labelDataTarget = [];
   const valueLabelTarget = [];
@@ -149,8 +149,7 @@
           type: 'bar',
           data: {
             labels: labelData,
-            datasets: [
-              {
+            datasets: [{
                 label: 'Proyeksi 2024',
                 yAxisID: "y-axis-2",
                 data: valueTargetData,

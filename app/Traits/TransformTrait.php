@@ -41,6 +41,7 @@ trait TransformTrait
         'province_id'=>$value['province']['id'],
         'province_name'=>$value['province']['province_name'],
         'dimension_name'=>$value['dimension']['dimension_name'],
+        'dimension_icon'=>$value['dimension']['dimension_icon'],
         'dimension_value'=>$value['dimension_value'],
         'dimension_target'=>0,
         'year'=>$value['year'],

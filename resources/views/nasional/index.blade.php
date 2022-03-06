@@ -248,7 +248,9 @@
       </div>
       <div class="col-md-4 offset-md-2 align-self-center">
         <h4 class="text-primary">Nilai IPK Nasional</h4>
-        <h1 id="total-ipk-nasional"></h1>
+        <h6> Tahun 2018 : <span class="text-primary" id="total-ipk-nasional-2018"></span></h6>
+        <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-nasional-2019"></span></h6>
+        <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
       </div>
     </div>
 </div>
@@ -286,7 +288,7 @@
         <div class="col-md-6">
           <h3 id="title-line" class="mt-3"></h3>
           <div id="description">
-            
+
           </div>
         </div>
         <div class="col-md-6">
@@ -294,14 +296,14 @@
             <p class="p-2 text-primary">Nasional</p>
             <p class="p-2 text-danger">Proyeksi 2024</p>
           </div>
-          <div id="chart-line-custom"></div>
+          <div id="chart-line-custom" style="margin-top:-50px;"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 @endsection
-@push('custom-scripts');
+@push('custom-scripts')
 <script>
   $(document).ready(function() {
     let labelYear = '2018';
@@ -436,13 +438,29 @@
         }
       });
     };
-    const getTotalAreaNasional = (year, provinceId) => {
+    const getTotalAreaNasional = (provinceId) => {
       const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
       $.ajax({
-        url: urlTotalAreaNasional + '/' + year + '/province-id' + '/' + provinceId + '/total',
+        url: urlTotalAreaNasional + '/2018' + '/province-id' + '/' + provinceId + '/total',
         success: function(data) {
           if (data) {
-            $("#total-ipk-nasional").text(data.total);
+            $("#total-ipk-nasional-2018").text(data.total);
+          }
+        }
+      });
+      $.ajax({
+        url: urlTotalAreaNasional + '/2019' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-nasional-2019").text(data.total);
+          }
+        }
+      });
+      $.ajax({
+        url: urlTotalAreaNasional + '/2020' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-nasional-2020").text(data.total);
           }
         }
       });
@@ -462,44 +480,22 @@
           if (data.length > 0) {
             let text = '';
             let chartLine = '';
-            // $('#description-line').text(data[0].indicator_description);
-            // $('#subtitle-line').text('Indikator ' + data[0].indicator_code);
             data.forEach(generateDescription);
             data.forEach(generateChart);
             document.getElementById("description").innerHTML = text;
             document.getElementById("chart-line-custom").innerHTML = chartLine;
-            $('#indicator-min').text(data[0].min);
-            $('#indicator-nasional').text(data[0].indicator_value);
-            $('#indicator-proyeksi').text(data[0].indicator_target_value);
-            $('#indicator-max').text(data[0].max);
             $('#line-chart').show();
+
             function generateDescription(item) {
-              text += `<h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
-              text += `<p>${item.indicator_description}</p>`;
+              text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
+              if (item.indicator_description.length < 65) {
+                text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
+              } else {
+                text += `<p>${item.indicator_description}</p></div>`;
+              }
             }
+
             function generateChart(item, index) {
-            //   <li class='entry'>
-            //   <input checked='checked' class='radio' id='trigger1' name='trigger' type='radio'>
-            //   <span class='top-label'>Nilai Minimum</span>
-            //   <span class='bottom-label' id="indicator-min"></span>
-            //   <span class='circle-black'></span>
-            // </li>
-            // <li class='entry'>
-            //   <input class='radio' id='trigger2' name='trigger' type='radio'>
-            //   <span class='top-label' id="indicator-nasional"></span>
-            //   <span class='circle-blue'></span>
-            // </li>
-            // <li class='entry'>
-            //   <input class='radio' id='trigger3' name='trigger' type='radio'>
-            //   <span class='top-label' id="indicator-proyeksi"></span>
-            //   <span class='circle-red'></span>
-            // </li>
-            // <li class='entry'>
-            //   <input checked='checked' class='radio' id='trigger4' name='trigger' type='radio'>
-            //   <span class='top-label'>Nilai Maksimum</span>
-            //   <span class='bottom-label' id="indicator-max"></span>
-            //   <span class='circle-black'></span>
-            // </li>
               chartLine += `<ul id='timeline'><li class='entry'>
               <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
               <span class='top-label'>Nilai Minimum</span>
@@ -509,12 +505,12 @@
               chartLine += `<li class='entry'>
               <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
               <span class='top-label' id="indicator-nasional">${item.indicator_value}</span>
-              <span class='circle-black'></span>
+              <span class='circle-blue'></span>
               </li>`;
               chartLine += `<li class='entry'>
               <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
               <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-              <span class='circle-black'></span>
+              <span class='circle-red'></span>
               </li>`;
               chartLine += `<li class='entry'>
               <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
@@ -529,7 +525,7 @@
 
     }
     getDataAreaNasional('2018', initProvince);
-    getTotalAreaNasional('2018', initProvince);
+    getTotalAreaNasional(initProvince);
     $('#change-year-nasional').on('change', () => {
       year = $(this).find(":selected").val();
       $('#line-chart').hide();

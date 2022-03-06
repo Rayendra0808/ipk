@@ -19,11 +19,25 @@ class DimensionValue extends Model
 
   public static function getDimensionProvince($param)
   {
-    if (!$param->input('year') || !$param->input('dimension_id')) return [];
-    $data = DimensionValue::with(['province', 'dimension'])
-      ->where('dimension_values.year', $param->input('year'))
-      ->where('dimension_values.dimension_id', $param->input('dimension_id'))
-      ->orderBy('dimension_values.dimension_value', 'desc')
+    if (!$param->input('year')) return [];
+    $condition = [];
+    $orderBy = ['dimension_values.dimension_value', 'desc'];
+    if ($year = $param->input('year')) $condition[]=['year', $year];
+    if ($dimensionId = $param->input('dimension_id')) $condition[]=['dimension_id', $dimensionId];
+    if ($provinceId = $param->input('province_id')) {
+      $condition[]=['province_id', $provinceId];
+      if($provinceId!='1001'){
+        $orderBy = ['dimension_values.dimension_id', 'asc'];
+      }
+    }
+
+    $data = DimensionValue::with(['province'=>function($q) use ($param) {
+      if($provinceId = $param->input('province_id')) $q->where('provinces.id', $provinceId);
+    }, 'dimension'])
+      // ->where('dimension_values.year', $param->input('year'))
+      // ->where('dimension_values.dimension_id', $param->input('dimension_id'))
+      ->where($condition)
+      ->orderBy($orderBy[0], $orderBy[1])
       ->get();
     return $data;
   }
