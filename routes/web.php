@@ -22,3 +22,4 @@ Route::get('/chart/area-nasional/{year}/province-id/{province_id}/total', 'Chart
 Route::get('/chart/dimension-province', 'ChartController@getDimensionProvince')->name('chart.getDimensionProvince');
 Route::get('/chart/dimension-province-target', 'ChartController@getDimensionProvinceTarget')->name('chart.getDimensionProvinceTarget');
 Route::get('/chart/indicator-province', 'ChartController@getIndicatorProvince')->name('chart.getIndicatorProvince');
+Route::get('/chart/province', 'ChartController@getProvince')->name('chart.getProvince');
