@@ -44,7 +44,7 @@ trait TransformTrait
         'dimension_icon'=>$value['dimension']['dimension_icon'],
         'dimension_value'=>$value['dimension_value'],
         'dimension_target'=>0,
-        'rank'=>$value['rank']['sort'] .'/34',
+        'rank'=>$value['rank'] != null ? $value['rank']['sort'] .'/34' : '0/34',
         'year'=>$value['year'],
       );
       foreach ($dataTarget as $keyTarget => $valueTarget) {
