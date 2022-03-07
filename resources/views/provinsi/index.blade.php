@@ -98,6 +98,27 @@
     display: block;
   }
 
+  .top-label-min {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: left;
+    position: absolute;
+    top: -60px;
+    display: block;
+    left: -8px;
+  }
+
+
+  .top-label-max {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: center;
+    position: absolute;
+    top: -60px;
+    display: block;
+    right: -8px;
+  }
+
   .bottom-label {
     width: 100%;
     padding-bottom: 30px;
@@ -105,6 +126,26 @@
     position: absolute;
     bottom: -30px;
     display: block;
+  }
+
+  .bottom-label-min {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: center;
+    position: absolute;
+    bottom: -30px;
+    display: block;
+    left: -50%;
+  }
+
+  .bottom-label-max {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: center;
+    position: absolute;
+    bottom: -30px;
+    display: block;
+    left: 50%;
   }
 
   #indicator-nasional {
@@ -119,7 +160,7 @@
     color: #f73e4f;
   }
 
-  .circle-black {
+  .circle-black-min {
     width: 10px;
     height: 10px;
     margin-left: -5px;
@@ -127,8 +168,19 @@
     border: 5px solid black;
     border-radius: 50%;
     position: absolute;
-    top: -14px;
-    left: 50%;
+    top: -10px;
+    left: 0%;
+  }
+  .circle-black-max {
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    background: #3f9cca;
+    border: 5px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: 100%;
   }
 
   .circle-blue {
@@ -140,7 +192,7 @@
     color: #0dcaf0;
     border-radius: 50%;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 50%;
   }
 
@@ -153,7 +205,7 @@
     border-radius: 50%;
     color: #f73e4f;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 50%;
   }
 
@@ -166,7 +218,7 @@
     border-radius: 50%;
     color: #0d6efd;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 50%;
   }
 
@@ -581,30 +633,117 @@
               function generateChart(item, index) {
                 chartLine += `<ul id='timeline'><li class='entry'>
                 <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label'>Nilai Minimum</span>
-                <span class='bottom-label' id="indicator-min">${item.min}</span>
-                <span class='circle-black'></span>
+                <span class='top-label-min'>Nilai Minimum</span>
+                <span class='bottom-label-min' id="indicator-min">${item.min}</span>
+                <span class='circle-black-min'></span>
                 </li>`;
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                <span class='circle-info'></span>
-                </li>`;
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                <span class='circle-blue'></span>
-                </li>`;
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                <span class='circle-red'></span>
-                </li>`;
+                if (item.indicator_value >= item.indicator_nasional && item.indicator_nasional >= item.indicator_target_value) {
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+                  <span class='circle-red'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+                  <span class='circle-blue'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+                  <span class='circle-info'></span>
+                  </li>`;
+                }
+                if (item.indicator_value > item.indicator_target_value && item.indicator_target_value > item.indicator_nasional) {
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+                  <span class='circle-blue'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+                  <span class='circle-red'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+                  <span class='circle-info'></span>
+                  </li>`;
+                }
+                if (item.indicator_nasional > item.indicator_target_value && item.indicator_target_value > item.indicator_value) {
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+                  <span class='circle-info'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+                  <span class='circle-red'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+                  <span class='circle-blue'></span>
+                  </li>`;
+                }
+                if (item.indicator_nasional > item.indicator_value && item.indicator_value > item.indicator_target_value) {
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+                  <span class='circle-red'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+                  <span class='circle-info'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+                  <span class='circle-blue'></span>
+                  </li>`;
+                }
+                if (item.indicator_target_value > item.indicator_nasional && item.indicator_nasional > item.indicator_value) {
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+                  <span class='circle-info'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+                  <span class='circle-blue'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+                  <span class='circle-red'></span>
+                  </li>`;
+                }
+                if (item.indicator_target_value > item.indicator_value && item.indicator_value > item.indicator_nasional) {
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+                  <span class='circle-blue'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+                  <span class='circle-info'></span>
+                  </li>`;
+                  chartLine += `<li class='entry'>
+                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+                  <span class='circle-red'></span>
+                  </li>`;
+                }
                 chartLine += `<li class='entry'>
                 <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label'>Nilai Maksimum</span>
-                <span class='bottom-label' id="indicator-max">${item.max}</span>
-                <span class='circle-black'></span>
+                <span class='top-label-max'>Nilai Maksimum</span>
+                <span class='bottom-label-max' id="indicator-max">${item.max}</span>
+                <span class='circle-black-max'></span>
                 </li></ul>`;
               }
               $.ajax({
