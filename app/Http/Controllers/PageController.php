@@ -39,7 +39,8 @@ class PageController extends Controller
     $dimensi = Dimension::getAll();
     $year = Dimension::getYear();
     $provinsi = Province::find($provinceId);
+    $provinsiData = Province::getAll();
  
-    return view('provinsi.index', compact('dimensi', 'year', 'provinsi'));
+    return view('provinsi.index', compact('dimensi', 'year', 'provinsi', 'provinsiData'));
   }
 }

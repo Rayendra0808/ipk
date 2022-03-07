@@ -82,6 +82,9 @@
   <h3 class="text-center text-primary mt-5">Perkembangan Nilai Dimensi</h3>
   <h4 class="text-center">Pilih salah satu tahun data:</h3>
     <div class="d-flex justify-content-center">
+      @php
+        sort($year);
+      @endphp
       @foreach($year as $yearData)
       <button id="btn-{{$yearData}}" class="btn btn-default btn-year btn-sm fs-4 text-primary border m-3" data-year="{{$yearData}}">
         {{$yearData}}
@@ -117,30 +120,17 @@
         const valueData = [];
         const labelTargetData = [];
         const valueTargetData = [];
-        const options = {
-          options: {
-            responsive: true,
-            title: {
-              display: true,
-              text: "Chart.js Bar Chart - Multi Axis"
-            },
-            tooltips: {
-              mode: 'index',
-              intersect: true
-            },
-            scales: {
-              xAxes: [{
-                stacked: true
-              }],
-            }
-          }
-        };
+        const backgroundColor = [];
+        const borderColor = [];
+        const options = {};
 
         for (const i in resultData) {
           labelData.push(resultData[i].province_name);
           valueData.push(resultData[i].dimension_value);
           labelTargetData.push(resultData[i].province_name);
           valueTargetData.push(resultData[i].dimension_target);
+          backgroundColor.push('rgb(65 70 75)');
+          borderColor.push('rgb(65 70 75)');
         }
         const dimensionBar = document.getElementById('dimension-bar');
 
@@ -151,7 +141,6 @@
             labels: labelData,
             datasets: [{
                 label: 'Proyeksi 2024',
-                yAxisID: "y-axis-2",
                 data: valueTargetData,
                 type: 'line',
                 backgroundColor: 'rgb(236 127 118)',
@@ -160,21 +149,35 @@
               },
               {
                 label: 'Perkembangan Nilai Dimensi Tahun ' + year,
-                backgroundColor: 'rgb(65 70 75)',
-                borderColor: 'rgb(65 70 75);',
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
                 data: valueData,
               },
 
             ]
           },
-          options: options
+          options: options,
         });
+        const indexData = dimensionChart.config._config.data.labels.map(function(o) {
+                    return o;
+                  }).indexOf('NASIONAL');
+        if (indexData >= 0) {
+          // dimensionChart.config._config.data.datasets[1].bars[indexData].fillColor = 'green';
+          dimensionChart.config._config.data.datasets[1].backgroundColor[indexData] = ['red'];
+          dimensionChart.config._config.data.datasets[1].borderColor[indexData] = ['red'];
+          dimensionChart.config._config.options.scales.x.ticks.maxRotation = 180;
+          dimensionChart.config._config.options.scales.x.ticks.minRotation = 90;
+          dimensionChart.config._config.options.scales.x.grid.display = false;
+          dimensionChart.config._config.options.scales.y.grid.display = false;
+          console.log(dimensionChart.config._config);
+          dimensionChart.update();
+        }
       },
       error: function(xhr) {}
     });
   }
   $(document).ready(function() {
-    $("#btn-" + "{{$year[0]}}").click();
+    $("#btn-" + "{{$year[count($year)-1]}}").click();
   });
   $('.btn-year').on('click', function() {
     // change button

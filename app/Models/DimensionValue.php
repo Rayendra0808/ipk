@@ -13,6 +13,10 @@ class DimensionValue extends Model
     return $this->belongsTo(Province::class);
   }
 
+  public function rank(){
+    return $this->hasOne(DimensionRank::class, 'id', 'id');
+  }
+
   public function dimension(){
     return $this->belongsTo(Dimension::class);
   }
@@ -31,7 +35,7 @@ class DimensionValue extends Model
       }
     }
 
-    $data = DimensionValue::with(['province'=>function($q) use ($param) {
+    $data = DimensionValue::with(['rank', 'province'=>function($q) use ($param) {
       if($provinceId = $param->input('province_id')) $q->where('provinces.id', $provinceId);
     }, 'dimension'])
       // ->where('dimension_values.year', $param->input('year'))

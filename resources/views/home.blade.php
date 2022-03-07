@@ -390,7 +390,7 @@
 
     const onRegionClick = function(element, code, region, tahun) {
       // Go to prov page
-      // window.location.href = ...;
+      window.location = "{{url('/provinsi')}}"+'/'+code; 
     };
 
     const onLabelShow = function(event, label, code, tahun) {
