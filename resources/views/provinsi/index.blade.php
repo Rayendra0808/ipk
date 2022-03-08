@@ -847,6 +847,7 @@
                     return o.dimension_name;
                   }).indexOf(resultData[i].dimension_name);
                   if (indexData >= 0) {
+                    console.log(dataBarNasional[indexData]);
                     let color = 'gray';
                     if (dataBarNasional[indexData].dimension_value > resultData[i].dimension_value) {
                       color = 'red';
@@ -857,7 +858,6 @@
                     options.scales.x.ticks.color.push(color);
                     valueDataNasional.push(dataBarNasional[indexData].dimension_value);
                   }
-                  valueDataNasional.push(resultData[i].dimension_value);
                   labelTargetData.push(resultData[i].dimension_name);
                   valueTargetData.push(resultData[i].dimension_target);
                 }
@@ -894,8 +894,6 @@
                 });
                 dimensionChart.config._config.options.scales.x.grid.display = false;
                 dimensionChart.config._config.options.scales.y.grid.display = false;
-                console.log(dimensionChart.config._config.options);
-
                 dimensionChart.update();
               },
             })
