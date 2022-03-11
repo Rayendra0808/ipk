@@ -128,6 +128,11 @@
         <div class="tab-pane fade" id="home-jqvmap-tabs-2019" role="tabpanel" style="width:100%;height:400px;"></div>
         <div class="tab-pane fade show active" id="home-jqvmap-tabs-2020" role="tabpanel" style="width:100%;height:400px;"></div>
       </div>
+      <div class="home-jqvmap-legend text-center fw-bolder mb-5" style="height: 28px;background: linear-gradient(to right, red 0%, white 50%, green 100%);">
+        <span class="float-start text-white ms-2">Di Bawah Nasional</span>
+        <span>Nasional</span>
+        <span class="float-end text-white me-2">Di Atas Nasional</span>
+      </div>
     </div>
     <div class="container-fluid">
       <h2 class="text-center">Pilih Provinsi</h2>
