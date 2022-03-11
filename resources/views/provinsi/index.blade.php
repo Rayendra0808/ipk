@@ -288,7 +288,7 @@
 <div class="row" id="block-content">
 </div>
 <div class="container mb-5 mt-5">
-  <h4 class="text-center">Pilih provinsi lainnya</h3>
+  <h4 class="text-center">Pilih provinsi lainnya</h4>
     <center>
       <div class="mb-3 row justify-content-center">
         <div for="staticEmail" class="col-md-2 col-form-label">Provinsi: </div>
@@ -362,6 +362,7 @@
     </div>
   </center>
   <h5 class="text-center"> Klik pada masing masing logo untuk melihat nilai per indikator </h5>
+  <center>
   <div class="owl-carousel owl-theme">
     @foreach($dimensi as $dataDimensi)
     <div class="item">
@@ -374,6 +375,7 @@
     </div>
     @endforeach
   </div>
+  </center>
 </div>
 <div id="line-chart">
   <div class="container border mb-5 mt-5">
@@ -870,21 +872,24 @@
                     datasets: [{
                         label: 'Proyeksi 2024',
                         data: valueTargetData,
-                        type: 'line',
+                        type: 'scatter',
                         backgroundColor: 'rgb(236 127 118)',
                         borderColor: 'rgb(236 127 118)',
                         fill: false,
+                        pointRadius: 5,
+                        pointHoverRadius: 5
                       },
                       {
                         label: 'Nilai Dimensi Nasional Tahun ' + yearBar,
-                        backgroundColor: '#0dcaf0',
-                        borderColor: '#0dcaf0;',
+                        backgroundColor: '#ffffff',
+                        borderColor: '#6ea8e2',
+                        borderWidth: 2,
                         data: valueDataNasional,
                       },
                       {
                         label: 'Nilai Dimensi Provinsi {{$provinsi->province_name}} Tahun ' + yearBar,
-                        backgroundColor: '#0d6efd',
-                        borderColor: '#0d6efd;',
+                        backgroundColor: '#4a66ac',
+                        borderColor: '#4a66ac;',
                         data: valueData,
                       },
 

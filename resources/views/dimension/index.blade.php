@@ -11,20 +11,30 @@
   th {
     white-space: nowrap !important;
   }
+
+  .owl-carousel .nav-btn {
+    height: 47px;
+    position: absolute;
+    width: 26px;
+    cursor: pointer;
+    top: 100px !important;
+  }
 </style>
 <div class="container pt-5 mt-5">
-  <div class="owl-carousel owl-theme">
-    @foreach($dimensi as $dataDimensi)
-    <div class="item">
-      <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-        <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
-          <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-          <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-        </a>
-      </p>
+  <center>
+    <div class="owl-carousel owl-theme">
+      @foreach($dimensi as $dataDimensi)
+      <div class="item">
+        <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+          <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
+            <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+            <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+          </a>
+        </p>
+      </div>
+      @endforeach
     </div>
-    @endforeach
-  </div>
+  </center>
 </div>
 <div style="background: url({{asset('assets/img/bawah.png')}});
     background-position-y: center; padding:60px;">
@@ -83,7 +93,7 @@
   <h4 class="text-center">Pilih salah satu tahun data:</h3>
     <div class="d-flex justify-content-center">
       @php
-        sort($year);
+      sort($year);
       @endphp
       @foreach($year as $yearData)
       <button id="btn-{{$yearData}}" class="btn btn-default btn-year btn-sm fs-4 text-primary border m-3" data-year="{{$yearData}}">
@@ -139,19 +149,22 @@
           type: 'bar',
           data: {
             labels: labelData,
-            datasets: [{
-                label: 'Proyeksi 2024',
-                data: valueTargetData,
-                type: 'line',
-                backgroundColor: 'rgb(236 127 118)',
-                borderColor: 'rgb(236 127 118)',
-                fill: false
-              },
+            datasets: [
               {
                 label: 'Perkembangan Nilai Dimensi Tahun ' + year,
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
                 data: valueData,
+              },
+              {
+                label: 'Proyeksi 2024',
+                data: valueTargetData,
+                type: 'scatter',
+                backgroundColor: 'rgb(236 127 118)',
+                borderColor: 'rgb(236 127 118)',
+                fill: false,
+                pointRadius: 5,
+                pointHoverRadius: 5
               },
 
             ]
@@ -159,8 +172,8 @@
           options: options,
         });
         const indexData = dimensionChart.config._config.data.labels.map(function(o) {
-                    return o;
-                  }).indexOf('NASIONAL');
+          return o;
+        }).indexOf('NASIONAL');
         if (indexData >= 0) {
           // dimensionChart.config._config.data.datasets[1].bars[indexData].fillColor = 'green';
           dimensionChart.config._config.data.datasets[1].backgroundColor[indexData] = ['red'];

@@ -334,8 +334,7 @@
         </select>
       </div>
     </div>
-  </center>
-  <div class="owl-carousel owl-theme">
+    <div class="owl-carousel owl-theme">
     @foreach($dimensi as $dataDimensi)
     <div class="item">
       <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
@@ -347,6 +346,7 @@
     </div>
     @endforeach
   </div>
+  </center>
   <div id="line-chart">
     <div class="container border mb-5 mt-5">
       <div class="row">

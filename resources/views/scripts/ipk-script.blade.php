@@ -1,15 +1,16 @@
 <script>
   $('.owl-carousel').owlCarousel({
     center: false,
-    loop: true,
-    margin: 40,
-    nav: false,
+    loop: false,
+    margin: 30,
+    nav: true,
     dots: false,
-    items: 2,
+    items: 6,
     autoWidth: true,
     autoplay: false,
     autoplayTimeout: 2000,
     autoplayHoverPause: true,
+    navText : ["<div class='nav-btn prev-slide'></div>","<div class='nav-btn next-slide'></div>"],
     responsive: {
       0: {
         items: 2
@@ -18,7 +19,7 @@
         items: 3
       },
       1000: {
-        items: 7
+        items: 6
       }
     }
   })

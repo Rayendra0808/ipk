@@ -23,7 +23,7 @@
   <div class="container">
 
     <div class="intro-img">
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/ctTYfgDvngg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/ctTYfgDvngg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="intro-info">
@@ -51,19 +51,21 @@
       Klik pada masing-masing Logo Dimensi untuk penjelasan lebih lanjut
     </p>
     <div class="container pt-3">
-      <div class="owl-carousel owl-theme">
-        @foreach($dimensi as $dataDimensi)
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
-              <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-              <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-            </a>
-          </p>
+      <center>
+        <div class="owl-carousel owl-theme">
+          @foreach($dimensi as $dataDimensi)
+          <div class="item">
+            <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+              <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
+                <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+                <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+              </a>
+            </p>
+          </div>
+          @endforeach
         </div>
-        @endforeach
-      </div>
-      <hr>
+        <hr>
+      </center>
     </div>
   </div>
 </section>
@@ -128,14 +130,23 @@
       </div>
     </div>
     <div class="container-fluid">
-      <h2 class="text-center">Pokok Pikiran Provinsi</h2>
-      <div class="row d-flex justify-content-between">
-        @foreach($province as $provinceData)
-        <div class="col-md-3 p-3 border border-dark text-center m-3" style="max-width: 200px !important;">
-          <a href="{{route('provinsi.index', $provinceData->id)}}" id="province-list" class="order-{{$provinceData->id}}" data-province-id="{{$provinceData->id}}">{{$provinceData->province_name}}</a>
-        </div>
-        @endforeach
-      </div>
+      <h2 class="text-center">Pilih Provinsi</h2>
+      <center>
+        <form class="row g-3 justify-content-center">
+          <div class="col-auto">
+            <label for="inputPassword2" class="visually-hidden"></label>
+            <select name="provinsi" id="change-province" class="form-control form-control-sm">
+                <option disabled>Pilih Provinsi</option>
+                @foreach($province as $provinsiValue)
+                <option value="{{$provinsiValue->id}}">{{$provinsiValue->province_name}}</option>
+                @endforeach
+              </select>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-sm mb-3" onclick="changeProvince()">Submit</button>
+          </div>
+        </form>
+      </center>
     </div>
   </div>
   </div>
@@ -385,12 +396,11 @@
 
       return chromaGradientsLow(percent / 100).hex();
     };
-    const onLoad = function(event, map, tahun) {
-    };
+    const onLoad = function(event, map, tahun) {};
 
     const onRegionClick = function(element, code, region, tahun) {
       // Go to prov page
-      window.location = "{{url('/provinsi')}}"+'/'+code; 
+      window.location = "{{url('/provinsi')}}" + '/' + code;
     };
 
     const onLabelShow = function(event, label, code, tahun) {
@@ -474,6 +484,10 @@
       window.dispatchEvent(new Event('resize'));
     })
   });
+  function changeProvince() {
+    const provinceChoose = $('#change-province').val();
+    window.location = "{{url('/provinsi')}}" + '/' + provinceChoose;
+  }
 </script>
 @endpush
 @endsection
