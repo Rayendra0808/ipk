@@ -291,6 +291,11 @@
 </div>
 <div class="container mb-5 mt-5">
   <h4 class="text-center">Pilih provinsi lainnya</h4>
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-primary" style="background: #6f42c1;
+    border-color: #6f42c1;" type="button" onclick="print();"><i class="fa fa-print"></i> Cetak Halaman</button>
+  </div>
+
   <center>
     <div class="mb-3 row justify-content-center">
       <div for="staticEmail" class="col-md-2 col-form-label">Provinsi: </div>
@@ -637,6 +642,7 @@
               });
               let description = '';
               $('#line-chart').show();
+
               function generateDescription(item, index) {
                 description += `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
            <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
