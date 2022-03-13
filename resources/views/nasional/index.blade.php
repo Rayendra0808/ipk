@@ -589,7 +589,7 @@
                     offset: -60,
                     align: 'top',
                     anchor: 'end',
-                    formatter: (val) => (`                Nilai\n                Minimum\n                      ${nMin}`),
+                    formatter: (val) => (`                    Nilai\n                Minimum\n                      ${nMin}`),
                     labels: {
                       value: {
                         color: 'black',
