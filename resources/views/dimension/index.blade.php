@@ -107,6 +107,11 @@
       </div>
     </div>
 </div>
+<div class="d-flex flex-row-reverse">
+  <p style="font-size:12px;margin-right:25px">
+    * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+  </p>
+</div>
 @endsection
 @push('custom-scripts')
 <script>
@@ -139,43 +144,87 @@
           valueData.push(resultData[i].dimension_value);
           labelTargetData.push(resultData[i].province_name);
           valueTargetData.push(resultData[i].dimension_target);
-          backgroundColor.push('rgb(65 70 75)');
-          borderColor.push('rgb(65 70 75)');
+          backgroundColor.push('#212529');
+          borderColor.push('#212529');
         }
-        const dimensionBar = document.getElementById('dimension-bar');
+        const dimensionBar = document.getElementById('dimension-bar').getContext('2d');;
 
         // create bar
         const dimensionChart = new Chart(dimensionBar, {
           type: 'bar',
+          plugins: [ChartDataLabels],
           data: {
             labels: labelData,
-            datasets: [
-              {
-                label: 'Perkembangan Nilai Dimensi Tahun ' + year,
-                backgroundColor: backgroundColor,
-                borderColor: borderColor,
-                data: valueData,
-              },
-              {
+            datasets: [{
                 label: 'Proyeksi 2024',
                 data: valueTargetData,
-                type: 'scatter',
+                type: 'line',
                 backgroundColor: 'rgb(236 127 118)',
                 borderColor: 'rgb(236 127 118)',
                 fill: false,
                 pointRadius: 5,
-                pointHoverRadius: 5
+                pointHoverRadius: 5,
+                showLine: false,
+                datalabels: {
+                  align: 'top',
+                  anchor: 'end',
+                  formatter: (val) => (`${val}`),
+                  labels: {
+                    value: {
+                      color: 'black',
+                      font: {
+                        size: 12,
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                type: 'bar',
+                label: 'Perkembangan Nilai Dimensi Tahun ' + year,
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
+                barPercentage: 0.8,
+                padding: 10,
+                data: valueData,
+                datalabels: {
+                  rotation: -90,
+                  align: 'top',
+                  anchor: 'end',
+                  offset: -40,
+                  formatter: (val) => (`${val}`),
+                  labels: {
+                    value: {
+                      color: 'white',
+                      font: {
+                        size: 12,
+                      }
+                    }
+                  }
+                }
               },
 
             ]
           },
-          options: options,
+          options: {
+            tooltips: {
+              enabled: true
+            },
+            hover: {
+              animationDuration: 1
+            },
+            animation: {
+              duration: 1000,
+            },
+            plugins: {
+              datalabels: {}
+            }
+          },
         });
         const indexData = dimensionChart.config._config.data.labels.map(function(o) {
           return o;
         }).indexOf('NASIONAL');
         if (indexData >= 0) {
-          // dimensionChart.config._config.data.datasets[1].bars[indexData].fillColor = 'green';
           dimensionChart.config._config.data.datasets[1].backgroundColor[indexData] = ['red'];
           dimensionChart.config._config.data.datasets[1].borderColor[indexData] = ['red'];
           dimensionChart.config._config.options.scales.x.ticks.maxRotation = 180;

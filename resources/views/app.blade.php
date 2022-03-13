@@ -88,7 +88,7 @@
             <div class="col-lg-4 col-md-6 footer-links">
               <h4>Sekretariat Direktorat Jenderal</h4>
               <h4>Direktorat Jenderal Kebudayaan</h4>
-              <h4>Kementrian Pendidikan dan Kebudayaan</h4>
+              <h4>Kementrian Pendidikan, Kebudayaan, Riset dan Teknologi</h4>
             </div>
             <div class="col-lg-4 col-md-6 footer-contact">
               <h4>Ditjen Kebudayaan</h4>
@@ -125,6 +125,7 @@
   <script src="{{asset('assets/lib/wow/wow.js')}}"></script>
   <script src="{{asset('assets/lib/aos/aos.js')}}"></script>
   <script src="{{asset('assets/lib/chart/chart.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
   @include('scripts.ipk-script')
   @stack('custom-scripts')
 </body>

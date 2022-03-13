@@ -167,6 +167,7 @@
     top: -10px;
     left: 0%;
   }
+
   .circle-black-max {
     width: 10px;
     height: 10px;
@@ -335,21 +336,24 @@
       </div>
     </div>
     <div class="owl-carousel owl-theme">
-    @foreach($dimensi as $dataDimensi)
-    <div class="item">
-      <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-        <span class="dimension-action" style="cursor:pointer;" data-slug="{{$dataDimensi['dimension_slug']}}" data-id="{{$dataDimensi['id']}}" data-name="{{$dataDimensi['dimension_name']}}">
-          <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-          <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-        </span>
-      </p>
+      @foreach($dimensi as $dataDimensi)
+      <div class="item">
+        <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+          <span class="dimension-action" style="cursor:pointer;" data-slug="{{$dataDimensi['dimension_slug']}}" data-id="{{$dataDimensi['id']}}" data-name="{{$dataDimensi['dimension_name']}}">
+            <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+            <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+          </span>
+        </p>
+      </div>
+      @endforeach
     </div>
-    @endforeach
-  </div>
   </center>
   <div id="line-chart">
     <div class="container border mb-5 mt-5">
-      <div class="row">
+      <div class="row p-1" id="line-chart-new">
+
+      </div>
+      <!-- <div class="row">
         <div class="col-md-6">
           <h3 id="title-line" class="mt-3"></h3>
           <div id="description">
@@ -363,8 +367,13 @@
           </div>
           <div id="chart-line-custom" style="margin-top:-50px;"></div>
         </div>
-      </div>
+      </div> -->
     </div>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <p style="font-size:12px;margin-right:25px">
+      * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+    </p>
   </div>
 </div>
 @endsection
@@ -439,6 +448,9 @@
             },
             options: {
               responsive: true,
+              interaction: {
+                mode: 'index'
+              },
               elements: {
                 line: {
                   borderWidth: 3
@@ -537,72 +549,246 @@
         url: urlIndicatorProvince,
         type: "get",
         data: {
-          year,
-          province_id: provinceId,
-          dimension_id: dimensionId,
+          year, province_id: provinceId, dimension_id: dimensionId
         },
-        success: function(data) {
-          if (data.length > 0) {
-            let text = '';
-            let chartLine = '';
-            data.forEach(generateDescription);
-            data.forEach(generateChart);
-            document.getElementById("description").innerHTML = text;
-            document.getElementById("chart-line-custom").innerHTML = chartLine;
-            $('#line-chart').show();
+        success: function (data) {
 
-            function generateDescription(item) {
-              text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
-              if (item.indicator_description.length < 65) {
-                text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
-              } else {
-                text += `<p>${item.indicator_description}</p></div>`;
-              }
-            }
+         $('#line-chart').show();
+         let description = '';
+         data.forEach(generateDescription);
+         document.getElementById("line-chart-new").innerHTML = description;
+         function generateDescription(item, index) {
+           description +=`<div class="col-md-6 pt-5"><p>${item.indicator_description}</p></div>
+           <div class="col-md-6 pt-5"><canvas class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
+         }
+         function generateChart(item, index) {
+          const nMin = item.min;
+          const nMax = item.max;
 
-            function generateChart(item, index) {
-              chartLine += `<ul id='timeline'><li class='entry'>
-              <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label-min'>Nilai Minimum</span>
-                <span class='bottom-label-min' id="indicator-min">${item.min}</span>
-                <span class='circle-black-min'></span>
-              </li>`;
-              if (item.indicator_value <= item.indicator_target_value) {
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-nasional">${item.indicator_value}</span>
-                <span class='circle-blue'></span>
-                </li>`;
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                <span class='circle-red'></span>
-                </li>`;
-              }
-              if (item.indicator_value > item.indicator_target_value) {
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                <span class='circle-red'></span>
-                </li>`;
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                <span class='top-label' id="indicator-nasional">${item.indicator_value}</span>
-                <span class='circle-blue'></span>
-                </li>`;
-              }
-              chartLine += `<li class='entry'>
-              <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label-max'>Nilai Maksimum</span>
-                <span class='bottom-label-max' id="indicator-max">${item.max}</span>
-                <span class='circle-black-max'></span>
-              </li></ul>`;
-            }
-          }
+          const indicatorCtx = $("body").find('#chart-indicator-' + index);
+          // const indicatorCtx = document.getElementById('chart-indicator-0');
+          const indicatorLine = new Chart(indicatorCtx, {
+            type: 'line',
+            plugins: [ChartDataLabels],
+            data: {
+              labels: [''],
+              images: [],
+              datasets: [
+                // {
+                //   label: item.min,
+                //   data: [item.min, item.indicator_target_value, item.indicator_value, item.max],
+                // },
+                {
+                  // type: 'line',
+                  label: 'Nilai Minimum',
+                  data: [item.min],
+                  backgroundColor: 'black',
+                  borderColor: 'black',
+                  datalabels: {
+                    clip: true,
+                    offset: -60,
+                    align: 'top',
+                    anchor: 'end',
+                    formatter: (val) => (`                Nilai\n                Minimum\n                      ${nMin}`),
+                    labels: {
+                      value: {
+                        color: 'black',
+                        font: {
+                          size: 12,
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  // type: 'line',
+                  label: 'Proyeksi 2024',
+                  pointRadius: 5,
+                  pointHoverRadius: 5,
+                  backgroundColor: 'rgb(236 127 118)',
+                  borderColor: 'rgb(236 127 118)',
+                  data: [item.indicator_target_value],
+                  datalabels: {
+                    offset: -30,
+                    align: 'top',
+                    anchor: 'end',
+                    formatter: (val) => (`${val}`),
+                    labels: {
+                      value: {
+                        color: 'rgb(236 127 118)',
+                        font: {
+                          size: 12,
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  // type: 'line',
+                  label: 'Nasional',
+                  backgroundColor: '#ffffff',
+                  pointRadius: 5,
+                  pointHoverRadius: 5,
+                  borderColor: '#6ea8e2',
+                  data: [item.indicator_value],
+                  datalabels: {
+                    offset: -30,
+                    align: 'top',
+                    anchor: 'end',
+                    formatter: (val) => (`${val}`),
+                    labels: {
+                      value: {
+                        color: '#6ea8e2',
+                        font: {
+                          size: 12,
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  // type: 'line',
+                  label: 'Nilai Maksimum',
+                  backgroundColor: 'black',
+                  pointRadius: 5,
+                  pointHoverRadius: 5,
+                  borderColor: 'black',
+                  data: [item.max],
+                  datalabels: {
+                    offset: -60,
+                    align: 'top',
+                    anchor: 'end',
+                    formatter: (val) => ('     Nilai\nMaksimum              \n   ' + '    '+ nMax),
+                    labels: {
+                      value: {
+                        color: 'black',
+                        font: {
+                          size: 12,
+                        }
+                      }
+                    }
+                  }
+                },
+              ]
+            },
+            options: {
+              plugins: {
+                tooltip: {
+                  enabled: true,
+                },
+                legend:{
+                  display: false,
+                },
+                datalabels: {}
+              },
+              // interaction: {
+              //   mode: 'index'
+              // },
+              indexAxis: 'y',
+              scales: {
+                  x: {  
+                    display: true,
+                    grid: { 
+                      display: false,
+                    },
+                    position: 'top',
+                    // min: startMin,
+                    // max: startMax,
+                    ticks: {
+                      display: false
+                    },
+                  },
+                  y: {
+                    display: false,
+                    grid: {
+                      display: false,
+                    },
+                  }
+                },
+            },
+          })
+        //  console.log(); 
+        //  indicatorLine.legend.legendItems[index].hidden = true;
+        //  console.log(indicatorLine.legend.legendItems[index]);
+        //  indicatorLine.update();
+         }
+
+        data.forEach(generateChart);
         }
-      });
-
+      })
     }
+    // const getDimensionIndicator = (year, provinceId, dimensionId) => {
+    //   const urlIndicatorProvince = "{{url('/chart/indicator-province')}}";
+    //   $.ajax({
+    //     url: urlIndicatorProvince,
+    //     type: "get",
+    //     data: {
+    //       year,
+    //       province_id: provinceId,
+    //       dimension_id: dimensionId,
+    //     },
+    //     success: function(data) {
+    //       if (data.length > 0) {
+    //         let text = '';
+    //         let chartLine = '';
+    //         data.forEach(generateDescription);
+    //         data.forEach(generateChart);
+    //         document.getElementById("description").innerHTML = text;
+    //         document.getElementById("chart-line-custom").innerHTML = chartLine;
+    //         $('#line-chart').show();
+
+    //         function generateDescription(item) {
+    //           text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
+    //           if (item.indicator_description.length < 65) {
+    //             text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
+    //           } else {
+    //             text += `<p>${item.indicator_description}</p></div>`;
+    //           }
+    //         }
+
+    //         function generateChart(item, index) {
+    //           chartLine += `<ul id='timeline'><li class='entry'>
+    //           <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
+    //             <span class='top-label-min'>Nilai Minimum</span>
+    //             <span class='bottom-label-min' id="indicator-min">${item.min}</span>
+    //             <span class='circle-black-min'></span>
+    //           </li>`;
+    //           if (item.indicator_value <= item.indicator_target_value) {
+    //             chartLine += `<li class='entry'>
+    //             <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+    //             <span class='top-label' id="indicator-nasional">${item.indicator_value}</span>
+    //             <span class='circle-blue'></span>
+    //             </li>`;
+    //             chartLine += `<li class='entry'>
+    //             <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+    //             <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+    //             <span class='circle-red'></span>
+    //             </li>`;
+    //           }
+    //           if (item.indicator_value > item.indicator_target_value) {
+    //             chartLine += `<li class='entry'>
+    //             <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+    //             <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+    //             <span class='circle-red'></span>
+    //             </li>`;
+    //             chartLine += `<li class='entry'>
+    //             <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+    //             <span class='top-label' id="indicator-nasional">${item.indicator_value}</span>
+    //             <span class='circle-blue'></span>
+    //             </li>`;
+    //           }
+    //           chartLine += `<li class='entry'>
+    //           <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
+    //             <span class='top-label-max'>Nilai Maksimum</span>
+    //             <span class='bottom-label-max' id="indicator-max">${item.max}</span>
+    //             <span class='circle-black-max'></span>
+    //           </li></ul>`;
+    //         }
+    //       }
+    //     }
+    //   });
+
+    // }
     getDataAreaNasional('2018', initProvince);
     getTotalAreaNasional(initProvince);
     $('#change-year-nasional').on('change', () => {

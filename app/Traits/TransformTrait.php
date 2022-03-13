@@ -85,10 +85,10 @@ trait TransformTrait
         'indicator_target_value' => 0,
       );
       foreach ($value['indicator_values'] as $indicatorValue ) {
-        $result[$keyIndicator]['indicator_value'] = $indicatorValue['indicator_value'];
+        $result[$keyIndicator]['indicator_value'] = round($indicatorValue['indicator_value'], 2);
       }
       foreach ($value['indicator_target_values'] as $indicatorTargetValue ) {
-        $result[$keyIndicator]['indicator_target_value'] = $indicatorTargetValue['indicator_target_value'];
+        $result[$keyIndicator]['indicator_target_value'] = round($indicatorTargetValue['indicator_target_value'], 2);
       }
     }
     return $result;

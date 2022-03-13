@@ -453,7 +453,7 @@
             myChart.data.datasets[0].data.push(data[i].dimension_value);
           };
 
-          myChart.update();
+          // myChart.update();
           $.ajax({
             url: urlAreaNasional + '/' + '2019' + '/province-id' + '/' + provinceId,
             success: function(data2019) {
