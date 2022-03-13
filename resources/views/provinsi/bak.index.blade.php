@@ -98,6 +98,27 @@
     display: block;
   }
 
+  .top-label-min {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: left;
+    position: absolute;
+    top: -60px;
+    display: block;
+    left: -8px;
+  }
+
+
+  .top-label-max {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: center;
+    position: absolute;
+    top: -60px;
+    display: block;
+    right: -8px;
+  }
+
   .bottom-label {
     width: 100%;
     padding-bottom: 30px;
@@ -105,6 +126,26 @@
     position: absolute;
     bottom: -30px;
     display: block;
+  }
+
+  .bottom-label-min {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: center;
+    position: absolute;
+    bottom: -30px;
+    display: block;
+    left: -50%;
+  }
+
+  .bottom-label-max {
+    width: 100%;
+    padding-bottom: 30px;
+    text-align: center;
+    position: absolute;
+    bottom: -30px;
+    display: block;
+    left: 50%;
   }
 
   #indicator-nasional {
@@ -119,7 +160,7 @@
     color: #f73e4f;
   }
 
-  .circle-black {
+  .circle-black-min {
     width: 10px;
     height: 10px;
     margin-left: -5px;
@@ -127,8 +168,20 @@
     border: 5px solid black;
     border-radius: 50%;
     position: absolute;
-    top: -14px;
-    left: 50%;
+    top: -10px;
+    left: 0%;
+  }
+
+  .circle-black-max {
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    background: #3f9cca;
+    border: 5px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: 100%;
   }
 
   .circle-blue {
@@ -140,7 +193,7 @@
     color: #0dcaf0;
     border-radius: 50%;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 50%;
   }
 
@@ -153,7 +206,7 @@
     border-radius: 50%;
     color: #f73e4f;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 50%;
   }
 
@@ -166,7 +219,7 @@
     border-radius: 50%;
     color: #0d6efd;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 50%;
   }
 
@@ -231,47 +284,62 @@
     <div class="p-2 flex-grow-1">
       <h1 class="title-page">IPK Provinsi <br> <span class="sub-title" style="text-transform:capitalize;">{{strtolower($provinsi->province_name)}}</span></h1>
     </div>
+    <div class="p-2"> <img src="{{asset('assets/img/propinsi')}}/{{$provinsi->id}}.png" style="max-width: 100px;"></div>
   </div>
 </div>
 <div class="row" id="block-content">
 </div>
 <div class="container mb-5 mt-5">
-  <h4 class="text-center">Pilih provinsi lainnya</h3>
-    <center>
-      <div class="mb-3 row justify-content-center">
-        <div for="staticEmail" class="col-md-2 col-form-label">Provinsi: </div>
-        <div class="col-md-2 p-1">
-          <select name="provinsi" id="change-provinsi-dimensi" class="form-control form-control-sm">
-            <option disabled>Pilih Provinsi</option>
-            @foreach($provinsiData as $provinsiValue)
-            @php
-            $selected = '';
-            if($provinsiValue->province_name == $provinsi->province_name) $selected = 'selected';
-            @endphp
-            <option value="{{$provinsiValue->id}}" {{$selected}}>{{$provinsiValue->province_name}}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-    </center>
-    <div class="row">
-      <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
-      <div class="col-md-6">
-        <div class="chart-nasional">
-          <canvas id="ipk-nasional"></canvas>
-        </div>
-      </div>
-      <div class="col-md-4 offset-md-2 align-self-center">
-        <h4 class="text-primary">Nilai IPK Provinsi</h4>
-        <h6> Tahun 2018 : <span class="text-primary" id="total-ipk-provinsi-2018"></span></h6>
-        <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-provinsi-2019"></span></h6>
-        <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-provinsi-2020"></span></h6>
-        <h4 class="text-primary">Nilai IPK Nasional</h4>
-        <h6> Tahun 2018 : <span class="text-primary" id="total-ipk-nasional-2018"></span></h6>
-        <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-nasional-2019"></span></h6>
-        <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
+  <h4 class="text-center">Pilih provinsi lainnya</h4>
+  <center>
+    <div class="mb-3 row justify-content-center">
+      <div for="staticEmail" class="col-md-2 col-form-label">Provinsi: </div>
+      <div class="col-md-2 p-1">
+        <select name="provinsi" id="change-provinsi-dimensi" class="form-control form-control-sm">
+          <option disabled>Pilih Provinsi</option>
+          @foreach($provinsiData as $provinsiValue)
+          @php
+          $selected = '';
+          if($provinsiValue->province_name == $provinsi->province_name) $selected = 'selected';
+          @endphp
+          <option value="{{$provinsiValue->id}}" {{$selected}}>{{$provinsiValue->province_name}}</option>
+          @endforeach
+        </select>
       </div>
     </div>
+  </center>
+  <div class="row">
+    <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
+    <div class="col-md-6">
+      <div class="chart-nasional">
+        <canvas id="ipk-nasional"></canvas>
+      </div>
+    </div>
+    <div class="col-md-4 offset-md-2 align-self-center">
+      <div class="table-responsive">
+        <table class="table border">
+          <thead>
+            <tr>
+              <th>Tahun</th>
+              <th>Nasional</th>
+              <th>{{$provinsi->province_name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($totalData as $keyData => $dataValue)
+
+            <tr>
+              <td>{{$keyData}}</td>
+              <td>{{$totalData[$keyData][0]['NASIONAL']}}</td>
+              <td>{{$totalData[$keyData][1][$provinsi->province_name]}}</td>
+            </tr>
+
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container">
   <h3 class="text-primary text-center"> Perbandingan Nilai per Dimensi </h3>
@@ -310,18 +378,20 @@
     </div>
   </center>
   <h5 class="text-center"> Klik pada masing masing logo untuk melihat nilai per indikator </h5>
-  <div class="owl-carousel owl-theme">
-    @foreach($dimensi as $dataDimensi)
-    <div class="item">
-      <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-        <span class="dimension-action" style="cursor:pointer;" data-slug="{{$dataDimensi['dimension_slug']}}" data-id="{{$dataDimensi['id']}}" data-name="{{$dataDimensi['dimension_name']}}">
-          <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-          <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-        </span>
-      </p>
+  <center>
+    <div class="owl-carousel owl-theme">
+      @foreach($dimensi as $dataDimensi)
+      <div class="item">
+        <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+          <span class="dimension-action" style="cursor:pointer;" data-slug="{{$dataDimensi['dimension_slug']}}" data-id="{{$dataDimensi['id']}}" data-name="{{$dataDimensi['dimension_name']}}">
+            <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+            <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+          </span>
+        </p>
+      </div>
+      @endforeach
     </div>
-    @endforeach
-  </div>
+  </center>
 </div>
 <div id="line-chart">
   <div class="container border mb-5 mt-5">
@@ -343,7 +413,27 @@
     </div>
   </div>
 </div>
+<div class="d-flex flex-row-reverse">
+  <p style="font-size:12px;margin-right:25px">
+    * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+  </p>
 </div>
+<!-- <div id="line-chart">
+  <div class="container border mb-5 mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="d-flex">
+          <div>
+            <h3 id="title-line" class="mt-3"></h3>
+            <div id="description">
+            </div>
+            <div id="chart-line-custom">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
 @endsection
 @push('custom-scripts')
 <script>
@@ -379,7 +469,6 @@
     }
     // logic to get new data
     const getDataAreaProvince = (year, provinceId) => {
-      console.log(year);
       const urlAreaNasional = "{{url('/chart/area-nasional')}}";
       $.ajax({
         url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
@@ -420,6 +509,9 @@
             },
             options: {
               responsive: true,
+              interaction: {
+                mode: 'index'
+              },
               elements: {
                 line: {
                   borderWidth: 3
@@ -453,7 +545,7 @@
             myChart.data.datasets[0].data.push(data[i].dimension_value);
           };
 
-          // myChart.update();
+          myChart.update();
           $.ajax({
             url: urlAreaNasional + '/' + '2019' + '/province-id' + '/' + provinceId,
             success: function(data2019) {
@@ -484,33 +576,33 @@
         }
       });
     };
-    const getTotalAreaNasional = (provinceId) => {
-      const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
-      $.ajax({
-        url: urlTotalAreaNasional + '/2018' + '/province-id' + '/' + provinceId + '/total',
-        success: function(data) {
-          if (data) {
-            $("#total-ipk-nasional-2018").text(data.total);
-          }
-        }
-      });
-      $.ajax({
-        url: urlTotalAreaNasional + '/2019' + '/province-id' + '/' + provinceId + '/total',
-        success: function(data) {
-          if (data) {
-            $("#total-ipk-nasional-2019").text(data.total);
-          }
-        }
-      });
-      $.ajax({
-        url: urlTotalAreaNasional + '/2020' + '/province-id' + '/' + provinceId + '/total',
-        success: function(data) {
-          if (data) {
-            $("#total-ipk-nasional-2020").text(data.total);
-          }
-        }
-      });
-    }
+    // const getTotalAreaNasional = (provinceId) => {
+    //   const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
+    //   $.ajax({
+    //     url: urlTotalAreaNasional + '/2018' + '/province-id' + '/' + provinceId + '/total',
+    //     success: function(data) {
+    //       if (data) {
+    //         $("#total-ipk-nasional-2018").text(data.total);
+    //       }
+    //     }
+    //   });
+    //   $.ajax({
+    //     url: urlTotalAreaNasional + '/2019' + '/province-id' + '/' + provinceId + '/total',
+    //     success: function(data) {
+    //       if (data) {
+    //         $("#total-ipk-nasional-2019").text(data.total);
+    //       }
+    //     }
+    //   });
+    //   $.ajax({
+    //     url: urlTotalAreaNasional + '/2020' + '/province-id' + '/' + provinceId + '/total',
+    //     success: function(data) {
+    //       if (data) {
+    //         $("#total-ipk-nasional-2020").text(data.total);
+    //       }
+    //     }
+    //   });
+    // }
     const getTotalAreaProvince = (provinceId) => {
       const urlTotalAreaProvince = "{{url('/chart/area-nasional')}}";
       $.ajax({
@@ -554,44 +646,131 @@
             let text = '';
             let chartLine = '';
 
-            function generateDescription(item) {
-              text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
-              if (item.indicator_description.length < 65) {
-                text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
-              } else {
-                text += `<p>${item.indicator_description}</p></div>`;
-              }
-            }
+            // function generateDescription(item) {
+            //   text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
+            //   if (item.indicator_description.length < 65) {
+            //     text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
+            //   } else {
+            //     text += `<p>${item.indicator_description}</p></div>`;
+            //   }
+            // }
 
-            function generateChart(item, index) {
-              chartLine += `<ul id='timeline'><li class='entry'>
-              <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-              <span class='top-label'>Nilai Minimum</span>
-              <span class='bottom-label' id="indicator-min">${item.min}</span>
-              <span class='circle-black'></span>
-              </li>`;
-              chartLine += `<li class='entry'>
-              <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-              <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-              <span class='circle-info'></span>
-              </li>`;
-              chartLine += `<li class='entry'>
-              <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-              <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-              <span class='circle-blue'></span>
-              </li>`;
-              chartLine += `<li class='entry'>
-              <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-              <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-              <span class='circle-red'></span>
-              </li>`;
-              chartLine += `<li class='entry'>
-              <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-              <span class='top-label'>Nilai Maksimum</span>
-              <span class='bottom-label' id="indicator-max">${item.max}</span>
-              <span class='circle-black'></span>
-              </li></ul>`;
-            }
+            // function generateChart(item, index) {
+            //   chartLine += `<ul id='timeline'><li class='entry'>
+            //     <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
+            //     <span class='top-label-min'>Nilai Minimum</span>
+            //     <span class='bottom-label-min' id="indicator-min">${item.min}</span>
+            //     <span class='circle-black-min'></span>
+            //     </li>`;
+            //   if (item.indicator_value >= item.indicator_nasional && item.indicator_nasional >= item.indicator_target_value) {
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+            //       <span class='circle-red'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+            //       <span class='circle-blue'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+            //       <span class='circle-info'></span>
+            //       </li>`;
+            //   }
+            //   if (item.indicator_value > item.indicator_target_value && item.indicator_target_value > item.indicator_nasional) {
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+            //       <span class='circle-blue'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+            //       <span class='circle-red'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+            //       <span class='circle-info'></span>
+            //       </li>`;
+            //   }
+            //   if (item.indicator_nasional > item.indicator_target_value && item.indicator_target_value > item.indicator_value) {
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+            //       <span class='circle-info'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+            //       <span class='circle-red'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+            //       <span class='circle-blue'></span>
+            //       </li>`;
+            //   }
+            //   if (item.indicator_nasional > item.indicator_value && item.indicator_value > item.indicator_target_value) {
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+            //       <span class='circle-red'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+            //       <span class='circle-info'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+            //       <span class='circle-blue'></span>
+            //       </li>`;
+            //   }
+            //   if (item.indicator_target_value > item.indicator_nasional && item.indicator_nasional > item.indicator_value) {
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+            //       <span class='circle-info'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+            //       <span class='circle-blue'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+            //       <span class='circle-red'></span>
+            //       </li>`;
+            //   }
+            //   if (item.indicator_target_value > item.indicator_value && item.indicator_value > item.indicator_nasional) {
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
+            //       <span class='circle-blue'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
+            //       <span class='circle-info'></span>
+            //       </li>`;
+            //     chartLine += `<li class='entry'>
+            //       <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
+            //       <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
+            //       <span class='circle-red'></span>
+            //       </li>`;
+            //   }
+            //   chartLine += `<li class='entry'>
+            //     <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
+            //     <span class='top-label-max'>Nilai Maksimum</span>
+            //     <span class='bottom-label-max' id="indicator-max">${item.max}</span>
+            //     <span class='circle-black-max'></span>
+            //     </li></ul>`;
+            // }
             $.ajax({
               url: urlIndicatorProvince,
               type: "get",
@@ -622,7 +801,7 @@
 
     }
     getDataAreaProvince('2018', provinceSelected);
-    getTotalAreaNasional(provinceNasional);
+    // getTotalAreaNasional(provinceNasional);
     getTotalAreaProvince(provinceSelected);
     $('#change-year-indicator').on('change', () => {
       year = $('#change-year-indicator').find(":selected").val();
@@ -654,21 +833,29 @@
           $('#canvas-dimension').append('<canvas id="dimension-bar"><canvas>');
           const resultData = dataBar;
           const labelData = [];
+          const labelRank = [];
           const valueData = [];
           const valueDataNasional = [];
           const labelTargetData = [];
           const valueTargetData = [];
           const options = {
-            options: {
-              responsive: true,
-              title: {
-                display: true,
-              },
-              tooltips: {
-                mode: 'index',
-                intersect: true
-              },
-              scales: {}
+            plugins: {
+              datalabels:{}
+            },
+            responsive: true,
+            title: {
+              display: true,
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: true
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: [],
+                }
+              }
             }
           };
           $.ajax({
@@ -680,23 +867,32 @@
             },
             success: function(dataBarNasional) {
               for (const i in resultData) {
-
-                labelData.push(resultData[i].dimension_name);
+                const newLabel = [resultData[i].dimension_name, resultData[i].rank];
+                labelData.push(newLabel);
+                labelRank.push(resultData[i].rank);
                 valueData.push(resultData[i].dimension_value);
                 const indexData = dataBarNasional.map(function(o) {
                   return o.dimension_name;
                 }).indexOf(resultData[i].dimension_name);
                 if (indexData >= 0) {
+                  let color = 'gray';
+                  if (dataBarNasional[indexData].dimension_value > resultData[i].dimension_value) {
+                    color = 'red';
+                  }
+                  if (resultData[i].rank == '1/34') {
+                    color = 'green';
+                  }
+                  options.scales.x.ticks.color.push(color);
                   valueDataNasional.push(dataBarNasional[indexData].dimension_value);
                 }
-                valueDataNasional.push(resultData[i].dimension_value);
                 labelTargetData.push(resultData[i].dimension_name);
                 valueTargetData.push(resultData[i].dimension_target);
               }
-              const dimensionBar = document.getElementById('dimension-bar');
+              const dimensionBar = document.getElementById('dimension-bar').getContext('2d');
               // create bar
               const dimensionChart = new Chart(dimensionBar, {
                 type: 'bar',
+                plugins: [ChartDataLabels],
                 data: {
                   labels: labelData,
                   datasets: [{
@@ -706,26 +902,33 @@
                       backgroundColor: 'rgb(236 127 118)',
                       borderColor: 'rgb(236 127 118)',
                       fill: false,
+                      pointRadius: 5,
+                      pointHoverRadius: 5,
+                      showLine: false,
                     },
                     {
                       label: 'Nilai Dimensi Nasional Tahun ' + yearBar,
-                      backgroundColor: '#0dcaf0',
-                      borderColor: '#0dcaf0;',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#6ea8e2',
+                      borderWidth: 2,
                       data: valueDataNasional,
                     },
                     {
                       label: 'Nilai Dimensi Provinsi {{$provinsi->province_name}} Tahun ' + yearBar,
-                      backgroundColor: '#0d6efd',
-                      borderColor: '#0d6efd;',
+                      backgroundColor: '#4a66ac',
+                      borderColor: '#4a66ac;',
                       data: valueData,
                     },
 
                   ]
                 },
-                options: options
+                options: options,
               });
-              dimensionChart.config._config.options.scales.x.grid.display = false;
-              dimensionChart.config._config.options.scales.y.grid.display = false;
+              dimensionChart.options.scales.x.grid.display = false;
+              dimensionChart.options.scales.y.grid.display = false;
+              dimensionChart.options.plugins.datalabels.align = 'end';
+              dimensionChart.options.plugins.datalabels.anchor = 'end';
+              dimensionChart.options.plugins.datalabels.formatter = (val) => (`${val}`);
               dimensionChart.update();
             },
           })

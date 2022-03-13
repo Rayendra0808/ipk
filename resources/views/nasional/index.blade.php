@@ -350,6 +350,11 @@
   </center>
   <div id="line-chart">
     <div class="container border mb-5 mt-5">
+      <h3 id="title-line" class="mt-3"></h3>
+      <div class="d-flex justify-content-end" id="sticky-custom">
+          <p class="p-2 text-primary">Nasional</p>
+          <p class="p-2 text-danger">Proyeksi 2024</p>
+      </div>
       <div class="row p-1" id="line-chart-new">
 
       </div>
@@ -558,8 +563,8 @@
          data.forEach(generateDescription);
          document.getElementById("line-chart-new").innerHTML = description;
          function generateDescription(item, index) {
-           description +=`<div class="col-md-6 pt-5"><p>${item.indicator_description}</p></div>
-           <div class="col-md-6 pt-5"><canvas class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
+           description +=`<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
+           <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
          }
          function generateChart(item, index) {
           const nMin = item.min;
@@ -609,7 +614,7 @@
                   borderColor: 'rgb(236 127 118)',
                   data: [item.indicator_target_value],
                   datalabels: {
-                    offset: -30,
+                    offset: 10,
                     align: 'top',
                     anchor: 'end',
                     formatter: (val) => (`${val}`),
@@ -632,7 +637,7 @@
                   borderColor: '#6ea8e2',
                   data: [item.indicator_value],
                   datalabels: {
-                    offset: -30,
+                    offset: 10,
                     align: 'top',
                     anchor: 'end',
                     formatter: (val) => (`${val}`),
@@ -650,8 +655,8 @@
                   // type: 'line',
                   label: 'Nilai Maksimum',
                   backgroundColor: 'black',
-                  pointRadius: 5,
-                  pointHoverRadius: 5,
+                  // pointRadius: 5,
+                  // pointHoverRadius: 5,
                   borderColor: 'black',
                   data: [item.max],
                   datalabels: {
@@ -672,6 +677,14 @@
               ]
             },
             options: {
+              layout: {
+                padding: {
+                  top: 40,
+                  right: 40,
+                  left: 40,
+                }
+              },
+              maintainAspectRatio: false,
               plugins: {
                 tooltip: {
                   enabled: true,
@@ -681,9 +694,9 @@
                 },
                 datalabels: {}
               },
-              // interaction: {
-              //   mode: 'index'
-              // },
+              interaction: {
+                mode: 'index'
+              },
               indexAxis: 'y',
               scales: {
                   x: {  
@@ -692,8 +705,6 @@
                       display: false,
                     },
                     position: 'top',
-                    // min: startMin,
-                    // max: startMax,
                     ticks: {
                       display: false
                     },
@@ -707,10 +718,7 @@
                 },
             },
           })
-        //  console.log(); 
-        //  indicatorLine.legend.legendItems[index].hidden = true;
-        //  console.log(indicatorLine.legend.legendItems[index]);
-        //  indicatorLine.update();
+
          }
 
         data.forEach(generateChart);
@@ -802,7 +810,7 @@
       // change button
       let dimensionId = $(this).data('id');
       let dimensionName = 'Dimensi ' + $(this).data('name');
-      $('#title-line').text(dimensionName);
+      $('#title-line').text(dimensionName + year);
       $('.dimension-action').removeClass('text-success');
       $(this).addClass('text-success');
       getDimensionIndicator(year, initProvince, dimensionId);

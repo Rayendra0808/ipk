@@ -52,7 +52,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-white fixed-top bg-white" id="mainNav">
         <div class="container-fluid">
-          <a class="navbar-brand flex-grow-1" href="#"><img src="{{asset('assets/img/logo3.png')}}" class="img-fluid logo"></a>
+          <a class="navbar-brand flex-grow-1" href="#"><img src="{{asset('assets/img/logo_rev.png')}}" class="img-fluid logo"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi" fill="currentColor" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
@@ -106,7 +106,7 @@
               </div>
             </div>
             <div class="col-lg-4">
-              <a><img src="{{asset('assets/img/logo3.png')}}" alt="" class="img-fluid"></a>
+              <a><img src="{{asset('assets/img/logo_rev.png')}}" alt="" class="img-fluid"></a>
             </div>
           </div>
         </div>

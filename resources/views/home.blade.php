@@ -405,6 +405,9 @@
 
     const onRegionClick = function(element, code, region, tahun) {
       // Go to prov page
+      console.log(code);
+      if (code == 91) code = 94;
+      if (code == 92) code = 91;
       window.location = "{{url('/provinsi')}}" + '/' + code;
     };
 
@@ -475,6 +478,7 @@
           onLoad(event, map, tahun);
         },
         onRegionClick: function(element, code, region) {
+          console.log(region);
           onRegionClick(element, code, region, tahun);
         },
 

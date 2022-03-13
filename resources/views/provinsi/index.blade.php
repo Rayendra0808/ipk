@@ -395,45 +395,21 @@
 </div>
 <div id="line-chart">
   <div class="container border mb-5 mt-5">
-    <div class="row">
-      <div class="col-md-6">
-        <h3 id="title-line" class="mt-3"></h3>
-        <div id="description">
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="d-flex justify-content-center">
-          <p class="p-2" style="color:#0d6efd;">{{$provinsi->province_name}}</p>
-          <p class="p-2" style="color:#0dcaf0;">Nasional</p>
-          <p class="p-2 text-danger">Proyeksi 2024</p>
-        </div>
-        <div id="chart-line-custom" style="margin-top:-50px;"></div>
-      </div>
+    <h3 id="title-line" class="mt-3"></h3>
+    <div class="d-flex justify-content-end" id="sticky-custom">
+      <p class="p-2" style="color:#204498;">{{$provinsi->province_name}}</p>
+      <p class="p-2 text-primary">Nasional</p>
+      <p class="p-2 text-danger">Proyeksi 2024</p>
+    </div>
+    <div class="row p-1" id="line-chart-new">
     </div>
   </div>
 </div>
 <div class="d-flex flex-row-reverse">
   <p style="font-size:12px;margin-right:25px">
-  * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+    * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
   </p>
 </div>
-<!-- <div id="line-chart">
-  <div class="container border mb-5 mt-5">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="d-flex">
-          <div>
-            <h3 id="title-line" class="mt-3"></h3>
-            <div id="description">
-            </div>
-            <div id="chart-line-custom">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 @endsection
 @push('custom-scripts')
 <script>
@@ -642,160 +618,214 @@
           dimension_id: dimensionId,
         },
         success: function(dataProvince) {
-          if (dataProvince.length > 0) {
-            let text = '';
-            let chartLine = '';
+          $.ajax({
+            url: urlIndicatorProvince,
+            type: "get",
+            data: {
+              year,
+              province_id: '1001',
+              dimension_id: dimensionId,
+            },
+            success: function(dataNasional) {
+              dataNasional.forEach((n, j) => {
+                const indexData = dataProvince.map(function(o) {
+                  return o.indicator_code;
+                }).indexOf(n.indicator_code);
+                if (indexData >= 0) {
+                  dataProvince[indexData].indicator_nasional = n.indicator_value;
+                }
+              });
+              let description = '';
+              $('#line-chart').show();
+              function generateDescription(item, index) {
+                description += `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
+           <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
+              }
 
-            function generateDescription(item) {
-              text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
-              if (item.indicator_description.length < 65) {
-                text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
-              } else {
-                text += `<p>${item.indicator_description}</p></div>`;
-              }
-            }
+              function generateChart(item, index) {
+                console.log(item);
+                const nMin = item.min;
+                const nMax = item.max;
 
-            function generateChart(item, index) {
-              chartLine += `<ul id='timeline'><li class='entry'>
-                <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label-min'>Nilai Minimum</span>
-                <span class='bottom-label-min' id="indicator-min">${item.min}</span>
-                <span class='circle-black-min'></span>
-                </li>`;
-              if (item.indicator_value >= item.indicator_nasional && item.indicator_nasional >= item.indicator_target_value) {
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
+                const indicatorCtx = $("body").find('#chart-indicator-' + index);
+                // const indicatorCtx = document.getElementById('chart-indicator-0');
+                const indicatorLine = new Chart(indicatorCtx, {
+                  type: 'line',
+                  plugins: [ChartDataLabels],
+                  data: {
+                    labels: [''],
+                    images: [],
+                    datasets: [
+                      // {
+                      //   label: item.min,
+                      //   data: [item.min, item.indicator_target_value, item.indicator_value, item.max],
+                      // },
+                      {
+                        // type: 'line',
+                        label: 'Nilai Minimum',
+                        data: [item.min],
+                        backgroundColor: 'black',
+                        borderColor: 'black',
+                        datalabels: {
+                          clip: true,
+                          offset: -60,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`                    Nilai\n                Minimum\n                      ${nMin}`),
+                          labels: {
+                            value: {
+                              color: 'black',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
+                        label: "{{$provinsi->province_name}}",
+                        backgroundColor: '#204498',
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
+                        borderColor: '#204498',
+                        data: [item.indicator_value],
+                        datalabels: {
+                          offset: 10,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`${val}`),
+                          labels: {
+                            value: {
+                              color: '#204498',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
+                        label: 'Nasional',
+                        backgroundColor: '#ffffff',
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
+                        borderColor: '#6ea8e2',
+                        data: [item.indicator_nasional],
+                        datalabels: {
+                          offset: 10,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`${val}`),
+                          labels: {
+                            value: {
+                              color: '#6ea8e2',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
+                        label: 'Proyeksi 2024',
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
+                        backgroundColor: 'rgb(236 127 118)',
+                        borderColor: 'rgb(236 127 118)',
+                        data: [item.indicator_target_value],
+                        datalabels: {
+                          offset: 10,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`${val}`),
+                          labels: {
+                            value: {
+                              color: 'rgb(236 127 118)',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
+                        label: 'Nilai Maksimum',
+                        backgroundColor: 'black',
+                        // pointRadius: 5,
+                        // pointHoverRadius: 5,
+                        borderColor: 'black',
+                        data: [item.max],
+                        datalabels: {
+                          offset: -60,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => ('     Nilai\nMaksimum              \n   ' + '    ' + nMax),
+                          labels: {
+                            value: {
+                              color: 'black',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                    ]
+                  },
+                  options: {
+                    layout: {
+                      padding: {
+                        top: 40,
+                        right: 40,
+                        left: 40,
+                      }
+                    },
+                    maintainAspectRatio: false,
+                    plugins: {
+                      tooltip: {
+                        enabled: true,
+                      },
+                      legend: {
+                        display: false,
+                      },
+                      datalabels: {}
+                    },
+                    interaction: {
+                      mode: 'index'
+                    },
+                    indexAxis: 'y',
+                    scales: {
+                      x: {
+                        display: true,
+                        grid: {
+                          display: false,
+                        },
+                        position: 'top',
+                        ticks: {
+                          display: false
+                        },
+                      },
+                      y: {
+                        display: false,
+                        grid: {
+                          display: false,
+                        },
+                      }
+                    },
+                  },
+                })
+
               }
-              if (item.indicator_value > item.indicator_target_value && item.indicator_target_value > item.indicator_nasional) {
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-              }
-              if (item.indicator_nasional > item.indicator_target_value && item.indicator_target_value > item.indicator_value) {
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-              }
-              if (item.indicator_nasional > item.indicator_value && item.indicator_value > item.indicator_target_value) {
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-              }
-              if (item.indicator_target_value > item.indicator_nasional && item.indicator_nasional > item.indicator_value) {
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-              }
-              if (item.indicator_target_value > item.indicator_value && item.indicator_value > item.indicator_nasional) {
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-              }
-              chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label-max'>Nilai Maksimum</span>
-                <span class='bottom-label-max' id="indicator-max">${item.max}</span>
-                <span class='circle-black-max'></span>
-                </li></ul>`;
+              dataProvince.forEach(generateDescription);
+
+              document.getElementById("line-chart-new").innerHTML = description;
+              dataProvince.forEach(generateChart);
             }
-            $.ajax({
-              url: urlIndicatorProvince,
-              type: "get",
-              data: {
-                year,
-                province_id: '1001',
-                dimension_id: dimensionId,
-              },
-              success: function(dataNasional) {
-                dataNasional.forEach((n, j) => {
-                  const indexData = dataProvince.map(function(o) {
-                    return o.indicator_code;
-                  }).indexOf(n.indicator_code);
-                  if (indexData >= 0) {
-                    dataProvince[indexData].indicator_nasional = n.indicator_value;
-                  }
-                });
-                dataProvince.forEach(generateDescription);
-                dataProvince.forEach(generateChart);
-                document.getElementById("description").innerHTML = text;
-                document.getElementById("chart-line-custom").innerHTML = chartLine;
-                $('#line-chart').show();
-              }
-            });
-          }
+          });
         }
       });
 
@@ -839,6 +869,9 @@
           const labelTargetData = [];
           const valueTargetData = [];
           const options = {
+            plugins: {
+              datalabels: {}
+            },
             responsive: true,
             title: {
               display: true,
@@ -919,37 +952,13 @@
 
                   ]
                 },
-                options: {}
+                options: options,
               });
-              dimensionChart.options = {
-                scales: {
-                  x: {
-                    grid: {
-                      display: false,
-                    }
-                  },
-                  y: {
-                    grid: {
-                      display: false,
-                    }
-                  }
-                },
-                plugins: {
-                  tooltip: {
-                    enabled: true,
-                  },
-                  datalabels: {
-                  align: 'end',
-                  anchor: 'end',
-                  labels: {
-                    value: {
-                      color: '#007bff',
-                    }
-                  },
-                  formatter: (val) => (`${val}`),
-                }
-                }
-              };
+              dimensionChart.options.scales.x.grid.display = false;
+              dimensionChart.options.scales.y.grid.display = false;
+              dimensionChart.options.plugins.datalabels.align = 'end';
+              dimensionChart.options.plugins.datalabels.anchor = 'end';
+              dimensionChart.options.plugins.datalabels.formatter = (val) => (`${val}`);
               dimensionChart.update();
             },
           })

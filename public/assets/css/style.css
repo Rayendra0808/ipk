@@ -47,6 +47,11 @@ h6 {
   padding: 0;
 }
 
+#sticky-custom{
+  position: sticky;
+  top: 100px;
+}
+
 /* Back to top button */
 
 .back-to-top {
