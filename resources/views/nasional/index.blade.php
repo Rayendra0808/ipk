@@ -308,6 +308,7 @@
     <div class="row">
       <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
       <div class="col-md-6">
+      <h5 class="text-center text-primary">Silahkan klik tahun</h5>
         <div class="chart-nasional">
           <canvas id="ipk-nasional"></canvas>
         </div>
