@@ -47,6 +47,11 @@ h6 {
   padding: 0;
 }
 
+#sticky-custom{
+  position: sticky;
+  top: 100px;
+}
+
 /* Back to top button */
 
 .back-to-top {
@@ -1375,6 +1380,40 @@ Chart
 .owl-item > .item > p > img {
   border: 2px solid #007bff;
   border-radius: 50%;
+}
+
+
+.owl-carousel .nav-btn {
+  height: 47px;
+  position: absolute;
+  width: 26px;
+  cursor: pointer;
+  top: 100px !important;
+}
+
+.owl-carousel .owl-prev.disabled,
+.owl-carousel .owl-next.disabled {
+  pointer-events: none;
+  opacity: 0.2;
+  display: none !important;
+}
+
+.owl-carousel .prev-slide {
+  background: url('/assets/img/nav-icon.png') no-repeat scroll 0 0;
+  left: -33px;
+}
+
+.owl-carousel .next-slide {
+  background: url('/assets/img/nav-icon.png') no-repeat scroll -24px 0px;
+  right: -33px;
+}
+
+.owl-carousel .prev-slide:hover {
+  background-position: 0px -53px;
+}
+
+.owl-carousel .next-slide:hover {
+  background-position: -24px -53px;
 }
 
 .text-intro {

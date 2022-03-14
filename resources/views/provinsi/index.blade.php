@@ -171,6 +171,7 @@
     top: -10px;
     left: 0%;
   }
+
   .circle-black-max {
     width: 10px;
     height: 10px;
@@ -283,47 +284,67 @@
     <div class="p-2 flex-grow-1">
       <h1 class="title-page">IPK Provinsi <br> <span class="sub-title" style="text-transform:capitalize;">{{strtolower($provinsi->province_name)}}</span></h1>
     </div>
+    <div class="p-2"> <img src="{{asset('assets/img/propinsi')}}/{{$provinsi->id}}.png" style="max-width: 100px;"></div>
   </div>
 </div>
 <div class="row" id="block-content">
 </div>
 <div class="container mb-5 mt-5">
-  <h4 class="text-center">Pilih provinsi lainnya</h3>
-    <center>
-      <div class="mb-3 row justify-content-center">
-        <div for="staticEmail" class="col-md-2 col-form-label">Provinsi: </div>
-        <div class="col-md-2 p-1">
-          <select name="provinsi" id="change-provinsi-dimensi" class="form-control form-control-sm">
-            <option disabled>Pilih Provinsi</option>
-            @foreach($provinsiData as $provinsiValue)
-            @php
-            $selected = '';
-            if($provinsiValue->province_name == $provinsi->province_name) $selected = 'selected';
-            @endphp
-            <option value="{{$provinsiValue->id}}" {{$selected}}>{{$provinsiValue->province_name}}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-    </center>
-    <div class="row">
-      <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
-      <div class="col-md-6">
-        <div class="chart-nasional">
-          <canvas id="ipk-nasional"></canvas>
-        </div>
-      </div>
-      <div class="col-md-4 offset-md-2 align-self-center">
-        <h4 class="text-primary">Nilai IPK Provinsi</h4>
-        <h6> Tahun 2018 : <span class="text-primary" id="total-ipk-provinsi-2018"></span></h6>
-        <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-provinsi-2019"></span></h6>
-        <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-provinsi-2020"></span></h6>
-        <h4 class="text-primary">Nilai IPK Nasional</h4>
-        <h6> Tahun 2018 : <span class="text-primary" id="total-ipk-nasional-2018"></span></h6>
-        <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-nasional-2019"></span></h6>
-        <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
+  <h4 class="text-center">Pilih provinsi lainnya</h4>
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-primary" style="background: #6f42c1;
+    border-color: #6f42c1;" type="button" onclick="print();"><i class="fa fa-print"></i> Cetak Halaman</button>
+  </div>
+
+  <center>
+    <div class="mb-3 row justify-content-center">
+      <div for="staticEmail" class="col-md-2 col-form-label">Provinsi: </div>
+      <div class="col-md-2 p-1">
+        <select name="provinsi" id="change-provinsi-dimensi" class="form-control form-control-sm">
+          <option disabled>Pilih Provinsi</option>
+          @foreach($provinsiData as $provinsiValue)
+          @php
+          $selected = '';
+          if($provinsiValue->province_name == $provinsi->province_name) $selected = 'selected';
+          @endphp
+          <option value="{{$provinsiValue->id}}" {{$selected}}>{{$provinsiValue->province_name}}</option>
+          @endforeach
+        </select>
       </div>
     </div>
+  </center>
+  <div class="row">
+    <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
+    <div class="col-md-6">
+      <div class="chart-nasional">
+        <canvas id="ipk-nasional"></canvas>
+      </div>
+    </div>
+    <div class="col-md-4 offset-md-2 align-self-center">
+      <div class="table-responsive">
+        <table class="table border">
+          <thead>
+            <tr>
+              <th>Tahun</th>
+              <th>Nasional</th>
+              <th>{{$provinsi->province_name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($totalData as $keyData => $dataValue)
+
+            <tr>
+              <td>{{$keyData}}</td>
+              <td>{{$totalData[$keyData][0]['NASIONAL']}}</td>
+              <td>{{$totalData[$keyData][1][$provinsi->province_name]}}</td>
+            </tr>
+
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container">
   <h3 class="text-primary text-center"> Perbandingan Nilai per Dimensi </h3>
@@ -362,554 +383,604 @@
     </div>
   </center>
   <h5 class="text-center"> Klik pada masing masing logo untuk melihat nilai per indikator </h5>
-  <div class="owl-carousel owl-theme">
-    @foreach($dimensi as $dataDimensi)
-    <div class="item">
-      <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-        <span class="dimension-action" style="cursor:pointer;" data-slug="{{$dataDimensi['dimension_slug']}}" data-id="{{$dataDimensi['id']}}" data-name="{{$dataDimensi['dimension_name']}}">
-          <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-          <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-        </span>
-      </p>
+  <center>
+    <div class="owl-carousel owl-theme">
+      @foreach($dimensi as $dataDimensi)
+      <div class="item">
+        <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+          <span class="dimension-action" style="cursor:pointer;" data-slug="{{$dataDimensi['dimension_slug']}}" data-id="{{$dataDimensi['id']}}" data-name="{{$dataDimensi['dimension_name']}}">
+            <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+            <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+          </span>
+        </p>
+      </div>
+      @endforeach
     </div>
-    @endforeach
-  </div>
+  </center>
 </div>
 <div id="line-chart">
   <div class="container border mb-5 mt-5">
-    <div class="row">
-      <div class="col-md-6">
-        <h3 id="title-line" class="mt-3"></h3>
-        <div id="description">
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="d-flex justify-content-center">
-          <p class="p-2" style="color:#0d6efd;">{{$provinsi->province_name}}</p>
-          <p class="p-2" style="color:#0dcaf0;">Nasional</p>
-          <p class="p-2 text-danger">Proyeksi 2024</p>
-        </div>
-        <div id="chart-line-custom" style="margin-top:-50px;"></div>
-      </div>
+    <h3 id="title-line" class="mt-3"></h3>
+    <div class="d-flex justify-content-end" id="sticky-custom">
+      <p class="p-2" style="color:#204498;">{{$provinsi->province_name}}</p>
+      <p class="p-2 text-primary">Nasional</p>
+      <p class="p-2 text-danger">Proyeksi 2024</p>
+    </div>
+    <div class="row p-1" id="line-chart-new">
     </div>
   </div>
 </div>
-<!-- <div id="line-chart">
-  <div class="container border mb-5 mt-5">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="d-flex">
-          <div>
-            <h3 id="title-line" class="mt-3"></h3>
-            <div id="description">
-            </div>
-            <div id="chart-line-custom">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  @endsection
-  @push('custom-scripts')
-  <script>
-    $(document).ready(function() {
-      let labelYear = '2018';
-      let initYear = '2018';
-      let provinceNasional = '1001';
-      let provinceSelected = "{{$provinsi->id}}";
-      let year = "{{$year[0]}}";
-      let yearBar = "{{$year[0]}}";
+<div class="d-flex flex-row-reverse">
+  <p style="font-size:12px;margin-right:25px">
+    * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+  </p>
+</div>
+@endsection
+@push('custom-scripts')
+<script>
+  $(document).ready(function() {
+    let labelYear = '2018';
+    let initYear = '2018';
+    let provinceNasional = '1001';
+    let provinceSelected = "{{$provinsi->id}}";
+    let year = "{{$year[0]}}";
+    let yearBar = "{{$year[0]}}";
 
-      function drawTextAtIndex(scale, index, icon, text, value) {
-        const offset = -5;
-        const r = scale.drawingArea + offset;
-        const angle = scale.getIndexAngle(index) - Math.PI / 2;
-        const x = scale.xCenter + Math.cos(angle) * r;
-        const y = scale.yCenter + Math.sin(angle) * r;
-        const ctx = scale.ctx;
-        ctx.save();
-        ctx.translate(x, y);
-        //ctx.rotate(angle + Math.PI / 2);
-        ctx.textAlign = 'center';
-        const image = new Image();
-        image.src = icon;
-        ctx.fillStyle = 'blue';
-        ctx.font = '20px material-icons'
-        ctx.drawImage(image, -10, -15, 30, 30);
+    function drawTextAtIndex(scale, index, icon, text, value) {
+      const offset = -5;
+      const r = scale.drawingArea + offset;
+      const angle = scale.getIndexAngle(index) - Math.PI / 2;
+      const x = scale.xCenter + Math.cos(angle) * r;
+      const y = scale.yCenter + Math.sin(angle) * r;
+      const ctx = scale.ctx;
+      ctx.save();
+      ctx.translate(x, y);
+      //ctx.rotate(angle + Math.PI / 2);
+      ctx.textAlign = 'center';
+      const image = new Image();
+      image.src = icon;
+      ctx.fillStyle = 'blue';
+      ctx.font = '20px material-icons'
+      ctx.drawImage(image, -10, -15, 30, 30);
 
-        ctx.font = "12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
-        ctx.fillStyle = 'gray';
-        // ctx.fillText(text, 0, -5);
-        ctx.restore();
-      }
-      // logic to get new data
-      const getDataAreaProvince = (year, provinceId) => {
-        console.log(year);
-        const urlAreaNasional = "{{url('/chart/area-nasional')}}";
-        $.ajax({
-          url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
-          success: function(data) {
-            $('#ipk-nasional').remove();
-            $('.chart-nasional').append('<canvas id="ipk-nasional"><canvas>');
-            const ctx_live = document.getElementById("ipk-nasional");
-            const myChart = new Chart(ctx_live, {
-              type: 'radar',
-              data: {
-                labels: [],
-                images: [],
-                datasets: [{
-                    data: [],
-                    borderWidth: 1,
-                    borderColor: 'green',
-                    backgroundColor: 'green',
-                    label: labelYear,
-                    fill: false,
-                  },
-                  {
-                    data: [],
-                    borderWidth: 1,
-                    borderColor: 'yellow',
-                    backgroundColor: 'yellow',
-                    label: 2019,
-                    fill: false,
-                  },
-                  {
-                    data: [],
-                    borderWidth: 1,
-                    borderColor: 'red',
-                    backgroundColor: 'red',
-                    label: 2020,
-                    fill: false,
-                  }
-                ]
-              },
-              options: {
-                responsive: true,
-                elements: {
-                  line: {
-                    borderWidth: 3
-                  }
+      ctx.font = "12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+      ctx.fillStyle = 'gray';
+      // ctx.fillText(text, 0, -5);
+      ctx.restore();
+    }
+    // logic to get new data
+    const getDataAreaProvince = (year, provinceId) => {
+      const urlAreaNasional = "{{url('/chart/area-nasional')}}";
+      $.ajax({
+        url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
+        success: function(data) {
+          $('#ipk-nasional').remove();
+          $('.chart-nasional').append('<canvas id="ipk-nasional"><canvas>');
+          const ctx_live = document.getElementById("ipk-nasional");
+          const myChart = new Chart(ctx_live, {
+            type: 'radar',
+            data: {
+              labels: [],
+              images: [],
+              datasets: [{
+                  data: [],
+                  borderWidth: 1,
+                  borderColor: 'green',
+                  backgroundColor: 'green',
+                  label: labelYear,
+                  fill: false,
                 },
-                legend: {
-                  display: true,
-                  position: "bottom",
-                  labels: {
-                    fontColor: "#333",
-                    fontSize: 24
-                  }
+                {
+                  data: [],
+                  borderWidth: 1,
+                  borderColor: 'yellow',
+                  backgroundColor: 'yellow',
+                  label: 2019,
+                  fill: false,
+                },
+                {
+                  data: [],
+                  borderWidth: 1,
+                  borderColor: 'red',
+                  backgroundColor: 'red',
+                  label: 2020,
+                  fill: false,
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              interaction: {
+                mode: 'index'
+              },
+              elements: {
+                line: {
+                  borderWidth: 3
                 }
               },
-              plugins: [{
-                id: 'custom_labels',
-                afterDraw: (chart, args) => {
-                  const getLabel = chart.config._config.data.labels;
-                  getLabel.forEach((value, i) => {
-                    const scale = chart.scales.r;
-                    drawTextAtIndex(scale, i, chart.config._config.data.images[i], value, chart.config._config.data.datasets[0].data[i]);
-                  });
-                },
-              }]
-            })
-            myChart.data.images = [];
-            myChart.data.labels = [];
-            for (let i = 0; i < data.length; i++) {
-              myChart.data.images.push(data[i].dimension_icon);
-              myChart.data.labels.push(data[i].dimension_name);
-              myChart.data.datasets[0].data.push(data[i].dimension_value);
-            };
-
-            myChart.update();
-            $.ajax({
-              url: urlAreaNasional + '/' + '2019' + '/province-id' + '/' + provinceId,
-              success: function(data2019) {
-                myChart.data.images = [];
-                myChart.data.labels = [];
-                for (let i = 0; i < data2019.length; i++) {
-                  myChart.data.images.push(data[i].dimension_icon);
-                  myChart.data.labels.push(data[i].dimension_name);
-                  myChart.data.datasets[1].data.push(data2019[i].dimension_value);
-                };
-                myChart.update();
-                $.ajax({
-                  url: urlAreaNasional + '/' + '2020' + '/province-id' + '/' + provinceId,
-                  success: function(data2020) {
-                    myChart.data.images = [];
-                    myChart.data.labels = [];
-                    for (let i = 0; i < data2020.length; i++) {
-                      myChart.data.images.push(data[i].dimension_icon);
-                      myChart.data.labels.push(data[i].dimension_name);
-                      myChart.data.datasets[2].data.push(data2020[i].dimension_value);
-                    };
-
-                    myChart.update();
-                  }
+              legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                  fontColor: "#333",
+                  fontSize: 24
+                }
+              }
+            },
+            plugins: [{
+              id: 'custom_labels',
+              afterDraw: (chart, args) => {
+                const getLabel = chart.config._config.data.labels;
+                getLabel.forEach((value, i) => {
+                  const scale = chart.scales.r;
+                  drawTextAtIndex(scale, i, chart.config._config.data.images[i], value, chart.config._config.data.datasets[0].data[i]);
                 });
-              }
-            });
-          }
-        });
-      };
-      const getTotalAreaNasional = (provinceId) => {
-        const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
-        $.ajax({
-          url: urlTotalAreaNasional + '/2018' + '/province-id' + '/' + provinceId + '/total',
-          success: function(data) {
-            if (data) {
-              $("#total-ipk-nasional-2018").text(data.total);
-            }
-          }
-        });
-        $.ajax({
-          url: urlTotalAreaNasional + '/2019' + '/province-id' + '/' + provinceId + '/total',
-          success: function(data) {
-            if (data) {
-              $("#total-ipk-nasional-2019").text(data.total);
-            }
-          }
-        });
-        $.ajax({
-          url: urlTotalAreaNasional + '/2020' + '/province-id' + '/' + provinceId + '/total',
-          success: function(data) {
-            if (data) {
-              $("#total-ipk-nasional-2020").text(data.total);
-            }
-          }
-        });
-      }
-      const getTotalAreaProvince = (provinceId) => {
-        const urlTotalAreaProvince = "{{url('/chart/area-nasional')}}";
-        $.ajax({
-          url: urlTotalAreaProvince + '/2018' + '/province-id' + '/' + provinceId + '/total',
-          success: function(data) {
-            if (data) {
-              $("#total-ipk-provinsi-2018").text(data.total);
-            }
-          }
-        });
-        $.ajax({
-          url: urlTotalAreaProvince + '/2019' + '/province-id' + '/' + provinceId + '/total',
-          success: function(data) {
-            if (data) {
-              $("#total-ipk-provinsi-2019").text(data.total);
-            }
-          }
-        });
-        $.ajax({
-          url: urlTotalAreaProvince + '/2020' + '/province-id' + '/' + provinceId + '/total',
-          success: function(data) {
-            if (data) {
-              $("#total-ipk-provinsi-2020").text(data.total);
-            }
-          }
-        });
-      }
-      $('#line-chart').hide();
-      const getDimensionIndicator = (year, provinceId, dimensionId) => {
-        const urlIndicatorProvince = "{{url('/chart/indicator-province')}}";
-        $.ajax({
-          url: urlIndicatorProvince,
-          type: "get",
-          data: {
-            year,
-            province_id: provinceId,
-            dimension_id: dimensionId,
-          },
-          success: function(dataProvince) {
-            if (dataProvince.length > 0) {
-              let text = '';
-              let chartLine = '';
+              },
+            }]
+          })
+          myChart.data.images = [];
+          myChart.data.labels = [];
+          for (let i = 0; i < data.length; i++) {
+            myChart.data.images.push(data[i].dimension_icon);
+            myChart.data.labels.push(data[i].dimension_name);
+            myChart.data.datasets[0].data.push(data[i].dimension_value);
+          };
 
-              function generateDescription(item) {
-                text += `<div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6>`;
-                if (item.indicator_description.length < 65) {
-                  text += `<p style="padding-bottom:15px;">${item.indicator_description}</p></div>`;
-                } else {
-                  text += `<p>${item.indicator_description}</p></div>`;
-                }
-              }
-
-              function generateChart(item, index) {
-                chartLine += `<ul id='timeline'><li class='entry'>
-                <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label-min'>Nilai Minimum</span>
-                <span class='bottom-label-min' id="indicator-min">${item.min}</span>
-                <span class='circle-black-min'></span>
-                </li>`;
-                if (item.indicator_value >= item.indicator_nasional && item.indicator_nasional >= item.indicator_target_value) {
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                }
-                if (item.indicator_value > item.indicator_target_value && item.indicator_target_value > item.indicator_nasional) {
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                }
-                if (item.indicator_nasional > item.indicator_target_value && item.indicator_target_value > item.indicator_value) {
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                }
-                if (item.indicator_nasional > item.indicator_value && item.indicator_value > item.indicator_target_value) {
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                }
-                if (item.indicator_target_value > item.indicator_nasional && item.indicator_nasional > item.indicator_value) {
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                }
-                if (item.indicator_target_value > item.indicator_value && item.indicator_value > item.indicator_nasional) {
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-nasional">${item.indicator_nasional}</span>
-                  <span class='circle-blue'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger2${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-provinsi">${item.indicator_value}</span>
-                  <span class='circle-info'></span>
-                  </li>`;
-                  chartLine += `<li class='entry'>
-                  <input checked='checked' class='radio' id='trigger3${index}+' name='trigger' type='radio'>
-                  <span class='top-label' id="indicator-proyeksi">${item.indicator_target_value}</span>
-                  <span class='circle-red'></span>
-                  </li>`;
-                }
-                chartLine += `<li class='entry'>
-                <input checked='checked' class='radio' id='trigger1${index}+' name='trigger' type='radio'>
-                <span class='top-label-max'>Nilai Maksimum</span>
-                <span class='bottom-label-max' id="indicator-max">${item.max}</span>
-                <span class='circle-black-max'></span>
-                </li></ul>`;
-              }
+          myChart.update();
+          $.ajax({
+            url: urlAreaNasional + '/' + '2019' + '/province-id' + '/' + provinceId,
+            success: function(data2019) {
+              myChart.data.images = [];
+              myChart.data.labels = [];
+              for (let i = 0; i < data2019.length; i++) {
+                myChart.data.images.push(data[i].dimension_icon);
+                myChart.data.labels.push(data[i].dimension_name);
+                myChart.data.datasets[1].data.push(data2019[i].dimension_value);
+              };
+              myChart.update();
               $.ajax({
-                url: urlIndicatorProvince,
-                type: "get",
-                data: {
-                  year,
-                  province_id: '1001',
-                  dimension_id: dimensionId,
-                },
-                success: function(dataNasional) {
-                  dataNasional.forEach((n, j) => {
-                    const indexData = dataProvince.map(function(o) {
-                      return o.indicator_code;
-                    }).indexOf(n.indicator_code);
-                    if (indexData >= 0) {
-                      dataProvince[indexData].indicator_nasional = n.indicator_value;
-                    }
-                  });
-                  dataProvince.forEach(generateDescription);
-                  dataProvince.forEach(generateChart);
-                  document.getElementById("description").innerHTML = text;
-                  document.getElementById("chart-line-custom").innerHTML = chartLine;
-                  $('#line-chart').show();
+                url: urlAreaNasional + '/' + '2020' + '/province-id' + '/' + provinceId,
+                success: function(data2020) {
+                  myChart.data.images = [];
+                  myChart.data.labels = [];
+                  for (let i = 0; i < data2020.length; i++) {
+                    myChart.data.images.push(data[i].dimension_icon);
+                    myChart.data.labels.push(data[i].dimension_name);
+                    myChart.data.datasets[2].data.push(data2020[i].dimension_value);
+                  };
+
+                  myChart.update();
                 }
               });
             }
+          });
+        }
+      });
+    };
+    // const getTotalAreaNasional = (provinceId) => {
+    //   const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
+    //   $.ajax({
+    //     url: urlTotalAreaNasional + '/2018' + '/province-id' + '/' + provinceId + '/total',
+    //     success: function(data) {
+    //       if (data) {
+    //         $("#total-ipk-nasional-2018").text(data.total);
+    //       }
+    //     }
+    //   });
+    //   $.ajax({
+    //     url: urlTotalAreaNasional + '/2019' + '/province-id' + '/' + provinceId + '/total',
+    //     success: function(data) {
+    //       if (data) {
+    //         $("#total-ipk-nasional-2019").text(data.total);
+    //       }
+    //     }
+    //   });
+    //   $.ajax({
+    //     url: urlTotalAreaNasional + '/2020' + '/province-id' + '/' + provinceId + '/total',
+    //     success: function(data) {
+    //       if (data) {
+    //         $("#total-ipk-nasional-2020").text(data.total);
+    //       }
+    //     }
+    //   });
+    // }
+    const getTotalAreaProvince = (provinceId) => {
+      const urlTotalAreaProvince = "{{url('/chart/area-nasional')}}";
+      $.ajax({
+        url: urlTotalAreaProvince + '/2018' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-provinsi-2018").text(data.total);
           }
-        });
-
-      }
-      getDataAreaProvince('2018', provinceSelected);
-      getTotalAreaNasional(provinceNasional);
-      getTotalAreaProvince(provinceSelected);
-      $('#change-year-indicator').on('change', () => {
-        year = $('#change-year-indicator').find(":selected").val();
-        $('#line-chart').hide();
-        $('.dimension-action').removeClass('text-success');
+        }
       });
-
-      $('.dimension-action').on('click', function() {
-        // change button
-        let dimensionId = $(this).data('id');
-        let dimensionName = 'Dimensi ' + $(this).data('name');
-        $('#title-line').text(dimensionName + ' ' + year);
-        $('.dimension-action').removeClass('text-success');
-        $(this).addClass('text-success');
-        getDimensionIndicator(year, provinceSelected, dimensionId);
+      $.ajax({
+        url: urlTotalAreaProvince + '/2019' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-provinsi-2019").text(data.total);
+          }
+        }
       });
-
-      const getBarData = (yearBar, provinceId) => {
-        const urlIndicatorProvince = "{{url('/chart/dimension-province')}}";
-        $.ajax({
-          url: urlIndicatorProvince,
-          type: "get",
-          data: {
-            year: yearBar,
-            province_id: provinceId,
-          },
-          success: function(dataBar) {
-            $('#dimension-bar').remove();
-            $('#canvas-dimension').append('<canvas id="dimension-bar"><canvas>');
-            const resultData = dataBar;
-            const labelData = [];
-            const labelRank = [];
-            const valueData = [];
-            const valueDataNasional = [];
-            const labelTargetData = [];
-            const valueTargetData = [];
-            const options = {
-              responsive: true,
-              title: {
-                display: true,
-              },
-              tooltips: {
-                mode: 'index',
-                intersect: true
-              },
-              scales: {
-                x: {
-                  ticks: {
-                    color: [],
-                  }
+      $.ajax({
+        url: urlTotalAreaProvince + '/2020' + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-ipk-provinsi-2020").text(data.total);
+          }
+        }
+      });
+    }
+    $('#line-chart').hide();
+    const getDimensionIndicator = (year, provinceId, dimensionId) => {
+      const urlIndicatorProvince = "{{url('/chart/indicator-province')}}";
+      $.ajax({
+        url: urlIndicatorProvince,
+        type: "get",
+        data: {
+          year,
+          province_id: provinceId,
+          dimension_id: dimensionId,
+        },
+        success: function(dataProvince) {
+          $.ajax({
+            url: urlIndicatorProvince,
+            type: "get",
+            data: {
+              year,
+              province_id: '1001',
+              dimension_id: dimensionId,
+            },
+            success: function(dataNasional) {
+              dataNasional.forEach((n, j) => {
+                const indexData = dataProvince.map(function(o) {
+                  return o.indicator_code;
+                }).indexOf(n.indicator_code);
+                if (indexData >= 0) {
+                  dataProvince[indexData].indicator_nasional = n.indicator_value;
                 }
+              });
+              let description = '';
+              $('#line-chart').show();
+
+              function generateDescription(item, index) {
+                description += `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
+           <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
               }
-            };
-            $.ajax({
-              url: urlIndicatorProvince,
-              type: "get",
-              data: {
-                year: yearBar,
-                province_id: provinceNasional,
-              },
-              success: function(dataBarNasional) {
-                for (const i in resultData) {
-                  const newLabel = [resultData[i].dimension_name, resultData[i].rank];
-                  labelData.push(newLabel);
-                  labelRank.push(resultData[i].rank);
-                  valueData.push(resultData[i].dimension_value);
-                  const indexData = dataBarNasional.map(function(o) {
-                    return o.dimension_name;
-                  }).indexOf(resultData[i].dimension_name);
-                  if (indexData >= 0) {
-                    console.log(dataBarNasional[indexData]);
-                    let color = 'gray';
-                    if (dataBarNasional[indexData].dimension_value > resultData[i].dimension_value) {
-                      color = 'red';
-                    }
-                    if (resultData[i].rank == '1/34') {
-                      color = 'green';
-                    }
-                    options.scales.x.ticks.color.push(color);
-                    valueDataNasional.push(dataBarNasional[indexData].dimension_value);
-                  }
-                  labelTargetData.push(resultData[i].dimension_name);
-                  valueTargetData.push(resultData[i].dimension_target);
-                }
-                const dimensionBar = document.getElementById('dimension-bar');
-                // create bar
-                const dimensionChart = new Chart(dimensionBar, {
-                  type: 'bar',
+
+              function generateChart(item, index) {
+                console.log(item);
+                const nMin = item.min;
+                const nMax = item.max;
+
+                const indicatorCtx = $("body").find('#chart-indicator-' + index);
+                // const indicatorCtx = document.getElementById('chart-indicator-0');
+                const indicatorLine = new Chart(indicatorCtx, {
+                  type: 'line',
+                  plugins: [ChartDataLabels],
                   data: {
-                    labels: labelData,
-                    datasets: [{
+                    labels: [''],
+                    images: [],
+                    datasets: [
+                      // {
+                      //   label: item.min,
+                      //   data: [item.min, item.indicator_target_value, item.indicator_value, item.max],
+                      // },
+                      {
+                        // type: 'line',
+                        label: 'Nilai Minimum',
+                        data: [item.min],
+                        backgroundColor: 'black',
+                        borderColor: 'black',
+                        datalabels: {
+                          clip: true,
+                          offset: -60,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`                    Nilai\n                Minimum\n                      ${nMin}`),
+                          labels: {
+                            value: {
+                              color: 'black',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
+                        label: "{{$provinsi->province_name}}",
+                        backgroundColor: '#204498',
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
+                        borderColor: '#204498',
+                        data: [item.indicator_value],
+                        datalabels: {
+                          offset: 10,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`${val}`),
+                          labels: {
+                            value: {
+                              color: '#204498',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
+                        label: 'Nasional',
+                        backgroundColor: '#ffffff',
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
+                        borderColor: '#6ea8e2',
+                        data: [item.indicator_nasional],
+                        datalabels: {
+                          offset: 10,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`${val}`),
+                          labels: {
+                            value: {
+                              color: '#6ea8e2',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // type: 'line',
                         label: 'Proyeksi 2024',
-                        data: valueTargetData,
-                        type: 'line',
+                        pointRadius: 5,
+                        pointHoverRadius: 5,
                         backgroundColor: 'rgb(236 127 118)',
                         borderColor: 'rgb(236 127 118)',
-                        fill: false,
+                        data: [item.indicator_target_value],
+                        datalabels: {
+                          offset: 10,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => (`${val}`),
+                          labels: {
+                            value: {
+                              color: 'rgb(236 127 118)',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
                       },
                       {
-                        label: 'Nilai Dimensi Nasional Tahun ' + yearBar,
-                        backgroundColor: '#0dcaf0',
-                        borderColor: '#0dcaf0;',
-                        data: valueDataNasional,
+                        // type: 'line',
+                        label: 'Nilai Maksimum',
+                        backgroundColor: 'black',
+                        // pointRadius: 5,
+                        // pointHoverRadius: 5,
+                        borderColor: 'black',
+                        data: [item.max],
+                        datalabels: {
+                          offset: -60,
+                          align: 'top',
+                          anchor: 'end',
+                          formatter: (val) => ('     Nilai\nMaksimum              \n   ' + '    ' + nMax),
+                          labels: {
+                            value: {
+                              color: 'black',
+                              font: {
+                                size: 12,
+                              }
+                            }
+                          }
+                        }
                       },
-                      {
-                        label: 'Nilai Dimensi Provinsi {{$provinsi->province_name}} Tahun ' + yearBar,
-                        backgroundColor: '#0d6efd',
-                        borderColor: '#0d6efd;',
-                        data: valueData,
-                      },
-
                     ]
                   },
-                  options: options
-                });
-                dimensionChart.config._config.options.scales.x.grid.display = false;
-                dimensionChart.config._config.options.scales.y.grid.display = false;
-                dimensionChart.update();
-              },
-            })
-          }
-        });
-      };
+                  options: {
+                    layout: {
+                      padding: {
+                        top: 40,
+                        right: 40,
+                        left: 40,
+                      }
+                    },
+                    maintainAspectRatio: false,
+                    plugins: {
+                      tooltip: {
+                        enabled: true,
+                      },
+                      legend: {
+                        display: false,
+                      },
+                      datalabels: {}
+                    },
+                    interaction: {
+                      mode: 'index'
+                    },
+                    indexAxis: 'y',
+                    scales: {
+                      x: {
+                        display: true,
+                        grid: {
+                          display: false,
+                        },
+                        position: 'top',
+                        ticks: {
+                          display: false
+                        },
+                      },
+                      y: {
+                        display: false,
+                        grid: {
+                          display: false,
+                        },
+                      }
+                    },
+                  },
+                })
 
-      getBarData(yearBar, provinceSelected);
-      $('#change-year-dimensi').on('change', () => {
-        let yearBarSelected = $('#change-year-dimensi').find(":selected").val();
-        getBarData(yearBarSelected, provinceSelected);
+              }
+              dataProvince.forEach(generateDescription);
+
+              document.getElementById("line-chart-new").innerHTML = description;
+              dataProvince.forEach(generateChart);
+            }
+          });
+        }
       });
-      $('#change-provinsi-dimensi').on('change', () => {
-        let newProvince = $('#change-provinsi-dimensi').find(":selected").val();
-        window.location = "{{url('/provinsi')}}" + '/' + newProvince;
-      });
+
+    }
+    getDataAreaProvince('2018', provinceSelected);
+    // getTotalAreaNasional(provinceNasional);
+    getTotalAreaProvince(provinceSelected);
+    $('#change-year-indicator').on('change', () => {
+      year = $('#change-year-indicator').find(":selected").val();
+      $('#line-chart').hide();
+      $('.dimension-action').removeClass('text-success');
     });
-  </script>
-  @endpush
+
+    $('.dimension-action').on('click', function() {
+      // change button
+      let dimensionId = $(this).data('id');
+      let dimensionName = 'Dimensi ' + $(this).data('name');
+      $('#title-line').text(dimensionName + ' ' + year);
+      $('.dimension-action').removeClass('text-success');
+      $(this).addClass('text-success');
+      getDimensionIndicator(year, provinceSelected, dimensionId);
+    });
+
+    const getBarData = (yearBar, provinceId) => {
+      const urlIndicatorProvince = "{{url('/chart/dimension-province')}}";
+      $.ajax({
+        url: urlIndicatorProvince,
+        type: "get",
+        data: {
+          year: yearBar,
+          province_id: provinceId,
+        },
+        success: function(dataBar) {
+          $('#dimension-bar').remove();
+          $('#canvas-dimension').append('<canvas id="dimension-bar"><canvas>');
+          const resultData = dataBar;
+          const labelData = [];
+          const labelRank = [];
+          const valueData = [];
+          const valueDataNasional = [];
+          const labelTargetData = [];
+          const valueTargetData = [];
+          const options = {
+            plugins: {
+              datalabels: {}
+            },
+            responsive: true,
+            title: {
+              display: true,
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: true
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: [],
+                }
+              }
+            }
+          };
+          $.ajax({
+            url: urlIndicatorProvince,
+            type: "get",
+            data: {
+              year: yearBar,
+              province_id: provinceNasional,
+            },
+            success: function(dataBarNasional) {
+              for (const i in resultData) {
+                const newLabel = [resultData[i].dimension_name, resultData[i].rank];
+                labelData.push(newLabel);
+                labelRank.push(resultData[i].rank);
+                valueData.push(resultData[i].dimension_value);
+                const indexData = dataBarNasional.map(function(o) {
+                  return o.dimension_name;
+                }).indexOf(resultData[i].dimension_name);
+                if (indexData >= 0) {
+                  let color = 'gray';
+                  if (dataBarNasional[indexData].dimension_value > resultData[i].dimension_value) {
+                    color = 'red';
+                  }
+                  if (resultData[i].rank == '1/34') {
+                    color = 'green';
+                  }
+                  options.scales.x.ticks.color.push(color);
+                  valueDataNasional.push(dataBarNasional[indexData].dimension_value);
+                }
+                labelTargetData.push(resultData[i].dimension_name);
+                valueTargetData.push(resultData[i].dimension_target);
+              }
+              const dimensionBar = document.getElementById('dimension-bar').getContext('2d');
+              // create bar
+              const dimensionChart = new Chart(dimensionBar, {
+                type: 'bar',
+                plugins: [ChartDataLabels],
+                data: {
+                  labels: labelData,
+                  datasets: [{
+                      label: 'Proyeksi 2024',
+                      data: valueTargetData,
+                      type: 'line',
+                      backgroundColor: 'rgb(236 127 118)',
+                      borderColor: 'rgb(236 127 118)',
+                      fill: false,
+                      pointRadius: 5,
+                      pointHoverRadius: 5,
+                      showLine: false,
+                    },
+                    {
+                      label: 'Nilai Dimensi Nasional Tahun ' + yearBar,
+                      backgroundColor: '#ffffff',
+                      borderColor: '#6ea8e2',
+                      borderWidth: 2,
+                      data: valueDataNasional,
+                    },
+                    {
+                      label: 'Nilai Dimensi Provinsi {{$provinsi->province_name}} Tahun ' + yearBar,
+                      backgroundColor: '#4a66ac',
+                      borderColor: '#4a66ac;',
+                      data: valueData,
+                    },
+
+                  ]
+                },
+                options: options,
+              });
+              dimensionChart.options.scales.x.grid.display = false;
+              dimensionChart.options.scales.y.grid.display = false;
+              dimensionChart.options.plugins.datalabels.align = 'end';
+              dimensionChart.options.plugins.datalabels.anchor = 'end';
+              dimensionChart.options.plugins.datalabels.formatter = (val) => (`${val}`);
+              dimensionChart.update();
+            },
+          })
+        }
+      });
+    };
+
+    getBarData(yearBar, provinceSelected);
+    $('#change-year-dimensi').on('change', () => {
+      let yearBarSelected = $('#change-year-dimensi').find(":selected").val();
+      getBarData(yearBarSelected, provinceSelected);
+    });
+    $('#change-provinsi-dimensi').on('change', () => {
+      let newProvince = $('#change-provinsi-dimensi').find(":selected").val();
+      window.location = "{{url('/provinsi')}}" + '/' + newProvince;
+    });
+  });
+</script>
+@endpush

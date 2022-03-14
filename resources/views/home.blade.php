@@ -23,7 +23,7 @@
   <div class="container">
 
     <div class="intro-img">
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/ctTYfgDvngg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/ctTYfgDvngg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="intro-info">
@@ -51,19 +51,21 @@
       Klik pada masing-masing Logo Dimensi untuk penjelasan lebih lanjut
     </p>
     <div class="container pt-3">
-      <div class="owl-carousel owl-theme">
-        @foreach($dimensi as $dataDimensi)
-        <div class="item">
-          <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-            <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
-              <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-              <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-            </a>
-          </p>
+      <center>
+        <div class="owl-carousel owl-theme">
+          @foreach($dimensi as $dataDimensi)
+          <div class="item">
+            <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+              <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
+                <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+                <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+              </a>
+            </p>
+          </div>
+          @endforeach
         </div>
-        @endforeach
-      </div>
-      <hr>
+        <hr>
+      </center>
     </div>
   </div>
 </section>
@@ -133,14 +135,23 @@
       </div>
     </div>
     <div class="container-fluid">
-      <h2 class="text-center">Pokok Pikiran Provinsi</h2>
-      <div class="row d-flex justify-content-between">
-        @foreach($province as $provinceData)
-        <div class="col-md-3 p-3 border border-dark text-center m-3" style="max-width: 200px !important;">
-          <a href="{{route('provinsi.index', $provinceData->id)}}" id="province-list" class="order-{{$provinceData->id}}" data-province-id="{{$provinceData->id}}">{{$provinceData->province_name}}</a>
-        </div>
-        @endforeach
-      </div>
+      <h2 class="text-center">Pilih Provinsi</h2>
+      <center>
+        <form class="row g-3 justify-content-center">
+          <div class="col-auto">
+            <label for="inputPassword2" class="visually-hidden"></label>
+            <select name="provinsi" id="change-province" class="form-control form-control-sm">
+                <option disabled>Pilih Provinsi</option>
+                @foreach($province as $provinsiValue)
+                <option value="{{$provinsiValue->id}}">{{$provinsiValue->province_name}}</option>
+                @endforeach
+              </select>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-sm mb-3" onclick="changeProvince()">Submit</button>
+          </div>
+        </form>
+      </center>
     </div>
   </div>
   </div>
@@ -390,12 +401,14 @@
 
       return chromaGradientsLow(percent / 100).hex();
     };
-    const onLoad = function(event, map, tahun) {
-    };
+    const onLoad = function(event, map, tahun) {};
 
     const onRegionClick = function(element, code, region, tahun) {
       // Go to prov page
-      window.location = "{{url('/provinsi')}}"+'/'+code; 
+      console.log(code);
+      if (code == 91) code = 94;
+      if (code == 92) code = 91;
+      window.location = "{{url('/provinsi')}}" + '/' + code;
     };
 
     const onLabelShow = function(event, label, code, tahun) {
@@ -465,6 +478,7 @@
           onLoad(event, map, tahun);
         },
         onRegionClick: function(element, code, region) {
+          console.log(region);
           onRegionClick(element, code, region, tahun);
         },
 
@@ -478,6 +492,119 @@
     $('#home-jqvmap-tabs-btns button[data-bs-toggle="pill"]').on('shown.bs.tab', function(event) {
       window.dispatchEvent(new Event('resize'));
     })
+  });
+  function changeProvince() {
+    const provinceChoose = $('#change-province').val();
+    window.location = "{{url('/provinsi')}}" + '/' + provinceChoose;
+  }
+
+  // ipk-nasional-chart
+  let labelYear = '2020';
+  function drawTextAtIndex(scale, index, icon, text, value) {
+    const offset = -5;
+    const r = scale.drawingArea + offset;
+    const angle = scale.getIndexAngle(index) - Math.PI / 2;
+    const x = scale.xCenter + Math.cos(angle) * r;
+    const y = scale.yCenter + Math.sin(angle) * r;
+    const ctx = scale.ctx;
+    ctx.save();
+    ctx.translate(x, y);
+    //ctx.rotate(angle + Math.PI / 2);
+    ctx.textAlign = 'center';
+    const image = new Image();
+    image.src = icon;
+    ctx.fillStyle = 'blue';
+    ctx.font = '20px material-icons'
+    ctx.drawImage(image, -10, -15, 30, 30);
+
+    ctx.font = "12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+    ctx.fillStyle = 'gray';
+    // ctx.fillText(text, 0, -5);
+    ctx.restore();
+  }
+  $(document).ready(function() {
+    let initYear = '2020';
+    let initProvince = '1001';
+    const getDataAreaNasional = (year, provinceId) => {
+      console.log(year);
+      const urlAreaNasional = "{{url('/chart/area-nasional')}}";
+      $.ajax({
+        url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
+        success: function(data) {
+          const ctx_live = document.getElementById("profil-ipk-nasional");
+          const myChart = new Chart(ctx_live, {
+            type: 'radar',
+            data: {
+              labels: [],
+              images: [],
+              datasets: [{
+                data: [],
+                borderWidth: 1,
+                borderColor: '#00c0ef',
+                label: labelYear,
+              }]
+            },
+            options: {
+              responsive: true,
+              elements: {
+                line: {
+                  borderWidth: 3
+                }
+              },
+              legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                  fontColor: "#333",
+                  fontSize: 24
+                }
+              }
+            },
+            plugins: [{
+              id: 'custom_labels',
+              afterDraw: (chart, args) => {
+                const getLabel = chart.config._config.data.labels;
+                getLabel.forEach((value, i) => {
+                  const scale = chart.scales.r;
+                  drawTextAtIndex(scale, i, chart.config._config.data.images[i], value, chart.config._config.data.datasets[0].data[i]);
+                });
+              },
+            }]
+          })
+          myChart.data.images = [];
+          myChart.data.labels = [];
+          for (let i = 0; i < data.length; i++) {
+            myChart.data.images.push(data[i].dimension_icon);
+            myChart.data.labels.push(data[i].dimension_name);
+            myChart.data.datasets[0].data.push(data[i].dimension_value);
+          };
+          myChart.update();
+        }
+      });
+    };
+    const getTotalAreaNasional = (year, provinceId) => {
+      const urlTotalAreaNasional = "{{url('/chart/area-nasional')}}";
+      $.ajax({
+        url: urlTotalAreaNasional + '/' + year + '/province-id' + '/' + provinceId + '/total',
+        success: function(data) {
+          if (data) {
+            $("#total-value-nasional").text(data.total);
+          }
+        }
+      });
+    }
+    getDataAreaNasional(initYear, initProvince);
+    getTotalAreaNasional(initYear, initProvince);
+
+    $('#change-year-nasional').on('change', () => {
+
+      $("#profil-ipk-nasional").remove();
+      $(".chart").append('<canvas id="profil-ipk-nasional" class="animated fadeIn"></canvas>');
+      const yearSelected = $(this).find(":selected").val();
+      labelYear = yearSelected;
+      getDataAreaNasional(yearSelected, initProvince);
+      getTotalAreaNasional(yearSelected, initProvince);
+    });
   });
 </script>
 @endpush

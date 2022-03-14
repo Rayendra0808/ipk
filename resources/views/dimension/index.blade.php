@@ -11,20 +11,30 @@
   th {
     white-space: nowrap !important;
   }
+
+  .owl-carousel .nav-btn {
+    height: 47px;
+    position: absolute;
+    width: 26px;
+    cursor: pointer;
+    top: 100px !important;
+  }
 </style>
 <div class="container pt-5 mt-5">
-  <div class="owl-carousel owl-theme">
-    @foreach($dimensi as $dataDimensi)
-    <div class="item">
-      <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
-        <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
-          <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
-          <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
-        </a>
-      </p>
+  <center>
+    <div class="owl-carousel owl-theme">
+      @foreach($dimensi as $dataDimensi)
+      <div class="item">
+        <p class="text-capitalize text-primary p-3 mb-2 text-left mt-4">
+          <a href="{{route('dimensi.index', [$dataDimensi['dimension_slug']])}}">
+            <img class="img-fluid img-center" src="{{asset('assets/img')}}/{{$dataDimensi['dimension_icon']}}" style="width: 100px !important;">
+            <span class="text-center">{{$dataDimensi['dimension_name']}}</span>
+          </a>
+        </p>
+      </div>
+      @endforeach
     </div>
-    @endforeach
-  </div>
+  </center>
 </div>
 <div style="background: url({{asset('assets/img/bawah.png')}});
     background-position-y: center; padding:60px;">
@@ -61,7 +71,7 @@
           <td>{{$valueIndicator->indicator_description}}</td>
           <td>{{$valueIndicator->min}}</td>
           <td>{{$valueIndicator->max}}</td>
-          <td>{{$valueIndicator->indicator_source}}</td>
+          <td>{{$valueIndicator->indicator_source == null ? 'Susenas MSBP' : $valueIndicator->indicator_source}}</td>
         </tr>
         @endforeach
     </table>
@@ -83,7 +93,7 @@
   <h4 class="text-center">Pilih salah satu tahun data:</h3>
     <div class="d-flex justify-content-center">
       @php
-        sort($year);
+      sort($year);
       @endphp
       @foreach($year as $yearData)
       <button id="btn-{{$yearData}}" class="btn btn-default btn-year btn-sm fs-4 text-primary border m-3" data-year="{{$yearData}}">
@@ -96,6 +106,11 @@
         <canvas id="dimension-bar"></canvas>
       </div>
     </div>
+</div>
+<div class="d-flex flex-row-reverse">
+  <p style="font-size:12px;margin-right:25px">
+    * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+  </p>
 </div>
 @endsection
 @push('custom-scripts')
@@ -129,14 +144,15 @@
           valueData.push(resultData[i].dimension_value);
           labelTargetData.push(resultData[i].province_name);
           valueTargetData.push(resultData[i].dimension_target);
-          backgroundColor.push('rgb(65 70 75)');
-          borderColor.push('rgb(65 70 75)');
+          backgroundColor.push('#212529');
+          borderColor.push('#212529');
         }
-        const dimensionBar = document.getElementById('dimension-bar');
+        const dimensionBar = document.getElementById('dimension-bar').getContext('2d');;
 
         // create bar
         const dimensionChart = new Chart(dimensionBar, {
           type: 'bar',
+          plugins: [ChartDataLabels],
           data: {
             labels: labelData,
             datasets: [{
@@ -145,24 +161,70 @@
                 type: 'line',
                 backgroundColor: 'rgb(236 127 118)',
                 borderColor: 'rgb(236 127 118)',
-                fill: false
+                fill: false,
+                pointRadius: 5,
+                pointHoverRadius: 5,
+                showLine: false,
+                datalabels: {
+                  align: 'top',
+                  anchor: 'end',
+                  formatter: (val) => (`${val}`),
+                  labels: {
+                    value: {
+                      color: 'black',
+                      font: {
+                        size: 12,
+                      }
+                    }
+                  }
+                }
               },
               {
+                type: 'bar',
                 label: 'Perkembangan Nilai Dimensi Tahun ' + year,
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
+                barPercentage: 0.8,
+                padding: 10,
                 data: valueData,
+                datalabels: {
+                  rotation: -90,
+                  align: 'top',
+                  anchor: 'end',
+                  offset: -40,
+                  formatter: (val) => (`${val}`),
+                  labels: {
+                    value: {
+                      color: 'white',
+                      font: {
+                        size: 12,
+                      }
+                    }
+                  }
+                }
               },
 
             ]
           },
-          options: options,
+          options: {
+            tooltips: {
+              enabled: true
+            },
+            hover: {
+              animationDuration: 1
+            },
+            animation: {
+              duration: 1000,
+            },
+            plugins: {
+              datalabels: {}
+            }
+          },
         });
         const indexData = dimensionChart.config._config.data.labels.map(function(o) {
-                    return o;
-                  }).indexOf('NASIONAL');
+          return o;
+        }).indexOf('NASIONAL');
         if (indexData >= 0) {
-          // dimensionChart.config._config.data.datasets[1].bars[indexData].fillColor = 'green';
           dimensionChart.config._config.data.datasets[1].backgroundColor[indexData] = ['red'];
           dimensionChart.config._config.data.datasets[1].borderColor[indexData] = ['red'];
           dimensionChart.config._config.options.scales.x.ticks.maxRotation = 180;

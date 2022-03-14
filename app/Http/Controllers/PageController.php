@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Dimension;
 use App\Models\Province;
+use App\Models\DimensionTotalValueProvince;
 use App\Traits\TransformTrait;
+use Illuminate\Http\Request;
 class PageController extends Controller
 {
   use TransformTrait;
@@ -34,13 +36,15 @@ class PageController extends Controller
     return view('nasional.index', compact('dimensi', 'year'));
   }
 
-  public function provinsi($provinceId)
+  public function provinsi(Request $request, $provinceId)
   {
+
     $dimensi = Dimension::getAll();
     $year = Dimension::getYear();
     $provinsi = Province::find($provinceId);
     $provinsiData = Province::getAll();
+    $totalData = DimensionTotalValueProvince::getDimensionTotal($provinceId);
  
-    return view('provinsi.index', compact('dimensi', 'year', 'provinsi', 'provinsiData'));
+    return view('provinsi.index', compact('dimensi', 'year', 'provinsi', 'provinsiData', 'totalData'));
   }
 }
