@@ -585,16 +585,16 @@
                 // },
                 {
                   // type: 'line',
-                  label: 'Nilai Minimum',
+                  label: 'Min',
                   data: [item.min],
                   backgroundColor: 'black',
                   borderColor: 'black',
                   datalabels: {
                     clip: true,
-                    offset: -60,
+                    offset: -70,
                     align: 'top',
                     anchor: 'end',
-                    formatter: (val) => (`                    Nilai\n                Minimum\n                      ${nMin}`),
+                    formatter: (val) => (`       Min\n         ${nMin}`),
                     labels: {
                       value: {
                         color: 'black',
@@ -631,13 +631,13 @@
                 {
                   // type: 'line',
                   label: 'Nasional',
-                  backgroundColor: '#ffffff',
-                  pointRadius: 5,
-                  pointHoverRadius: 5,
-                  borderColor: '#6ea8e2',
+                  backgroundColor: '#444444',
+                  pointRadius: 6,
+                  pointHoverRadius: 6,
+                  borderColor: '#444444',
                   data: [item.indicator_value],
                   datalabels: {
-                    offset: 10,
+                    offset: -35,
                     align: 'top',
                     anchor: 'end',
                     formatter: (val) => (`${val}`),
@@ -653,17 +653,17 @@
                 },
                 {
                   // type: 'line',
-                  label: 'Nilai Maksimum',
+                  label: 'Max',
                   backgroundColor: 'black',
                   // pointRadius: 5,
                   // pointHoverRadius: 5,
                   borderColor: 'black',
                   data: [item.max],
                   datalabels: {
-                    offset: -60,
+                    offset: -70,
                     align: 'top',
                     anchor: 'end',
-                    formatter: (val) => ('     Nilai\nMaksimum              \n   ' + '    '+ nMax),
+                    formatter: (val) => ('\nMax\n '+ nMax),
                     labels: {
                       value: {
                         color: 'black',
