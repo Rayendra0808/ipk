@@ -148,7 +148,7 @@
               </select>
           </div>
           <div class="col-auto">
-            <button type="button" class="btn btn-primary btn-sm mb-3" onclick="changeProvince()">Submit</button>
+            <button type="button" class="btn btn-primary btn-sm mb-3" onclick="changeProvince()">Pilih Provinsi</button>
           </div>
         </form>
       </center>
