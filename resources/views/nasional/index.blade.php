@@ -353,7 +353,7 @@
     <div class="container border mb-5 mt-5">
       <h3 id="title-line" class="mt-3"></h3>
       <div class="d-flex justify-content-end" id="sticky-custom">
-          <p class="p-2 text-primary">Nasional</p>
+          <p class="p-2">Nasional</p>
           <p class="p-2 text-danger">Proyeksi 2024</p>
       </div>
       <div class="row p-1" id="line-chart-new">
@@ -644,7 +644,7 @@
                     formatter: (val) => (`${val}`),
                     labels: {
                       value: {
-                        color: '#6ea8e2',
+                        color: '#444444',
                         font: {
                           size: 12,
                         }

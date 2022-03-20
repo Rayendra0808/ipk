@@ -292,8 +292,15 @@
 <div class="container mb-5 mt-5">
   <h4 class="text-center">Pilih provinsi lainnya</h4>
   <div class="d-flex flex-row-reverse">
+    @if(\File::exists("assets/provinsi-file/$provinsi->id.pdf"))
+    <a class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
+    border-color: #6f42c1;" href="{{url('/')}}/assets/provinsi-file/{{$provinsi->id}}.pdf" target="_blank"><i class="fa fa-download"></i> Download</a>
+    @else
+    <a class="btn btn-primary disabled" style="background: #6f42c1;margin-left:20px;
+    border-color: #6f42c1;" href="{{url('/')}}/assets/provinsi-file/{{$provinsi->id}}.pdf" target="_blank"><i class="fa fa-download"></i> Download</a>
+    @endif
     <button class="btn btn-primary" style="background: #6f42c1;
-    border-color: #6f42c1;" type="button" onclick="print();"><i class="fa fa-print"></i> Cetak Halaman</button>
+    border-color: #6f42c1;" type="button" onclick="print();"><i class="fa fa-print"> </i> Cetak Halaman</button>
   </div>
 
   <center>
@@ -404,7 +411,7 @@
     <h3 id="title-line" class="mt-3"></h3>
     <div class="d-flex justify-content-end" id="sticky-custom">
       <p class="p-2" style="color:#204498;">{{$provinsi->province_name}}</p>
-      <p class="p-2 text-primary">Nasional</p>
+      <p class="p-2">Nasional</p>
       <p class="p-2 text-danger">Proyeksi 2024</p>
     </div>
     <div class="row p-1" id="line-chart-new">
@@ -770,7 +777,7 @@
                           offset: -70,
                           align: 'top',
                           anchor: 'end',
-                          formatter: (val) => ('\nMax\n '+ nMax),
+                          formatter: (val) => ('\nMax\n ' + nMax),
                           labels: {
                             value: {
                               color: 'black',
@@ -877,6 +884,7 @@
           const valueTargetData = [];
           const options = {
             plugins: {
+              legend: {},
               datalabels: {}
             },
             responsive: true,
@@ -891,7 +899,13 @@
               x: {
                 ticks: {
                   color: [],
-                }
+                },
+              },
+              y: {
+                ticks: {
+                  label: [],
+                  value: [],
+                },
               }
             }
           };
@@ -961,8 +975,10 @@
                 },
                 options: options,
               });
+              console.log(dimensionChart);
               dimensionChart.options.scales.x.grid.display = false;
               dimensionChart.options.scales.y.grid.display = false;
+              dimensionChart.options.scales.y.suggestedMax = 120;
               dimensionChart.options.plugins.datalabels.align = 'end';
               dimensionChart.options.plugins.datalabels.anchor = 'end';
               dimensionChart.options.plugins.datalabels.formatter = (val) => (`${val}`);
