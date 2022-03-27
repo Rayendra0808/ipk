@@ -16,7 +16,7 @@ trait TransformTrait
         'dimension_value' => 0,
       );
       foreach ($value['dimension_values'] as $dimensionValue ) {
-        $result[$keyDimension]['dimension_value'] = $dimensionValue['dimension_value'];
+        $result[$keyDimension]['dimension_value'] = $this->decimalValue($dimensionValue['dimension_value']);
       }
     }
     return $result;
@@ -24,7 +24,7 @@ trait TransformTrait
 
   public function dimensionTotalValueToChartResponse($data)
   {
-    $result = ['total' => $data->total, 'year'=> $data->year];
+    $result = ['total' => $this->decimalValue($data->total), 'year'=> $data->year];
     return $result;
   }
 
@@ -42,7 +42,7 @@ trait TransformTrait
         'province_name'=>$value['province']['province_name'],
         'dimension_name'=>$value['dimension']['dimension_name'],
         'dimension_icon'=>$value['dimension']['dimension_icon'],
-        'dimension_value'=>$value['dimension_value'],
+        'dimension_value'=>$this->decimalValue($value['dimension_value']),
         'dimension_target'=>0,
         'rank'=>$value['rank'] != null ? $value['rank']['sort'] .'/34' : '0/34',
         'year'=>$value['year'],
@@ -50,7 +50,7 @@ trait TransformTrait
       foreach ($dataTarget as $keyTarget => $valueTarget) {
         if ($value['province']['id'] === $valueTarget['province_id'] 
           && $value['dimension_id'] === $valueTarget['dimension_id']) 
-          $result[$key]['dimension_target'] = $valueTarget['dimension_target_value'];
+          $result[$key]['dimension_target'] = $this->decimalValue($valueTarget['dimension_target_value']);
       }
     }
     return $result;
@@ -64,7 +64,7 @@ trait TransformTrait
         'province_id'=>$value['province']['id'],
         'province_name'=>$value['province']['province_name'],
         'dimension_name'=>$value['dimension']['dimension_name'],
-        'dimension_value'=>$value['dimension_target_value'],
+        'dimension_value'=>$this->decimalValue($value['dimension_target_value']),
         'year'=>$value['year'],
       );
     }
@@ -85,12 +85,16 @@ trait TransformTrait
         'indicator_target_value' => 0,
       );
       foreach ($value['indicator_values'] as $indicatorValue ) {
-        $result[$keyIndicator]['indicator_value'] = round($indicatorValue['indicator_value'], 2);
+        $result[$keyIndicator]['indicator_value'] = $this->decimalValue($indicatorValue['indicator_value']);
       }
       foreach ($value['indicator_target_values'] as $indicatorTargetValue ) {
-        $result[$keyIndicator]['indicator_target_value'] = round($indicatorTargetValue['indicator_target_value'], 2);
+        $result[$keyIndicator]['indicator_target_value'] = $this->decimalValue($indicatorTargetValue['indicator_target_value']);
       }
     }
     return $result;
+  }
+
+  public function decimalValue($value) {
+    return number_format((float)$value, 2, '.', '');
   }
 }
