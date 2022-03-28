@@ -340,11 +340,10 @@
           </thead>
           <tbody>
             @foreach($totalData as $keyData => $dataValue)
-
             <tr>
               <td>{{$keyData}}</td>
               <td>{{$totalData[$keyData][0]['NASIONAL']}}</td>
-              <td>{{$totalData[$keyData][1][$provinsi->province_name]}}</td>
+              <td>{{number_format((float)$totalData[$keyData][1][$provinsi->province_name], 2, '.', '')}}</td>
             </tr>
 
             @endforeach
@@ -657,7 +656,6 @@
               }
 
               function generateChart(item, index) {
-                console.log(item);
                 const nMin = item.min;
                 const nMax = item.max;
 
@@ -769,8 +767,8 @@
                         // type: 'line',
                         label: 'Max',
                         backgroundColor: 'black',
-                        // pointRadius: 5,
-                        // pointHoverRadius: 5,
+                          // pointRadius: 5,
+                          // pointHoverRadius: 5,
                         borderColor: 'black',
                         data: [item.max],
                         datalabels: {
@@ -793,9 +791,10 @@
                   options: {
                     layout: {
                       padding: {
-                        top: 40,
+                        top: 45,
                         right: 40,
-                        left: 40,
+                        left: 0,
+                        bottom: 40,
                       }
                     },
                     maintainAspectRatio: false,
@@ -814,13 +813,17 @@
                     indexAxis: 'y',
                     scales: {
                       x: {
+                        position: 'right',
+                        beginAtZero: false,
+                        offset: false,
                         display: true,
                         grid: {
                           display: false,
                         },
                         position: 'top',
                         ticks: {
-                          display: false
+                          stepSize: 1,
+                          display: false,
                         },
                       },
                       y: {
@@ -975,7 +978,8 @@
                 },
                 options: options,
               });
-              console.log(dimensionChart);
+              dimensionChart.options.scales.y.grid.borderColor = 'black';
+              dimensionChart.options.scales.x.grid.borderColor = 'black';
               dimensionChart.options.scales.x.grid.display = false;
               dimensionChart.options.scales.y.grid.display = false;
               dimensionChart.options.scales.y.suggestedMax = 120;

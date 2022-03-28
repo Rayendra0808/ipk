@@ -707,6 +707,7 @@
                     },
                     position: 'top',
                     ticks: {
+                      stepSize: 1,
                       display: false
                     },
                   },

@@ -64,6 +64,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{{url('/')}}">Beranda</a>
               </li>
+            @if(!Request::is('/'))
               <li class="nav-item">
                 <a class="nav-link" href="{{url('/')}}#about">Tentang IPK</a>
               </li>
@@ -73,6 +74,17 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{url('/')}}#provinsi">IPK Provinsi</a>
               </li>
+              @else
+              <li class="nav-item">
+                <a class="nav-link" href="#about">Tentang IPK</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nasional">IPK Nasional</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#provinsi">IPK Provinsi</a>
+              </li>
+            @endif
             </ul>
           </div>
         </div>
