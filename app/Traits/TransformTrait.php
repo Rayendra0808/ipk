@@ -48,8 +48,8 @@ trait TransformTrait
         'year'=>$value['year'],
       );
       foreach ($dataTarget as $keyTarget => $valueTarget) {
-        if ($value['province']['id'] === $valueTarget['province_id'] 
-          && $value['dimension_id'] === $valueTarget['dimension_id']) 
+        if ($value['province']['id'] == $valueTarget['province_id'] 
+          && $value['dimension_id'] == $valueTarget['dimension_id']) 
           $result[$key]['dimension_target'] = $this->decimalValue($valueTarget['dimension_target_value']);
       }
     }

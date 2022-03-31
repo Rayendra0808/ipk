@@ -496,6 +496,12 @@
               ]
             },
             options: {
+              scale: {
+                beginAtZero: true,
+                  max: 100,
+                  min: 0,
+                  stepSize: 10
+              },
               responsive: true,
               interaction: {
                 mode: 'index'
