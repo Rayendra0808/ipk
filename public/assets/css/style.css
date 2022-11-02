@@ -18,6 +18,7 @@ body {
 a {
   color: #007bff;
   transition: 0.5s;
+  text-decoration: none;
 }
 
 a:hover,
@@ -47,7 +48,7 @@ h6 {
   padding: 0;
 }
 
-#sticky-custom{
+#sticky-custom {
   position: sticky;
   top: 100px;
 }
@@ -132,7 +133,7 @@ h6 {
 /*---------------------------------------------------------------------
 Chart 
 ----------------------------------------------------------------------*/
-.bar-chart-container{
+.bar-chart-container {
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
   width: auto;
@@ -188,11 +189,11 @@ Chart
   margin-top: 60px;
 }
 
-.navbar-ipk > .nav-item > a {
+.navbar-ipk>.nav-item>a {
   color: #494d50 !important;
 }
 
-.navbar-ipk > .nav-item {
+.navbar-ipk>.nav-item {
   margin-right: 20px;
 }
 
@@ -208,7 +209,7 @@ Chart
   padding: 200px 0 120px 0;
 }
 
-#into-detail{
+#into-detail {
   width: 100%;
   position: relative;
   background: url("../img/bawah.png") center bottom no-repeat;
@@ -216,14 +217,22 @@ Chart
   padding: 200px 0 120px 0;
 }
 
-#intro .intro-img {
-  width: 50%;
-  float: right;
+#intro .intro-carousel .carousel-item {
+  padding: 0 10px;
 }
 
-#intro .intro-info {
-  width: 50%;
-  float: left;
+#intro .intro-carousel .carousel-item iframe {
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+#intro .intro-carousel .carousel-control-next, .carousel-control-prev {
+  margin: auto;
+  height: 40%;
+}
+
+#intro .intro-carousel .carousel-indicators {
+  margin-bottom: -2rem;
 }
 
 #intro .intro-info h2 {
@@ -248,8 +257,10 @@ Chart
   padding: 10px 32px;
   border-radius: 50px;
   transition: 0.5s;
-  margin: 0 20px 20px 0;
+  margin: 0px 20px 0px 0px;
+  width: fit-content;
   color: #fff;
+  background-color: transparent;
 }
 
 #intro .intro-info .btn-get-started {
@@ -274,6 +285,23 @@ Chart
   color: #fff;
 }
 
+#intro .intro-info .modal .btn-download {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  background: #d82b2b;
+  border: 2px solid #d82b2b;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+#intro .intro-info .modal .btn-download svg {
+  --size: 20px;
+  width: var(--size);
+  height: var(--size);
+  margin-right: .25rem;
+}
+
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
@@ -292,7 +320,7 @@ Chart
   list-style: none;
 }
 
-.main-nav > ul > li {
+.main-nav>ul>li {
   position: relative;
   white-space: nowrap;
   float: left;
@@ -310,8 +338,8 @@ Chart
 }
 
 .main-nav a:hover,
-.main-nav .active > a,
-.main-nav li:hover > a {
+.main-nav .active>a,
+.main-nav li:hover>a {
   color: #007bff;
   text-decoration: none;
 }
@@ -330,7 +358,7 @@ Chart
   transition: ease all 0.3s;
 }
 
-.main-nav .drop-down:hover > ul {
+.main-nav .drop-down:hover>ul {
   opacity: 1;
   top: 100%;
   visibility: visible;
@@ -348,12 +376,12 @@ Chart
 }
 
 .main-nav .drop-down ul a:hover,
-.main-nav .drop-down ul .active > a,
-.main-nav .drop-down ul li:hover > a {
+.main-nav .drop-down ul .active>a,
+.main-nav .drop-down ul li:hover>a {
   color: #007bff;
 }
 
-.main-nav .drop-down > a:after {
+.main-nav .drop-down>a:after {
   content: "\f107";
   font-family: FontAwesome;
   padding-left: 10px;
@@ -364,17 +392,17 @@ Chart
   left: calc(100% - 30px);
 }
 
-.main-nav .drop-down .drop-down:hover > ul {
+.main-nav .drop-down .drop-down:hover>ul {
   opacity: 1;
   top: 0;
   left: 100%;
 }
 
-.main-nav .drop-down .drop-down > a {
+.main-nav .drop-down .drop-down>a {
   padding-right: 35px;
 }
 
-.main-nav .drop-down .drop-down > a:after {
+.main-nav .drop-down .drop-down>a:after {
   content: "\f105";
   position: absolute;
   right: 15px;
@@ -410,13 +438,13 @@ Chart
 }
 
 .mobile-nav a:hover,
-.mobile-nav .active > a,
-.mobile-nav li:hover > a {
+.mobile-nav .active>a,
+.mobile-nav li:hover>a {
   color: #74b5fc;
   text-decoration: none;
 }
 
-.mobile-nav .drop-down > a:after {
+.mobile-nav .drop-down>a:after {
   content: "\f078";
   font-family: FontAwesome;
   padding-left: 10px;
@@ -424,11 +452,11 @@ Chart
   right: 15px;
 }
 
-.mobile-nav .active.drop-down > a:after {
+.mobile-nav .active.drop-down>a:after {
   content: "\f077";
 }
 
-.mobile-nav .drop-down > a {
+.mobile-nav .drop-down>a {
   padding-right: 35px;
 }
 
@@ -1374,10 +1402,11 @@ Chart
 #owl custom 
 ----------------- **/
 
-.owl-item > .item {
+.owl-item>.item {
   width: 120px;
 }
-.owl-item > .item > p > img {
+
+.owl-item>.item>p>img {
   border: 2px solid #007bff;
   border-radius: 50%;
 }
@@ -1428,6 +1457,7 @@ Chart
   .logo {
     max-width: 400px;
   }
+
   #testimonials .testimonial-item p {
     width: 80%;
   }
@@ -1464,6 +1494,7 @@ Chart
   #why-us .card {
     margin: 0;
   }
+
   .logo {
     max-width: 300px;
   }
@@ -1483,6 +1514,14 @@ Chart
   #intro .intro-info h2 {
     font-size: 34px;
     margin-bottom: 30px;
+  }
+
+  #intro .intro-carousel .carousel-item iframe {
+    height: 200px;
+  }
+
+  #intro .intro-info .btn-services {
+    margin: 0 auto 20px;
   }
 
   .section-header p {
@@ -1509,8 +1548,8 @@ Chart
   .logo {
     max-width: 200px;
   }
+
   #intro {
     padding: 100px 0 20px 0;
   }
 }
-
