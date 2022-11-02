@@ -18,6 +18,7 @@ class CreateDimensionTotalValueProvincesTable extends Migration
             $table->foreignId('province_id')->constrained('provinces');
             $table->float('total');
             $table->integer('year');
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }

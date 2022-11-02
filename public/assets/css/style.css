@@ -189,6 +189,10 @@ Chart
   margin-top: 60px;
 }
 
+.navbar {
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, .1);
+}
+
 .navbar-ipk>.nav-item>a {
   color: #494d50 !important;
 }
@@ -308,10 +312,10 @@ Chart
 
 /* Desktop Navigation */
 
-.main-nav {
-  /* Drop Down */
-  /* Deep Drop Down */
-}
+/* .main-nav { */
+/* Drop Down */
+/* Deep Drop Down */
+/* } */
 
 .main-nav,
 .main-nav * {
@@ -1121,6 +1125,20 @@ Chart
   transition: all 0.4s ease-in-out;
 }
 
+/* Deskripsi Container
+--------------------------------*/
+
+.desc-container {
+  display: none;
+  animation: fade .3s linear;
+}
+
+.desc-container .card {
+  padding: 1rem;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, .1);
+  border-radius: 1rem;
+}
+
 /* Contact Section
 --------------------------------*/
 
@@ -1551,5 +1569,15 @@ Chart
 
   #intro {
     padding: 100px 0 20px 0;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

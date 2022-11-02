@@ -9,6 +9,12 @@
             height: 60px;
         }
 
+        #nasional .btn-selengkapnya {
+            background: #96c3ec;
+            border-radius: 25px;
+            padding: 10px 30px 10px 30px;
+        }
+
         .leaflet-container {
             width: 100%;
             max-width: 100%;
@@ -182,15 +188,22 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ url('/nasional') }}" class="btn btn-md"
-                            style="background: #96c3ec;
-            border-radius: 25px;padding: 10px 30px 10px 30px;">
-                            Selengkapnya </a>
+                        <a href="{{ url('/nasional') }}" class="btn btn-md btn-selengkapnya">Selengkapnya</a>
                     </div>
                 </div>
                 <div class="col-md-6 offset-md-2">
                     <div class="chart">
                         <canvas id="profil-ipk-nasional"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center profil-ipk-nasional-desc desc-container">
+                <div class="col-md-8 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="mb-2 fw-bold">Deskripsi</h3>
+                            <span id="profil-ipk-nasional-desc"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -216,9 +229,14 @@
                             aria-controls="home-jqvmap-tabs-2019" aria-selected="false">2019</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2020" data-bs-toggle="pill"
+                        <button class="nav-link" id="home-jqvmap-tabs-btns-2020" data-bs-toggle="pill"
                             data-bs-target="#home-jqvmap-tabs-2020" type="button" role="tab"
                             aria-controls="home-jqvmap-tabs-2020" aria-selected="true">2020</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2021" data-bs-toggle="pill"
+                            data-bs-target="#home-jqvmap-tabs-2021" type="button" role="tab"
+                            aria-controls="home-jqvmap-tabs-2021" aria-selected="true">2021</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="home-jqvmap-tabs" style="width:100%;height:400px;">
@@ -226,7 +244,9 @@
                         style="width:100%;height:400px;"></div>
                     <div class="tab-pane fade" id="home-jqvmap-tabs-2019" role="tabpanel"
                         style="width:100%;height:400px;"></div>
-                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2020" role="tabpanel"
+                    <div class="tab-pane fade" id="home-jqvmap-tabs-2020" role="tabpanel"
+                        style="width:100%;height:400px;"></div>
+                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2021" role="tabpanel"
                         style="width:100%;height:400px;"></div>
                 </div>
                 <div class="home-jqvmap-legend text-center fw-bolder mb-5"
@@ -349,11 +369,13 @@
                     "91": "Papua",
                     "92": "Papua Barat"
                 };
+
                 // ToDo: ambil dari db
                 const IPKs = [
                     '2018',
                     '2019',
-                    '2020'
+                    '2020',
+                    '2021'
                 ];
 
                 // sebelum ada api buat ambil data ya disini dulu
@@ -477,9 +499,48 @@
                             "91": 48.07,
                             "94": 46.26,
                         }
+                    },
+                    "2021": {
+                        tahun: '2021',
+                        nasional: 51.90,
+                        provinsi: {
+                            "11": 49.89,
+                            "12": 48.74,
+                            "13": 52.76,
+                            "14": 54.20,
+                            "15": 52.39,
+                            "16": 50.89,
+                            "17": 54.56,
+                            "18": 53.19,
+                            "19": 50.85,
+                            "21": 52.12,
+                            "31": 52.67,
+                            "32": 50.78,
+                            "33": 55.24,
+                            "34": 64.22,
+                            "35": 53.19,
+                            "36": 47.47,
+                            "51": 61.69,
+                            "52": 54.73,
+                            "53": 48.18,
+                            "61": 48.53,
+                            "62": 55.21,
+                            "63": 52.45,
+                            "64": 52.49,
+                            "65": 50.08,
+                            "71": 49.84,
+                            "72": 48.02,
+                            "73": 51.21,
+                            "74": 48.62,
+                            "75": 47.32,
+                            "76": 45.86,
+                            "81": 54.23,
+                            "82": 49.91,
+                            "91": 46.79,
+                            "94": 41.87,
+                        }
                     }
                 };
-
                 const chromaGradientsHigh = chroma.scale(GRADIENTS_HIGH);
                 const chromaGradientsHighColor = function(percent) {
                     percent = parseInt(percent);
@@ -629,7 +690,7 @@
                 ctx.restore();
             }
             $(document).ready(function() {
-                let initYear = '2020';
+                let initYear = '2021';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
                     console.log(year);
@@ -701,11 +762,18 @@
                 };
                 const getTotalAreaNasional = (year, provinceId) => {
                     const urlTotalAreaNasional = "{{ url('/chart/area-nasional') }}";
+                    $('.row.profil-ipk-nasional-desc').css('display', 'none');
                     $.ajax({
                         url: urlTotalAreaNasional + '/' + year + '/province-id' + '/' + provinceId +
                             '/total',
                         success: function(data) {
                             if (data) {
+                                if (data.desc) {
+                                    $('.row.profil-ipk-nasional-desc').css('display', 'flex');
+                                    $("#profil-ipk-nasional-desc").text(data.desc);
+                                } else {
+                                    $('.row.profil-ipk-nasional-desc').css('display', 'none');
+                                }
                                 $("#total-value-nasional").text(data.total);
                             }
                         }

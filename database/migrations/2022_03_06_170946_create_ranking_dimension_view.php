@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateRankingDimensionView extends Migration
 {
-   /**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -15,7 +15,7 @@ class CreateRankingDimensionView extends Migration
     {
         \DB::statement($this->createView());
     }
-   
+
     /**
      * Reverse the migrations.
      *
@@ -25,7 +25,7 @@ class CreateRankingDimensionView extends Migration
     {
         \DB::statement($this->dropView());
     }
-   
+
     /**
      * Reverse the migrations.
      *
@@ -34,7 +34,7 @@ class CreateRankingDimensionView extends Migration
     private function createView()
     {
         return <<<SQL
-            CREATE VIEW view_dimension_rank AS
+            CREATE OR REPLACE VIEW view_dimension_rank AS
                 
             SELECT b.*,
             RANK() OVER (PARTITION BY
@@ -46,7 +46,7 @@ class CreateRankingDimensionView extends Migration
             where province_id != 1001) as b
             SQL;
     }
-   
+
     /**
      * Reverse the migrations.
      *
