@@ -29,8 +29,6 @@ a:focus {
   text-decoration: none;
 }
 
-
-
 p {
   padding: 0;
   margin: 0 0 30px 0;
@@ -287,23 +285,6 @@ Chart
   background: #007bff;
   border-color: #007bff;
   color: #fff;
-}
-
-#intro .intro-info .modal .btn-download {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  background: #d82b2b;
-  border: 2px solid #d82b2b;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-#intro .intro-info .modal .btn-download svg {
-  --size: 20px;
-  width: var(--size);
-  height: var(--size);
-  margin-right: .25rem;
 }
 
 /*--------------------------------------------------------------
@@ -1465,6 +1446,32 @@ Chart
 
 .text-intro {
   text-align: justify;
+}
+
+
+.btn-download {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  background: #d82b2b;
+  border: 2px solid #d82b2b;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.btn-download:hover,
+.btn-download:active,
+.btn-download:hover {
+  color: #fff !important;
+  background: #a81c1c;
+  border: 2px solid #a81c1c;
+}
+
+.btn-download svg {
+  --size: 20px;
+  width: var(--size);
+  height: var(--size);
+  margin-right: .25rem;
 }
 
 /*--------------------------------------------------------------
