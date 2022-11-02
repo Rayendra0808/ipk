@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Dimension;
 use App\Models\Province;
 use App\Models\DimensionTotalValueProvince;
 use App\Traits\TransformTrait;
 use Illuminate\Http\Request;
+
 class PageController extends Controller
 {
   use TransformTrait;
@@ -24,7 +26,7 @@ class PageController extends Controller
     $year = Dimension::getYear();
     $dataIndicator = Dimension::getDimensionWithIndicator($slug);
     $data = $this->dimensionQualityAndIndicatorResponse($dataIndicator);
-    $titlePage = 'Indeks Pembangunan Kebudayaan | Dimensi '. $data['dimension_name'];
+    $titlePage = 'Indeks Pembangunan Kebudayaan | Dimensi ' . $data['dimension_name'];
     return view('dimension.index', compact('data', 'dimensi', 'year', 'titlePage'));
   }
 
@@ -40,14 +42,13 @@ class PageController extends Controller
 
   public function provinsi(Request $request, $provinceId)
   {
-
     $dimensi = Dimension::getAll();
     $year = Dimension::getYear();
-    $provinsi = Province::find($provinceId);
+    $provinsi = Province::getProvince($provinceId);
     $provinsiData = Province::getAll();
     $totalData = DimensionTotalValueProvince::getDimensionTotal($provinceId);
-    $titlePage = 'Indeks Pembangunan Kebudayaan | Provinsi '. ucwords(strtolower($provinsi->province_name));
- 
+    $titlePage = 'Indeks Pembangunan Kebudayaan | Provinsi ' . ucwords(strtolower($provinsi->province_name));
+
     return view('provinsi.index', compact('dimensi', 'year', 'provinsi', 'provinsiData', 'totalData', 'titlePage'));
   }
 }

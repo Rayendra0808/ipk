@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDimensionTotalValueProvincesTable extends Migration
+class CreateProvinceFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateDimensionTotalValueProvincesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dimension_total_value_provinces', function (Blueprint $table) {
+        Schema::create('province_files', function (Blueprint $table) {
             $table->id();
             $table->foreignId('province_id')->constrained('provinces');
-            $table->float('total');
-            $table->integer('year');
-            $table->text('desc')->nullable();
+            $table->string('filename');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateDimensionTotalValueProvincesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dimension_total_value_provinces');
+        Schema::dropIfExists('province_files');
     }
 }
