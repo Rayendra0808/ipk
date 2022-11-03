@@ -1,4 +1,8 @@
 @extends('app')
+@push('custom-css')
+    <link rel="stylesheet" href="{{ asset('assets/css/image-pop-up.css') }}">
+@endpush
+
 @section('content')
     <style>
         #about:before,
@@ -37,8 +41,7 @@
                                 Buku IPK</a> --}}
                             <!-- Button trigger modal -->
                             <button type="button" class="btn-services" data-bs-toggle="modal"
-                                data-bs-target="#unduhBukuIPKModal">
-                                Unduh Buku IPK
+                                data-bs-target="#unduhBukuIPKModal">Unduh Buku IPK
                             </button>
                             <!-- Modal -->
                             <div class="modal fade" id="unduhBukuIPKModal" tabindex="-1"
@@ -52,10 +55,8 @@
                                         </div>
                                         <div class="modal-body">
                                             <a target="_blank" href="{{ asset('assets/img') }}/handbook_ipk.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Unduh Hand Book
+                                                class="btn btn-download">@include('icons/pdf-icon') Handbook IPK 2020
                                                 IPK</a>
-                                            <a target="_blank" href="{{ asset('assets/pdf') }}/contoh.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Unduh PDF Lain</a>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12 order-md-2 order-1">
+                <div class="col-md-6 col-12 order-md-2 order-1 mb-md-0 mb-5">
                     <div id="intro-carousel" class="intro-carousel carousel slide" data-bs-ride="true">
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="0" class="active"
@@ -76,8 +77,8 @@
                                 aria-label="Slide 4"></button>
                         </div>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="d-block w-100">
+                            <div class="carousel-item active ">
+                                <div class="d-block w-100 text-center">
                                     <iframe width="100%" height="315"
                                         src="https://www.youtube-nocookie.com/embed/ctTYfgDvngg"
                                         title="YouTube video player" frameborder="0"
@@ -86,25 +87,19 @@
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                                <div class="d-block w-100 text-center">
+                                    <img class="image-pop-up" src="{{ asset('assets/img/img-example.jpg') }}"
+                                        alt="Contoh Image">
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/u31qwQUeGuM"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                                <div class="d-block w-100 text-center">
+                                    <img class="image-pop-up" src="{{ asset('assets/img/img-example-2.jpg') }}"
+                                        alt="Contoh Image 2">
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <div class="d-block w-100">
+                                <div class="d-block w-100 text-center">
                                     <iframe width="100%" height="315"
                                         src="https://www.youtube-nocookie.com/embed/MLpWrANjFbI"
                                         title="YouTube video player" frameborder="0"
@@ -123,6 +118,12 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+                    </div>
+                    <!-- Galery Modal -->
+                    <div id="gallery_modal" class="modal image-pop-up-modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-image">
+                        <div class="modal-caption"></div>
                     </div>
                 </div>
             </div>
@@ -569,7 +570,6 @@
 
                 const onRegionClick = function(element, code, region, tahun) {
                     // Go to prov page
-                    console.log(code);
                     if (code == 91) code = 94;
                     if (code == 92) code = 91;
                     window.location = "{{ url('/provinsi') }}" + '/' + code;
@@ -643,7 +643,6 @@
                             onLoad(event, map, tahun);
                         },
                         onRegionClick: function(element, code, region) {
-                            console.log(region);
                             onRegionClick(element, code, region, tahun);
                         },
 
@@ -665,7 +664,7 @@
             }
 
             // ipk-nasional-chart
-            let labelYear = '2020';
+            let labelYear = '2021';
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -693,7 +692,6 @@
                 let initYear = '2021';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
-                    console.log(year);
                     const urlAreaNasional = "{{ url('/chart/area-nasional') }}";
                     $.ajax({
                         url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
@@ -793,5 +791,6 @@
                 });
             });
         </script>
+        <script src="{{ asset('assets/js/image-pop-up.js') }}" type="text/javascript"></script>
     @endpush
 @endsection
