@@ -46,6 +46,7 @@
   <link rel="stylesheet" href="{{asset('assets/lib/aos/aos.css')}}">
   <link rel="stylesheet" href="{{asset('assets/lib/font-awesome/css/font-awesome.css')}}">
   <link rel="stylesheet" href="{{asset('assets/jqvmap/jqvmap.css')}}">
+  @stack('custom-css')
 </head>
 
 <body>

@@ -13,11 +13,11 @@
         }
 
         /* -------------------------------------
-                                                                                                                         * Set to false if you are not using Chrome
-                                                                                                                         * ------------------------------------- */
+                                                                                                                             * Set to false if you are not using Chrome
+                                                                                                                             * ------------------------------------- */
         /* -------------------------------------
-                                                                                                                         * Styles
-                                                                                                                         * ------------------------------------- */
+                                                                                                                             * Styles
+                                                                                                                             * ------------------------------------- */
         @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
 
         h2,
@@ -363,7 +363,7 @@
                             @foreach ($totalData as $keyData => $dataValue)
                                 <tr>
                                     <td>{{ $keyData }}</td>
-                                    <td>{{ $totalData[$keyData][0]['NASIONAL'] }}</td>
+                                    <td>{{ number_format($totalData[$keyData][0]['NASIONAL'], 2, '.', '') }}</td>
                                     <td>{{ number_format((float) $totalData[$keyData][1][$provinsi->province_name], 2, '.', '') }}
                                     </td>
                                 </tr>
