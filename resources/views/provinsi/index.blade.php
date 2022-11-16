@@ -13,11 +13,11 @@
         }
 
         /* -------------------------------------
-                                                                                                                             * Set to false if you are not using Chrome
-                                                                                                                             * ------------------------------------- */
+                                                                                                                                             * Set to false if you are not using Chrome
+                                                                                                                                             * ------------------------------------- */
         /* -------------------------------------
-                                                                                                                             * Styles
-                                                                                                                             * ------------------------------------- */
+                                                                                                                                             * Styles
+                                                                                                                                             * ------------------------------------- */
         @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
 
         h2,
@@ -301,17 +301,17 @@
             </button>
             <div class="modal fade" id="unduhProvinceFile" tabindex="-1" aria-labelledby="unduhProvinceFileLabel"
                 aria-hidden="true">
-                <div class="modal-dialog ">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="unduhProvinceFileLabel">Unduh Provinsi File</h1>
+                            <h1 class="modal-title fs-5" id="unduhProvinceFileLabel">Unduh File Provinsi</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             @foreach ($provinsi->files as $file)
                                 <a href="{{ $file->getFile() }}" class="btn btn-download" target="_blank">
                                     @include('icons/pdf-icon')
-                                    {{ $file->filename }}</a>
+                                    {{ $file->title }}</a>
                             @endforeach
                         </div>
                     </div>

@@ -231,6 +231,7 @@ Chart
 }
 
 #intro .intro-carousel .carousel-item img {
+  border: 2px solid white;
   cursor: pointer;
   border-radius: 10px;
   height: 320px;
@@ -1477,6 +1478,10 @@ Chart
   color: #fff !important;
   background: #a81c1c;
   border: 2px solid #a81c1c;
+}
+
+.btn-download:visited {
+  color: #fff !important;
 }
 
 .btn-download svg {

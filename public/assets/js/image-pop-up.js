@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
     imagePopUps.forEach(function (imagePopUp) {
         imagePopUp.addEventListener('click', function () {
             imagePopUpModal.style.display = 'flex'
-            modalImage.src = imagePopUp.getAttribute('src')
+            modalImage.src = imagePopUp.getAttribute('data-load')
             modalCaption.textContent = imagePopUp.getAttribute('alt')
-            body.style.overflowY = 'hidden'
+            body.style.overflow = 'hidden'
         })
     })
 

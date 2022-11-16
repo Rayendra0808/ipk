@@ -734,7 +734,7 @@ dimension_id,province_id,dimension_value,year,desc
 7,9100,55.50666667,2020
 7,9400,58.11,2020
 7,1001,58.00666667,2020
-1,1100,11.59,2021,"Ini adalah contoh text Provinsi Aceh Tahun 2021 Dimensi Ekonomi Budaya, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+1,1100,11.59,2021,
 1,1200,11.27,2021
 1,1300,18.97,2021
 1,1400,26.35,2021
@@ -769,7 +769,7 @@ dimension_id,province_id,dimension_value,year,desc
 1,9100,18.95,2021
 1,9400,19.38,2021
 1,1001,20.69,2021
-2,1100,76.93,2021,"Ini adalah contoh text Provinsi Aceh Tahun 2021 Dimensi Pendidikan, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+2,1100,76.93,2021
 2,1200,68.55,2021
 2,1300,72.7,2021
 2,1400,74.27,2021
