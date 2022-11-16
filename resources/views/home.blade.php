@@ -67,46 +67,28 @@
                 <div class="col-md-6 col-12 order-md-2 order-1 mb-md-0 mb-5">
                     <div id="intro-carousel" class="intro-carousel carousel slide" data-bs-ride="true">
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="0" class="active"
-                                aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="3"
-                                aria-label="Slide 4"></button>
+                            @foreach ($homeSlider as $id => $slider)
+                                <button type="button" data-bs-target="#intro-carousel"
+                                    data-bs-slide-to="{{ $id }}" class="{{ $slider['isActive'] ? 'active' : '' }}"
+                                    aria-current="true" aria-label="Slide {{ $id }}"></button>
+                            @endforeach
                         </div>
                         <div class="carousel-inner">
-                            <div class="carousel-item active ">
-                                <div class="d-block w-100 text-center">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/ctTYfgDvngg"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                            @foreach ($homeSlider as $slider)
+                                <div class="carousel-item {{ $slider['isActive'] ? 'active' : '' }}">
+                                    <div class="d-block w-100 text-center">
+                                        @if ($slider['type'] == 'youtube')
+                                            <iframe width="100%" height="315" src="{{ $slider['src'] }}"
+                                                title="YouTube video player" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                        @elseif($slider['type'] == 'image')
+                                            <img class="image-pop-up" src="{{ $slider['src'] }}"
+                                                data-load="{{ $slider['dataLoad'] }}" alt="{{ $slider['alt'] }}">
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100 text-center">
-                                    <img class="image-pop-up" src="{{ asset('assets/img/img-example.jpg') }}"
-                                        alt="Contoh Image">
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100 text-center">
-                                    <img class="image-pop-up" src="{{ asset('assets/img/img-example-2.jpg') }}"
-                                        alt="Contoh Image 2">
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100 text-center">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/MLpWrANjFbI"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#intro-carousel"
                             data-bs-slide="prev">

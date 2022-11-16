@@ -17,7 +17,19 @@ class PageController extends Controller
     $year = Dimension::getYear();
     $province = Province::getAll();
     $titlePage = 'Indeks Pembangunan Kebudayaan | Beranda';
-    return view('home', compact('dimensi', 'province', 'year', 'titlePage'));
+    $homeSlider = [
+      ['src' => 'https://www.youtube-nocookie.com/embed/ctTYfgDvngg', 'type' => 'youtube', 'isActive' => true],
+    ];
+    for ($i = 1; $i <= 10; $i++) {
+      array_push($homeSlider, [
+        'src' => asset('assets/img/home-slider/infografis IPKblue-' . $i . '-720x720.jpg'),
+        'dataLoad' => asset('assets/img/home-slider/infografis IPKblue-' . $i . '.png'),
+        'alt' => 'Infografis IPK ' . $i,
+        'type' => 'image',
+        'isActive' => false,
+      ]);
+    }
+    return view('home', compact('dimensi', 'province', 'year', 'titlePage', 'homeSlider'));
   }
 
   public function dimensi($slug)

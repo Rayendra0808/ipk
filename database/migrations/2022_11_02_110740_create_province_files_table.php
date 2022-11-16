@@ -17,6 +17,7 @@ class CreateProvinceFilesTable extends Migration
             $table->id();
             $table->foreignId('province_id')->constrained('provinces');
             $table->string('filename');
+            $table->string('title')->nullable();
             $table->timestamps();
         });
     }
