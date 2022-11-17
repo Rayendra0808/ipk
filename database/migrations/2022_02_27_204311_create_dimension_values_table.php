@@ -19,8 +19,8 @@ class CreateDimensionValuesTable extends Migration
             $table->foreignId('province_id')->constrained('provinces');
             $table->float('dimension_value');
             $table->integer('year');
+            $table->text('desc')->nullable();
             $table->timestamps();
-            
         });
     }
 

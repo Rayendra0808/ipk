@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Dimension;
 use App\Models\Province;
 use App\Models\DimensionTotalValueProvince;
 use App\Traits\TransformTrait;
 use Illuminate\Http\Request;
+
 class PageController extends Controller
 {
   use TransformTrait;
@@ -15,7 +17,18 @@ class PageController extends Controller
     $year = Dimension::getYear();
     $province = Province::getAll();
     $titlePage = 'Indeks Pembangunan Kebudayaan | Beranda';
-    return view('home', compact('dimensi', 'province', 'year', 'titlePage'));
+    $homeSlider = [];
+    for ($i = 1; $i <= 10; $i++) {
+      array_push($homeSlider, [
+        'src' => asset('assets/img/home-slider/infografis IPKblue-' . $i . '-720x720.jpg'),
+        'dataLoad' => asset('assets/img/home-slider/infografis IPKblue-' . $i . '.png'),
+        'alt' => 'Infografis IPK ' . $i,
+        'type' => 'image',
+        'isActive' => $i == 1 ? true : false,
+      ]);
+    }
+    array_push($homeSlider, ['src' => 'https://www.youtube-nocookie.com/embed/ctTYfgDvngg', 'type' => 'youtube', 'isActive' => false]);
+    return view('home', compact('dimensi', 'province', 'year', 'titlePage', 'homeSlider'));
   }
 
   public function dimensi($slug)
@@ -24,7 +37,7 @@ class PageController extends Controller
     $year = Dimension::getYear();
     $dataIndicator = Dimension::getDimensionWithIndicator($slug);
     $data = $this->dimensionQualityAndIndicatorResponse($dataIndicator);
-    $titlePage = 'Indeks Pembangunan Kebudayaan | Dimensi '. $data['dimension_name'];
+    $titlePage = 'Indeks Pembangunan Kebudayaan | Dimensi ' . $data['dimension_name'];
     return view('dimension.index', compact('data', 'dimensi', 'year', 'titlePage'));
   }
 
@@ -40,14 +53,13 @@ class PageController extends Controller
 
   public function provinsi(Request $request, $provinceId)
   {
-
     $dimensi = Dimension::getAll();
     $year = Dimension::getYear();
-    $provinsi = Province::find($provinceId);
+    $provinsi = Province::getProvince($provinceId);
     $provinsiData = Province::getAll();
     $totalData = DimensionTotalValueProvince::getDimensionTotal($provinceId);
-    $titlePage = 'Indeks Pembangunan Kebudayaan | Provinsi '. ucwords(strtolower($provinsi->province_name));
- 
+    $titlePage = 'Indeks Pembangunan Kebudayaan | Provinsi ' . ucwords(strtolower($provinsi->province_name));
+
     return view('provinsi.index', compact('dimensi', 'year', 'provinsi', 'provinsiData', 'totalData', 'titlePage'));
   }
 }

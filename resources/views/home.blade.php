@@ -1,4 +1,8 @@
 @extends('app')
+@push('custom-css')
+    <link rel="stylesheet" href="{{ asset('assets/css/image-pop-up.css') }}">
+@endpush
+
 @section('content')
     <style>
         #about:before,
@@ -7,6 +11,12 @@
             display: block;
             content: "";
             height: 60px;
+        }
+
+        #nasional .btn-selengkapnya {
+            background: #96c3ec;
+            border-radius: 25px;
+            padding: 10px 30px 10px 30px;
         }
 
         .leaflet-container {
@@ -31,8 +41,7 @@
                                 Buku IPK</a> --}}
                             <!-- Button trigger modal -->
                             <button type="button" class="btn-services" data-bs-toggle="modal"
-                                data-bs-target="#unduhBukuIPKModal">
-                                Unduh Buku IPK
+                                data-bs-target="#unduhBukuIPKModal">Unduh Buku IPK
                             </button>
                             <!-- Modal -->
                             <div class="modal fade" id="unduhBukuIPKModal" tabindex="-1"
@@ -46,10 +55,8 @@
                                         </div>
                                         <div class="modal-body">
                                             <a target="_blank" href="{{ asset('assets/img') }}/handbook_ipk.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Unduh Hand Book
+                                                class="btn btn-download">@include('icons/pdf-icon') Handbook IPK 2020
                                                 IPK</a>
-                                            <a target="_blank" href="{{ asset('assets/pdf') }}/contoh.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Unduh PDF Lain</a>
                                         </div>
                                     </div>
                                 </div>
@@ -57,55 +64,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12 order-md-2 order-1">
+                <div class="col-md-6 col-12 order-md-2 order-1 mb-md-0 mb-5">
                     <div id="intro-carousel" class="intro-carousel carousel slide" data-bs-ride="true">
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="0" class="active"
-                                aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
-                            <button type="button" data-bs-target="#intro-carousel" data-bs-slide-to="3"
-                                aria-label="Slide 4"></button>
+                            @foreach ($homeSlider as $id => $slider)
+                                <button type="button" data-bs-target="#intro-carousel"
+                                    data-bs-slide-to="{{ $id }}" class="{{ $slider['isActive'] ? 'active' : '' }}"
+                                    aria-current="true" aria-label="Slide {{ $id }}"></button>
+                            @endforeach
                         </div>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="d-block w-100">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/ctTYfgDvngg"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                            @foreach ($homeSlider as $slider)
+                                <div class="carousel-item {{ $slider['isActive'] ? 'active' : '' }}">
+                                    <div class="d-block w-100 text-center">
+                                        @if ($slider['type'] == 'youtube')
+                                            <iframe width="100%" height="315" src="{{ $slider['src'] }}"
+                                                title="YouTube video player" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                        @elseif($slider['type'] == 'image')
+                                            <img class="image-pop-up" src="{{ $slider['src'] }}"
+                                                data-load="{{ $slider['dataLoad'] }}" alt="{{ $slider['alt'] }}">
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/u31qwQUeGuM"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-block w-100">
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/MLpWrANjFbI"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#intro-carousel"
                             data-bs-slide="prev">
@@ -117,6 +100,12 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+                    </div>
+                    <!-- Galery Modal -->
+                    <div id="gallery_modal" class="modal image-pop-up-modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-image">
+                        <div class="modal-caption"></div>
                     </div>
                 </div>
             </div>
@@ -182,15 +171,22 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ url('/nasional') }}" class="btn btn-md"
-                            style="background: #96c3ec;
-            border-radius: 25px;padding: 10px 30px 10px 30px;">
-                            Selengkapnya </a>
+                        <a href="{{ url('/nasional') }}" class="btn btn-md btn-selengkapnya">Selengkapnya</a>
                     </div>
                 </div>
                 <div class="col-md-6 offset-md-2">
                     <div class="chart">
                         <canvas id="profil-ipk-nasional"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center profil-ipk-nasional-desc desc-container">
+                <div class="col-md-8 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="mb-2 fw-bold">Deskripsi</h3>
+                            <span id="profil-ipk-nasional-desc"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -216,9 +212,14 @@
                             aria-controls="home-jqvmap-tabs-2019" aria-selected="false">2019</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2020" data-bs-toggle="pill"
+                        <button class="nav-link" id="home-jqvmap-tabs-btns-2020" data-bs-toggle="pill"
                             data-bs-target="#home-jqvmap-tabs-2020" type="button" role="tab"
                             aria-controls="home-jqvmap-tabs-2020" aria-selected="true">2020</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2021" data-bs-toggle="pill"
+                            data-bs-target="#home-jqvmap-tabs-2021" type="button" role="tab"
+                            aria-controls="home-jqvmap-tabs-2021" aria-selected="true">2021</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="home-jqvmap-tabs" style="width:100%;height:400px;">
@@ -226,7 +227,9 @@
                         style="width:100%;height:400px;"></div>
                     <div class="tab-pane fade" id="home-jqvmap-tabs-2019" role="tabpanel"
                         style="width:100%;height:400px;"></div>
-                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2020" role="tabpanel"
+                    <div class="tab-pane fade" id="home-jqvmap-tabs-2020" role="tabpanel"
+                        style="width:100%;height:400px;"></div>
+                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2021" role="tabpanel"
                         style="width:100%;height:400px;"></div>
                 </div>
                 <div class="home-jqvmap-legend text-center fw-bolder mb-5"
@@ -349,11 +352,13 @@
                     "91": "Papua",
                     "92": "Papua Barat"
                 };
+
                 // ToDo: ambil dari db
                 const IPKs = [
                     '2018',
                     '2019',
-                    '2020'
+                    '2020',
+                    '2021'
                 ];
 
                 // sebelum ada api buat ambil data ya disini dulu
@@ -477,9 +482,48 @@
                             "91": 48.07,
                             "94": 46.26,
                         }
+                    },
+                    "2021": {
+                        tahun: '2021',
+                        nasional: 51.90,
+                        provinsi: {
+                            "11": 49.89,
+                            "12": 48.74,
+                            "13": 52.76,
+                            "14": 54.20,
+                            "15": 52.39,
+                            "16": 50.89,
+                            "17": 54.56,
+                            "18": 53.19,
+                            "19": 50.85,
+                            "21": 52.12,
+                            "31": 52.67,
+                            "32": 50.78,
+                            "33": 55.24,
+                            "34": 64.22,
+                            "35": 53.19,
+                            "36": 47.47,
+                            "51": 61.69,
+                            "52": 54.73,
+                            "53": 48.18,
+                            "61": 48.53,
+                            "62": 55.21,
+                            "63": 52.45,
+                            "64": 52.49,
+                            "65": 50.08,
+                            "71": 49.84,
+                            "72": 48.02,
+                            "73": 51.21,
+                            "74": 48.62,
+                            "75": 47.32,
+                            "76": 45.86,
+                            "81": 54.23,
+                            "82": 49.91,
+                            "91": 46.79,
+                            "94": 41.87,
+                        }
                     }
                 };
-
                 const chromaGradientsHigh = chroma.scale(GRADIENTS_HIGH);
                 const chromaGradientsHighColor = function(percent) {
                     percent = parseInt(percent);
@@ -508,7 +552,6 @@
 
                 const onRegionClick = function(element, code, region, tahun) {
                     // Go to prov page
-                    console.log(code);
                     if (code == 91) code = 94;
                     if (code == 92) code = 91;
                     window.location = "{{ url('/provinsi') }}" + '/' + code;
@@ -582,7 +625,6 @@
                             onLoad(event, map, tahun);
                         },
                         onRegionClick: function(element, code, region) {
-                            console.log(region);
                             onRegionClick(element, code, region, tahun);
                         },
 
@@ -604,7 +646,7 @@
             }
 
             // ipk-nasional-chart
-            let labelYear = '2020';
+            let labelYear = '2021';
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -629,10 +671,9 @@
                 ctx.restore();
             }
             $(document).ready(function() {
-                let initYear = '2020';
+                let initYear = '2021';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
-                    console.log(year);
                     const urlAreaNasional = "{{ url('/chart/area-nasional') }}";
                     $.ajax({
                         url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
@@ -701,11 +742,18 @@
                 };
                 const getTotalAreaNasional = (year, provinceId) => {
                     const urlTotalAreaNasional = "{{ url('/chart/area-nasional') }}";
+                    $('.row.profil-ipk-nasional-desc').css('display', 'none');
                     $.ajax({
                         url: urlTotalAreaNasional + '/' + year + '/province-id' + '/' + provinceId +
                             '/total',
                         success: function(data) {
                             if (data) {
+                                if (data.desc) {
+                                    $('.row.profil-ipk-nasional-desc').css('display', 'flex');
+                                    $("#profil-ipk-nasional-desc").text(data.desc);
+                                } else {
+                                    $('.row.profil-ipk-nasional-desc').css('display', 'none');
+                                }
                                 $("#total-value-nasional").text(data.total);
                             }
                         }
@@ -725,5 +773,6 @@
                 });
             });
         </script>
+        <script src="{{ asset('assets/js/image-pop-up.js') }}" type="text/javascript"></script>
     @endpush
 @endsection

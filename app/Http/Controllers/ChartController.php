@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Dimension;
 use App\Models\DimensionValue;
 use App\Models\DimensionTotalValueProvince;
@@ -49,7 +50,8 @@ class ChartController extends Controller
     return response()->json($result, 200);
   }
 
-  public function getProvince() {
+  public function getProvince()
+  {
     $data = Province::getAll()->pluck('province_name', 'id');
     return response()->json($data, 200);
   }

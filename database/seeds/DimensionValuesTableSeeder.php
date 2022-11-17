@@ -26,6 +26,7 @@ class DimensionValuesTableSeeder extends Seeder
           "province_id" => ($data[1] != 1001) ? substr($data[1], 0, 2) : $data[1],
           "dimension_value" => $data[2],
           "year" => $data[3],
+          "desc" => isset($data[4]) && $data[4] != '' ? $data[4] : null,
         ]);
       }
       $firstline = false;

@@ -46,6 +46,7 @@
   <link rel="stylesheet" href="{{asset('assets/lib/aos/aos.css')}}">
   <link rel="stylesheet" href="{{asset('assets/lib/font-awesome/css/font-awesome.css')}}">
   <link rel="stylesheet" href="{{asset('assets/jqvmap/jqvmap.css')}}">
+  @stack('custom-css')
 </head>
 
 <body>
@@ -113,9 +114,9 @@
                 <strong>Fax:</strong> (021) 5731063, (021) 5725578<br>
               </p>
               <div class="social-links">
-                <a href="https://twitter.com/budayasaya" class="twitter"><i class="fa fa-twitterx"></i></a>
-                <a href="https://www.facebook.com/budayasaya" class="facebook"><i class="fa fa-facebookx"></i></a>
-                <a href="https://www.instagram.com/budayasaya/" class="instagram"><i class="fa fa-instagramx"></i></a>
+                <a href="https://twitter.com/budayasaya" class="twitter"><i class="fa fa-twitter text-white"></i></a>
+                <a href="https://www.facebook.com/budayasaya" class="facebook"><i class="fa fa-facebook text-white"></i></a>
+                <a href="https://www.instagram.com/budayasaya/" class="instagram"><i class="fa fa-instagram text-white"></i></a>
               </div>
             </div>
             <div class="col-lg-4">
