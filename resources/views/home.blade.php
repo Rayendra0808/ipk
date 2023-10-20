@@ -55,8 +55,9 @@
                                         </div>
                                         <div class="modal-body">
                                             <a target="_blank" href="{{ asset('assets/img') }}/handbook_ipk.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Handbook IPK 2020
-                                                IPK</a>
+                                                class="btn btn-download">@include('icons/pdf-icon') Handbook IPK 2018</a>
+                                            <a target="_blank" href="{{ asset('assets/pdf') }}/IPK 2022 dan Analisis Komparatif IPK.pdf"
+                                                class="btn btn-download">@include('icons/pdf-icon') IPK 2022 dan Analisis Komparatif IPK</a>
                                         </div>
                                     </div>
                                 </div>
