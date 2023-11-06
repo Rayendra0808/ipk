@@ -19,6 +19,7 @@ Route::get('/nasional', 'PageController@nasional')->name('nasional.index');
 Route::get('/provinsi/{provinsi_id}', 'PageController@provinsi')->name('provinsi.index');
 Route::get('/chart/area-nasional/{year}/province-id/{province_id}', 'ChartController@getDimension')->name('chart.getDimension');
 Route::get('/chart/area-nasional/{year}/province-id/{province_id}/total', 'ChartController@getDimensionTotalProvince')->name('chart.getDimensionTotalProvince');
+Route::get('/chart/area-nasional/{year}/total', 'ChartController@getTotalValueProvince')->name('chart.getTotalValueProvince');
 Route::get('/chart/dimension-province', 'ChartController@getDimensionProvince')->name('chart.getDimensionProvince');
 Route::get('/chart/dimension-province-target', 'ChartController@getDimensionProvinceTarget')->name('chart.getDimensionProvinceTarget');
 Route::get('/chart/indicator-province', 'ChartController@getIndicatorProvince')->name('chart.getIndicatorProvince');

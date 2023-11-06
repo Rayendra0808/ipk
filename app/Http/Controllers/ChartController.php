@@ -28,6 +28,27 @@ class ChartController extends Controller
     return response()->json($result, 200);
   }
 
+  public function getTotalValueProvince($year)
+  {
+    $data = DimensionTotalValueProvince::select(['province_id', 'total'])->where('year', $year)->get();
+    $nasional = null;
+    foreach ($data as $item) {
+      if ($item->province_id == '1001') $nasional = $item;
+    }
+    $data = array_filter(iterator_to_array($data), function ($item) {
+      return $item->province_id != '1001';
+    });
+    $provinsi = null;
+    foreach ($data as $item) {
+      $provinsi[$item->province_id] = $item->total;
+    }
+    return response()->json([
+      "tahun" => (int) $year,
+      "nasional" => $nasional->total,
+      "provinsi" => $provinsi
+    ], 200);
+  }
+
   public function getDimensionProvince(Request $request)
   {
     $data = DimensionValue::getDimensionProvince($request);

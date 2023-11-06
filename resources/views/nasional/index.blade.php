@@ -307,6 +307,12 @@
                                                                             </div> -->
             <div class="row">
                 <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
+                <div class="d-flex flex-row-reverse">
+                    <a href="{{ asset('assets/pdf/00 - Nasional 2018-2022.pdf') }}" target="_blank" class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
+            border-color: #6f42c1;">
+                        <i class="fa fa-download"></i> Download
+                    </a>
+                </div>
                 <div class="col-md-6">
                     <h5 class="text-center text-primary">Silahkan klik tahun</h5>
                     <div class="chart-nasional">
@@ -319,6 +325,7 @@
                     <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-nasional-2019"></span></h6>
                     <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
                     <h6> Tahun 2021 : <span class="text-primary" id="total-ipk-nasional-2021"></span></h6>
+                    <h6> Tahun 2022 : <span class="text-primary" id="total-ipk-nasional-2022"></span></h6>
                 </div>
             </div>
     </div>
@@ -390,7 +397,7 @@
 @endsection
 @push('custom-scripts')
     <script>
-        const years = ['2018', '2019', '2020', '2021'];
+        const years = ['2018', '2019', '2020', '2021', '2022'];
         $(document).ready(function() {
             let labelYear = '2018';
             let initYear = '2018';
@@ -461,6 +468,14 @@
                                         borderColor: 'blue',
                                         backgroundColor: 'blue',
                                         label: 2021,
+                                        fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: 'purple',
+                                        backgroundColor: 'purple',
+                                        label: 2022,
                                         fill: false,
                                     }
                                 ]
@@ -592,6 +607,54 @@
 
                                                 myChart
                                                     .update();
+                                                    $.ajax({
+                                            url: urlAreaNasional +
+                                                '/' + '2022' +
+                                                '/province-id' +
+                                                '/' + provinceId,
+                                            success: function(
+                                                data2022) {
+                                                myChart.data
+                                                    .images = [];
+                                                myChart.data
+                                                    .labels = [];
+                                                for (let i =
+                                                        0; i <
+                                                    data2022
+                                                    .length; i++
+                                                ) {
+                                                    myChart.data
+                                                        .images
+                                                        .push(
+                                                            data[
+                                                                i
+                                                            ]
+                                                            .dimension_icon
+                                                        );
+                                                    myChart.data
+                                                        .labels
+                                                        .push(
+                                                            data[
+                                                                i
+                                                            ]
+                                                            .dimension_name
+                                                        );
+                                                    myChart.data
+                                                        .datasets[
+                                                            4]
+                                                        .data
+                                                        .push(
+                                                            data2022[
+                                                                i
+                                                            ]
+                                                            .dimension_value
+                                                        );
+                                                };
+
+                                                myChart
+                                                    .update();
+                                            }
+                                        });
                                             }
                                         });
                                     }
@@ -876,7 +939,6 @@
                 year = $(this).find(":selected").val();
                 $('#line-chart').hide();
                 $('.dimension-action').removeClass('text-success');
-                console.log(year);
             });
 
             $('.dimension-action').on('click', function() {

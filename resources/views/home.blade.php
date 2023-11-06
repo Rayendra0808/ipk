@@ -54,10 +54,62 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <a target="_blank" href="{{ asset('assets/img') }}/handbook_ipk.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Handbook IPK 2018</a>
-                                            <a target="_blank" href="{{ asset('assets/pdf') }}/IPK 2022 dan Analisis Komparatif IPK.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') IPK 2022 dan Analisis Komparatif IPK</a>
+                                        @foreach([
+                                            [ 
+                                                "url" => asset('assets/img/handbook_ipk.pdf'), 
+                                                "label" => "Handbook IPK 2018"
+                                            ],
+                                            [ 
+                                                "url" => asset('assets/pdf/E-book IPK 2020.pdf'), 
+                                                "label" => "E-book IPK 2020"
+                                            ],
+                                            [ 
+                                                "url" => asset('assets/pdf/E-book IPK 2021.pdf'), 
+                                                "label" => "E-book IPK 2021"
+                                            ],
+                                            [ 
+                                                "url" => asset('assets/pdf/IPK 2022 dan Analisis Komparatif IPK.pdf'), 
+                                                "label" => "IPK 2022 dan Analisis Komparatif IPK"
+                                            ],
+                                        ] as $item)
+                                            <a target="_blank" href="{{ $item['url'] }}"
+                                                class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
+                                        @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-services" data-bs-toggle="modal"
+                                data-bs-target="#unduhRegulasi">Regulasi
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="unduhRegulasi" tabindex="-1"
+                                aria-labelledby="unduhBukuIPKModalLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="unduhBukuIPKModalLabel">Regulasi</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @foreach([
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/00. Permendikbudristek Nomor 55 Tahun 2022 CAP.pdf'),
+                                                    "label" => 'Permendikbudristek No. 55 2022',
+                                                ],
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/01. Kepmendikbudristek Nomor 512_M_2022 CAP (Hasil2021).pdf'),
+                                                    "label" => 'Kepmendikbudristek No. 512 2022 (Hasil 2021)',
+                                                ],
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/02. Kepmendikbudristek Nomor 297_M_2023 CAP (hasil2022).pdf'),
+                                                    "label" => 'Kepmendikbudristek No. 297 2023 (Hasil 2022)',
+                                                ],
+                                            ] as $item)
+                                            <a target="_blank" href="{{ $item['url'] }}"
+                                                class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -218,9 +270,14 @@
                             aria-controls="home-jqvmap-tabs-2020" aria-selected="true">2020</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2021" data-bs-toggle="pill"
+                        <button class="nav-link" id="home-jqvmap-tabs-btns-2021" data-bs-toggle="pill"
                             data-bs-target="#home-jqvmap-tabs-2021" type="button" role="tab"
                             aria-controls="home-jqvmap-tabs-2021" aria-selected="true">2021</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2022" data-bs-toggle="pill"
+                            data-bs-target="#home-jqvmap-tabs-2022" type="button" role="tab"
+                            aria-controls="home-jqvmap-tabs-2022" aria-selected="true">2022</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="home-jqvmap-tabs" style="width:100%;height:400px;">
@@ -230,7 +287,9 @@
                         style="width:100%;height:400px;"></div>
                     <div class="tab-pane fade" id="home-jqvmap-tabs-2020" role="tabpanel"
                         style="width:100%;height:400px;"></div>
-                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2021" role="tabpanel"
+                    <div class="tab-pane fade show" id="home-jqvmap-tabs-2021" role="tabpanel"
+                        style="width:100%;height:400px;"></div>
+                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2022" role="tabpanel"
                         style="width:100%;height:400px;"></div>
                 </div>
                 <div class="home-jqvmap-legend text-center fw-bolder mb-5"
@@ -359,11 +418,12 @@
                     '2018',
                     '2019',
                     '2020',
-                    '2021'
+                    '2021',
+                    '2022'
                 ];
 
                 // sebelum ada api buat ambil data ya disini dulu
-                const IPK_DATA = {
+                let IPK_DATA = {
                     "2018": {
                         tahun: '2018',
                         nasional: 53.74,
@@ -525,6 +585,11 @@
                         }
                     }
                 };
+                const urlAreaNasional = "{{ url('/chart/area-nasional') }}";
+                IPK_DATA['2022'] = await $.ajax({
+                    url: urlAreaNasional + '/' + '2022/total',
+                    method: 'GET',
+                })
                 const chromaGradientsHigh = chroma.scale(GRADIENTS_HIGH);
                 const chromaGradientsHighColor = function(percent) {
                     percent = parseInt(percent);
@@ -647,7 +712,7 @@
             }
 
             // ipk-nasional-chart
-            let labelYear = '2021';
+            let labelYear = '2022';
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -672,7 +737,7 @@
                 ctx.restore();
             }
             $(document).ready(function() {
-                let initYear = '2021';
+                let initYear = '2022';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
                     const urlAreaNasional = "{{ url('/chart/area-nasional') }}";

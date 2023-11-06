@@ -1,0 +1,33 @@
+No,Dimensi,Var,Indikator,Sumber Data
+D1,Ekonomi Budaya,X1.1,Persentase penduduk 15 tahun ke atas yang pernah terlibat sebagai pelaku/pendukung pertunjukan seni yang menjadikan keterlibatannya itu sebagai sumber penghasilan,Susenas MSBP
+D2,Pendidikan,X2.1,Rata-rata Lama Sekolah (MYS) penduduk usia 25 tahun ke atas,Susenas KOR
+D2,Pendidikan,X2.2,Harapan Lama Sekolah (HLS) penduduk usia 7 tahun ke atas,Susenas KOR
+D2,Pendidikan,X2.3,Angka Kesiapan Sekolah (AKS),Susenas KOR
+D2,Pendidikan,X2.4,Persentase satuan pendidikan yang mempunyai guru yang mengajar muatan lokal bahasa daerah dan/atau ekskul kesenian,Kemendikbud (DAPODIK)
+D2,Pendidikan,X2.5,Persentase penduduk penyandang disabilitas usia 7-18 tahun yang bersekolah,Susenas KOR
+D2,Pendidikan,X2.6,Persentase penduduk usia 7-18 tahun dengan kategori kelompok pengeluaran 40 persen terbawah yang bersekolah,Susenas KOR
+D3,Ketahanan Sosial Budaya,X3.1,Persentase rumah tangga yang setuju jika ada sekelompok orang dari agama lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal.,Susenas MSBP
+D3,Ketahanan Sosial Budaya,X3.2,Persentase rumah tangga yang setuju jika ada sekelompok orang dari suku lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal.,Susenas MSBP
+D3,Ketahanan Sosial Budaya,X3.3,Persentase rumah tangga yang setuju jika salah satu anggota rumah tangga berteman dengan orang lain yang beda agama.,Susenas MSBP
+D3,Ketahanan Sosial Budaya,X3.4,Persentase rumah tangga yang setuju jika salah satu anggota rumah tangga berteman dengan orang lain yang berbeda suku.,Susenas MSBP
+D3,Ketahanan Sosial Budaya,X3.5,Persentase penduduk usia 10 tahun ke atas yang mengikuti kegiatan sosial kemasyarakatan di lingkungan sekitar dalam 3 bulan terakhir,Susenas MSBP
+D3,Ketahanan Sosial Budaya,X3.6,Persentase penduduk usia 10 tahun ke atas yang mengikuti gotong royong,Susenas MSBP
+D3,Ketahanan Sosial Budaya,X3.7,Persentase rumah tangga yang merasa khawatir dengan keamanan saat berjalan kaki sendirian di malam hari,Susenas Hansos/SPTK
+D3,Ketahanan Sosial Budaya,X3.8,Persentase rumah tangga yang merasa percaya menitipkan rumah kepada tetangga,Susenas Hansos/SPTK
+D4,Warisan Budaya,X4.1,"Persentase benda, bangunan, struktur, situs dan kawasan cagar budaya yang telah ditetapkan terhadap total pendaftaran",Kemendikbud (DAPOBUD)
+D4,Warisan Budaya,X4.2,Persentase warisan budaya takbenda yang telah ditetapkan terhadap total pencatatan,Kemendikbud (DAPOBUD)
+D4,Warisan Budaya,X4.3,Persentase penduduk usia 5 tahun ke atas yang menggunakan bahasa daerah di rumah atau dalam pergaulan sehari-hari,Susenas MSBP
+D4,Warisan Budaya,X4.4,"Persentase penduduk usia 10 tahun ke atas yang menonton secara langsung pertunjukkan seni dalam 3 bulan terakhir
+*tahun 2022 ada perluasan definisioperasional (termasuk yang tidak langsung)",Susenas MSBP
+D4,Warisan Budaya,X4.5,Persentase penduduk usia 10 tahun ke atas yang mengunjungi peninggalan sejarah/warisan dunia dalam setahun terakhir,Susenas MSBP
+D4,Warisan Budaya,X4.6,Persentase rumah tangga yang menggunakan produk tradisional dalam 3 bulan terakhir,Susenas MSBP
+D5,Ekspresi Budaya,X5.1,Persentase penduduk usia 10 tahun ke atas yang memberikan saran atau pendapat dalam kegiatan rapat selama setahun terakhir,Susenas MSBP
+D5,Ekspresi Budaya,X5.2,Persentase penduduk usia 10 tahun ke atas yang aktif mengikuti kegiatan organisasi dalam setahun terakhir,Susenas MSBP
+D5,Ekspresi Budaya,X5.3,Persentase penduduk usia 10 tahun ke atas yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni dalam 3 bulan terakhir,Susenas MSBP
+D5,Ekspresi Budaya,X5.4,Persentase rumah tangga yang menyelenggarakan atau menghadiri upacara adat dalam setahun terakhir,Susenas MSBP
+D6,Budaya Literasi,X6.1,Persentase penduduk usia 10 tahun ke atas yang membaca selain kitab suci baik cetak maupun elektronik dalam seminggu terakhir,Susenas MSBP
+D6,Budaya Literasi,X6.2,Persentase penduduk usia 10 tahun ke atas yang mengakses internet dalam 3 bulan terakhir,Susenas Kor
+D6,Budaya Literasi,X6.3,Persentase penduduk usia 10 tahun ke atas yang mengunjungi perpustakaan/memanfaatkan taman bacaan masyarakat dalam 3 bulan terakhir,Susenas MSBP
+D7,Gender,X7.1,Rasio tingkat partisipasi angkatan kerja usia 15 tahun ke atas perempuan terhadap laki-laki,Sakernas
+D7,Gender,X7.2,Rasio penduduk usia 25 tahun ke atas perempuan terhadap laki-laki yang memiliki ijazah minimal SMA/Sederajat,Susenas KOR
+D7,Gender,X7.3,Rasio anggota parlemen perempuan terhadap anggota parlemen laki-laki,KPU; BPS
