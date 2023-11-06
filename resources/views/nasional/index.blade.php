@@ -325,6 +325,7 @@
                     <h6> Tahun 2019 : <span class="text-primary" id="total-ipk-nasional-2019"></span></h6>
                     <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
                     <h6> Tahun 2021 : <span class="text-primary" id="total-ipk-nasional-2021"></span></h6>
+                    <h6> Tahun 2022 : <span class="text-primary" id="total-ipk-nasional-2022"></span></h6>
                 </div>
             </div>
     </div>
@@ -396,7 +397,7 @@
 @endsection
 @push('custom-scripts')
     <script>
-        const years = ['2018', '2019', '2020', '2021'];
+        const years = ['2018', '2019', '2020', '2021', '2022'];
         $(document).ready(function() {
             let labelYear = '2018';
             let initYear = '2018';
@@ -467,6 +468,14 @@
                                         borderColor: 'blue',
                                         backgroundColor: 'blue',
                                         label: 2021,
+                                        fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: 'purple',
+                                        backgroundColor: 'purple',
+                                        label: 2022,
                                         fill: false,
                                     }
                                 ]
@@ -598,6 +607,54 @@
 
                                                 myChart
                                                     .update();
+                                                    $.ajax({
+                                            url: urlAreaNasional +
+                                                '/' + '2022' +
+                                                '/province-id' +
+                                                '/' + provinceId,
+                                            success: function(
+                                                data2022) {
+                                                myChart.data
+                                                    .images = [];
+                                                myChart.data
+                                                    .labels = [];
+                                                for (let i =
+                                                        0; i <
+                                                    data2022
+                                                    .length; i++
+                                                ) {
+                                                    myChart.data
+                                                        .images
+                                                        .push(
+                                                            data[
+                                                                i
+                                                            ]
+                                                            .dimension_icon
+                                                        );
+                                                    myChart.data
+                                                        .labels
+                                                        .push(
+                                                            data[
+                                                                i
+                                                            ]
+                                                            .dimension_name
+                                                        );
+                                                    myChart.data
+                                                        .datasets[
+                                                            4]
+                                                        .data
+                                                        .push(
+                                                            data2022[
+                                                                i
+                                                            ]
+                                                            .dimension_value
+                                                        );
+                                                };
+
+                                                myChart
+                                                    .update();
+                                            }
+                                        });
                                             }
                                         });
                                     }
@@ -882,7 +939,6 @@
                 year = $(this).find(":selected").val();
                 $('#line-chart').hide();
                 $('.dimension-action').removeClass('text-success');
-                console.log(year);
             });
 
             $('.dimension-action').on('click', function() {

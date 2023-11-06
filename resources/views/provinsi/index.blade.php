@@ -540,6 +540,14 @@
                                         backgroundColor: 'blue',
                                         label: 2021,
                                         fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: 'purple',
+                                        backgroundColor: 'purple',
+                                        label: 2022,
+                                        fill: false,
                                     }
                                 ]
                             },
@@ -635,18 +643,12 @@
                                                     .images = [];
                                                 myChart.data
                                                     .labels = [];
-                                                for (let i =
-                                                        0; i <
-                                                    data2021
-                                                    .length; i++
+                                                for (let i = 0; i < data2021.length; i++
                                                 ) {
                                                     myChart.data
                                                         .images
                                                         .push(
-                                                            data[
-                                                                i
-                                                            ]
-                                                            .dimension_icon
+                                                            data[i].dimension_icon
                                                         );
                                                     myChart.data
                                                         .labels
@@ -670,6 +672,54 @@
 
                                                 myChart
                                                     .update();
+                                                $.ajax({
+                                                    url: urlAreaNasional +
+                                                        '/' + '2022' +
+                                                        '/province-id' +
+                                                        '/' + provinceId,
+                                                    success: function(
+                                                        data2022) {
+                                                        myChart.data
+                                                            .images = [];
+                                                        myChart.data
+                                                            .labels = [];
+                                                        for (let i =
+                                                                0; i <
+                                                            data2022
+                                                            .length; i++
+                                                        ) {
+                                                            myChart.data
+                                                                .images
+                                                                .push(
+                                                                    data[
+                                                                        i
+                                                                    ]
+                                                                    .dimension_icon
+                                                                );
+                                                            myChart.data
+                                                                .labels
+                                                                .push(
+                                                                    data[
+                                                                        i
+                                                                    ]
+                                                                    .dimension_name
+                                                                );
+                                                            myChart.data
+                                                                .datasets[
+                                                                    4]
+                                                                .data
+                                                                .push(
+                                                                    data2022[
+                                                                        i
+                                                                    ]
+                                                                    .dimension_value
+                                                                );
+                                                        };
+
+                                                        myChart
+                                                            .update();
+                                                    }
+                                                });
                                             }
                                         });
                                     }

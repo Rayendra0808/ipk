@@ -270,9 +270,14 @@
                             aria-controls="home-jqvmap-tabs-2020" aria-selected="true">2020</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2021" data-bs-toggle="pill"
+                        <button class="nav-link" id="home-jqvmap-tabs-btns-2021" data-bs-toggle="pill"
                             data-bs-target="#home-jqvmap-tabs-2021" type="button" role="tab"
                             aria-controls="home-jqvmap-tabs-2021" aria-selected="true">2021</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2022" data-bs-toggle="pill"
+                            data-bs-target="#home-jqvmap-tabs-2022" type="button" role="tab"
+                            aria-controls="home-jqvmap-tabs-2022" aria-selected="true">2022</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="home-jqvmap-tabs" style="width:100%;height:400px;">
@@ -282,7 +287,9 @@
                         style="width:100%;height:400px;"></div>
                     <div class="tab-pane fade" id="home-jqvmap-tabs-2020" role="tabpanel"
                         style="width:100%;height:400px;"></div>
-                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2021" role="tabpanel"
+                    <div class="tab-pane fade show" id="home-jqvmap-tabs-2021" role="tabpanel"
+                        style="width:100%;height:400px;"></div>
+                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2022" role="tabpanel"
                         style="width:100%;height:400px;"></div>
                 </div>
                 <div class="home-jqvmap-legend text-center fw-bolder mb-5"
@@ -411,11 +418,12 @@
                     '2018',
                     '2019',
                     '2020',
-                    '2021'
+                    '2021',
+                    '2022'
                 ];
 
                 // sebelum ada api buat ambil data ya disini dulu
-                const IPK_DATA = {
+                let IPK_DATA = {
                     "2018": {
                         tahun: '2018',
                         nasional: 53.74,
@@ -577,6 +585,11 @@
                         }
                     }
                 };
+                const urlAreaNasional = "{{ url('/chart/area-nasional') }}";
+                IPK_DATA['2022'] = await $.ajax({
+                    url: urlAreaNasional + '/' + '2022/total',
+                    method: 'GET',
+                })
                 const chromaGradientsHigh = chroma.scale(GRADIENTS_HIGH);
                 const chromaGradientsHighColor = function(percent) {
                     percent = parseInt(percent);
@@ -699,7 +712,7 @@
             }
 
             // ipk-nasional-chart
-            let labelYear = '2021';
+            let labelYear = '2022';
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -724,7 +737,7 @@
                 ctx.restore();
             }
             $(document).ready(function() {
-                let initYear = '2021';
+                let initYear = '2022';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
                     const urlAreaNasional = "{{ url('/chart/area-nasional') }}";

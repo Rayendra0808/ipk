@@ -231,7 +231,6 @@
           dimensionChart.config._config.options.scales.x.ticks.minRotation = 90;
           dimensionChart.config._config.options.scales.x.grid.display = false;
           dimensionChart.config._config.options.scales.y.grid.display = false;
-          console.log(dimensionChart.config._config);
           dimensionChart.update();
         }
       },
