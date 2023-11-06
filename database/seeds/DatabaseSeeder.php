@@ -28,5 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(IndicatorsTable2Seeder::class);
         $this->call(DimensionValuesTable2Seeder::class);
         $this->call(IndicatorValuesTable2Seeder::class);
+        $this->call(DimensionTotalValueProvincesTable2Seeder::class);
     }
 }
