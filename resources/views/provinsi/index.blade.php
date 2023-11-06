@@ -308,10 +308,13 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            
                             @foreach ($provinsi->files as $file)
-                                <a href="{{ $file->getFile() }}" class="btn btn-download" target="_blank">
-                                    @include('icons/pdf-icon')
-                                    {{ $file->title }}</a>
+                                @if($file->getFile())
+                                    <a href="{{ $file->getFile() }}" class="btn btn-download" target="_blank">
+                                        @include('icons/pdf-icon')
+                                        {{ $file->title }}</a>
+                                @endif
                             @endforeach
                         </div>
                     </div>

@@ -307,6 +307,12 @@
                                                                             </div> -->
             <div class="row">
                 <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
+                <div class="d-flex flex-row-reverse">
+                    <a href="{{ asset('assets/pdf/00 - Nasional 2018-2022.pdf') }}" target="_blank" class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
+            border-color: #6f42c1;">
+                        <i class="fa fa-download"></i> Download
+                    </a>
+                </div>
                 <div class="col-md-6">
                     <h5 class="text-center text-primary">Silahkan klik tahun</h5>
                     <div class="chart-nasional">

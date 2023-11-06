@@ -54,10 +54,62 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <a target="_blank" href="{{ asset('assets/img') }}/handbook_ipk.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') Handbook IPK 2018</a>
-                                            <a target="_blank" href="{{ asset('assets/pdf') }}/IPK 2022 dan Analisis Komparatif IPK.pdf"
-                                                class="btn btn-download">@include('icons/pdf-icon') IPK 2022 dan Analisis Komparatif IPK</a>
+                                        @foreach([
+                                            [ 
+                                                "url" => asset('assets/img/handbook_ipk.pdf'), 
+                                                "label" => "Handbook IPK 2018"
+                                            ],
+                                            [ 
+                                                "url" => asset('assets/pdf/E-book IPK 2020.pdf'), 
+                                                "label" => "E-book IPK 2020"
+                                            ],
+                                            [ 
+                                                "url" => asset('assets/pdf/E-book IPK 2021.pdf'), 
+                                                "label" => "E-book IPK 2021"
+                                            ],
+                                            [ 
+                                                "url" => asset('assets/pdf/IPK 2022 dan Analisis Komparatif IPK.pdf'), 
+                                                "label" => "IPK 2022 dan Analisis Komparatif IPK"
+                                            ],
+                                        ] as $item)
+                                            <a target="_blank" href="{{ $item['url'] }}"
+                                                class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
+                                        @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-services" data-bs-toggle="modal"
+                                data-bs-target="#unduhRegulasi">Regulasi
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="unduhRegulasi" tabindex="-1"
+                                aria-labelledby="unduhBukuIPKModalLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="unduhBukuIPKModalLabel">Regulasi</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @foreach([
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/00. Permendikbudristek Nomor 55 Tahun 2022 CAP.pdf'),
+                                                    "label" => 'Permendikbudristek No. 55 2022',
+                                                ],
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/01. Kepmendikbudristek Nomor 512_M_2022 CAP (Hasil2021).pdf'),
+                                                    "label" => 'Kepmendikbudristek No. 512 2022 (Hasil 2021)',
+                                                ],
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/02. Kepmendikbudristek Nomor 297_M_2023 CAP (hasil2022).pdf'),
+                                                    "label" => 'Kepmendikbudristek No. 297 2023 (Hasil 2022)',
+                                                ],
+                                            ] as $item)
+                                            <a target="_blank" href="{{ $item['url'] }}"
+                                                class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
