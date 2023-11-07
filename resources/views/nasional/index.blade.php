@@ -292,6 +292,8 @@
             <div class="p-2 flex-grow-1">
                 <h1 class="title-page">IPK Nasional <br> <span class="sub-title"></span></h1>
             </div>
+            <div class="p-2"> <img src="{{ asset('assets/img/ipk-logo.png') }}"
+                    style="max-width: 120px;"></div>
         </div>
     </div>
     <div class="row" id="block-content">

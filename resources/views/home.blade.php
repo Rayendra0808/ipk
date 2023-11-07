@@ -334,6 +334,11 @@
                 await jQuery.getScript("{{ asset('assets/jqvmap/jquery.vmap.js') }}");
                 await jQuery.getScript("{{ asset('assets/jqvmap/jquery.vmap.indonesia.js') }}");
 
+                // init bootstrap carousel
+                $('.carousel').carousel({
+                    interval: false,
+                })
+
                 const GRADIENTS_HIGH = ['white', 'green'];
                 const GRADIENTS_LOW = ['red', 'white'];
 
