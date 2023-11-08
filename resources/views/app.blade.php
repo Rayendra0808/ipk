@@ -20,7 +20,7 @@
   <meta name="og:title" content="Indeks Pembangunan Kebudayaan" />
   <meta name="og:type" content="Media" />
   <meta name="og:url" content="{{url('/')}}" />
-  <meta name="og:image" content="{{asset('assets/img')}}/logo-dikbud.png" />
+  <meta name="og:image" content="{{asset('assets/img')}}/ipk-logo.png" />
   <meta name="og:site_name" content="Indeks Pembangunan Kebudayaan" />
   <meta name="og:description" content="Indeks Pembangunan Kebudayaan (IPK) disusun sebagai salah satu instrumen 
   untuk memberikan gambaran kemajuan pembangunan kebudayaan yang dapat digunakan sebagai basis formulasi kebijakan 
@@ -33,7 +33,7 @@
   untuk memberikan gambaran kemajuan pembangunan kebudayaan yang dapat digunakan sebagai basis formulasi kebijakan 
   bidang kebudayaan, serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan. Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan 
   dan data yang berkaitan dengan pembangunan kebudayaan nasional.">
-  <meta property="twitter:image" content="{{asset('assets/img')}}/logo-dikbud.png">
+  <meta property="twitter:image" content="{{asset('assets/img')}}/ipk-logo.png">
   <!-- <link rel="shortcut icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon">
   <link rel="icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon"> -->
   <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" type="image/x-icon">
