@@ -68,7 +68,7 @@
         @foreach($data->dimensionIndicators as $valueIndicator)
         <tr>
           <td>{{$valueIndicator->indicator_code}}</td>
-          <td>{{$valueIndicator->indicator_description}}</td>
+          <td>{!!$valueIndicator->indicator_description !!}</td>
           <td>{{$valueIndicator->min}}</td>
           <td>{{$valueIndicator->max}}</td>
           <td>{{$valueIndicator->indicator_source == null ? 'Susenas MSBP' : $valueIndicator->indicator_source}}</td>
