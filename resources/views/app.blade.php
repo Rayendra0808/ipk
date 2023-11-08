@@ -34,8 +34,10 @@
   bidang kebudayaan, serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan. Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan 
   dan data yang berkaitan dengan pembangunan kebudayaan nasional.">
   <meta property="twitter:image" content="{{asset('assets/img')}}/logo-dikbud.png">
-  <link rel="shortcut icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon">
+  <!-- <link rel="shortcut icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="{{asset('assets/img')}}/favicon.ico" type="image/x-icon"> -->
+  <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{asset('/favicon.ico')}}" type="image/x-icon">
 
   <title>Indeks Pembangunan Kebudayaan</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700">
@@ -70,7 +72,7 @@
                 <a class="nav-link" href="{{url('/')}}#about">Tentang IPK</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{url('/')}}#nasional">IPK Nasional</a>
+                <a class="nav-link" href="{{url('/nasional')}}">IPK Nasional</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{url('/')}}#provinsi">IPK Provinsi</a>
@@ -80,7 +82,7 @@
                 <a class="nav-link" href="#about">Tentang IPK</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#nasional">IPK Nasional</a>
+                <a class="nav-link" href="{{url('/nasional')}}">IPK Nasional</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#provinsi">IPK Provinsi</a>
