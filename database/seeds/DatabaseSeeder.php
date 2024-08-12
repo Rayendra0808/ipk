@@ -23,12 +23,18 @@ class DatabaseSeeder extends Seeder
         $this->call(IndicatorTargetValuesTableSeeder::class);
         $this->call(ProvinceFileSeeder::class);
         $this->call(ProvinceDimensionTextSeeder::class);
-        // new seeder
+        // new seeder 2022
         $this->call(ProvinceFile2Seeder::class);
         $this->call(IndicatorsTable2Seeder::class);
         $this->call(DimensionValuesTable2Seeder::class);
         $this->call(IndicatorValuesTable2Seeder::class);
         $this->call(DimensionTotalValueProvincesTable2Seeder::class);
         $this->call(IndicatorsTable3Seeder::class);
+        // new seeder 2023
+        $this->call([
+            ProvinceFile2023Seeder::class,
+            Dimension2023Seeder::class,
+            Indicator2023Seeder::class,
+        ]);
     }
 }

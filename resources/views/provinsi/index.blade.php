@@ -548,6 +548,14 @@
                                         backgroundColor: 'purple',
                                         label: 2022,
                                         fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: 'orange',
+                                        backgroundColor: 'orange',
+                                        label: 2023,
+                                        fill: false,
                                     }
                                 ]
                             },
@@ -670,8 +678,7 @@
                                                         );
                                                 };
 
-                                                myChart
-                                                    .update();
+                                                myChart.update();
                                                 $.ajax({
                                                     url: urlAreaNasional +
                                                         '/' + '2022' +
@@ -716,8 +723,55 @@
                                                                 );
                                                         };
 
-                                                        myChart
-                                                            .update();
+                                                        myChart.update();
+                                                        $.ajax({
+                                                            url: urlAreaNasional +
+                                                                '/' + '2023' +
+                                                                '/province-id' +
+                                                                '/' + provinceId,
+                                                            success: function(
+                                                                data2023) {
+                                                                myChart.data
+                                                                    .images = [];
+                                                                myChart.data
+                                                                    .labels = [];
+                                                                for (let i =
+                                                                        0; i <
+                                                                    data2023
+                                                                    .length; i++
+                                                                ) {
+                                                                    myChart.data
+                                                                        .images
+                                                                        .push(
+                                                                            data[
+                                                                                i
+                                                                            ]
+                                                                            .dimension_icon
+                                                                        );
+                                                                    myChart.data
+                                                                        .labels
+                                                                        .push(
+                                                                            data[
+                                                                                i
+                                                                            ]
+                                                                            .dimension_name
+                                                                        );
+                                                                    myChart.data
+                                                                        .datasets[
+                                                                            4]
+                                                                        .data
+                                                                        .push(
+                                                                            data2023[
+                                                                                i
+                                                                            ]
+                                                                            .dimension_value
+                                                                        );
+                                                                };
+
+                                                                myChart
+                                                                    .update();
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }

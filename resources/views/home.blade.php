@@ -71,6 +71,10 @@
                                                 "url" => asset('assets/pdf/IPK 2022 dan Analisis Komparatif IPK.pdf'), 
                                                 "label" => "IPK 2022 dan Analisis Komparatif IPK"
                                             ],
+                                            [ 
+                                                "url" => asset('assets/pdf/E-book IPK 2023.pdf'), 
+                                                "label" => "E-book IPK 2023"
+                                            ],
                                         ] as $item)
                                             <a target="_blank" href="{{ $item['url'] }}"
                                                 class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
@@ -105,6 +109,10 @@
                                                 [
                                                     "url" => asset('assets/pdf/regulations/02. Kepmendikbudristek Nomor 297_M_2023 CAP (hasil2022).pdf'),
                                                     "label" => 'Kepmendikbudristek No. 297 2023 (Hasil 2022)',
+                                                ],
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/03. Kepmendikbudristek Nomor 248_M_2024 CAP (Hasil2023).pdf'),
+                                                    "label" => 'Kepmendikbudristek No. 248 2024 (Hasil 2023)',
                                                 ],
                                             ] as $item)
                                             <a target="_blank" href="{{ $item['url'] }}"
@@ -275,9 +283,14 @@
                             aria-controls="home-jqvmap-tabs-2021" aria-selected="true">2021</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2022" data-bs-toggle="pill"
+                        <button class="nav-link" id="home-jqvmap-tabs-btns-2022" data-bs-toggle="pill"
                             data-bs-target="#home-jqvmap-tabs-2022" type="button" role="tab"
                             aria-controls="home-jqvmap-tabs-2022" aria-selected="true">2022</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2023" data-bs-toggle="pill"
+                            data-bs-target="#home-jqvmap-tabs-2023" type="button" role="tab"
+                            aria-controls="home-jqvmap-tabs-2023" aria-selected="true">2023</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="home-jqvmap-tabs" style="width:100%;height:400px;">
@@ -289,7 +302,9 @@
                         style="width:100%;height:400px;"></div>
                     <div class="tab-pane fade show" id="home-jqvmap-tabs-2021" role="tabpanel"
                         style="width:100%;height:400px;"></div>
-                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2022" role="tabpanel"
+                    <div class="tab-pane fade show" id="home-jqvmap-tabs-2022" role="tabpanel"
+                        style="width:100%;height:400px;"></div>
+                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2023" role="tabpanel"
                         style="width:100%;height:400px;"></div>
                 </div>
                 <div class="home-jqvmap-legend text-center fw-bolder mb-5"
@@ -424,7 +439,8 @@
                     '2019',
                     '2020',
                     '2021',
-                    '2022'
+                    '2022',
+                    '2023'
                 ];
 
                 // sebelum ada api buat ambil data ya disini dulu
@@ -588,11 +604,51 @@
                             "91": 46.79,
                             "94": 41.87,
                         }
+                    },
+                    "2022": {
+                        tahun: 2022,
+                        nasional: 55.13,
+                        provinsi: {
+                            "11": 53.03,
+                            "12": 52.47,
+                            "13": 56.9,
+                            "14": 58.52,
+                            "15": 54.38,
+                            "16": 53.09,
+                            "17": 57.28,
+                            "18": 55.71,
+                            "19": 54.04,
+                            "21": 56.5,
+                            "31": 54.72,
+                            "32": 53.67,
+                            "33": 59.43,
+                            "34": 66.52,
+                            "35": 57.15,
+                            "36": 51.41,
+                            "51": 66.04,
+                            "52": 56.6,
+                            "53": 50.7,
+                            "61": 52.95,
+                            "62": 58.09,
+                            "63": 58.45,
+                            "64": 54.81,
+                            "65": 55.4,
+                            "71": 54.97,
+                            "72": 49.71,
+                            "73": 52.68,
+                            "74": 52.98,
+                            "75": 49.64,
+                            "76": 49.48,
+                            "81": 55.87,
+                            "82": 52.87,
+                            "91": 46.92,
+                            "94": 44.62
+                        }
                     }
                 };
                 const urlAreaNasional = "{{ url('/chart/area-nasional') }}";
-                IPK_DATA['2022'] = await $.ajax({
-                    url: urlAreaNasional + '/' + '2022/total',
+                IPK_DATA['2023'] = await $.ajax({
+                    url: urlAreaNasional + '/' + '2023/total',
                     method: 'GET',
                 })
                 const chromaGradientsHigh = chroma.scale(GRADIENTS_HIGH);
@@ -717,7 +773,7 @@
             }
 
             // ipk-nasional-chart
-            let labelYear = '2022';
+            let labelYear = '2023';
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -742,7 +798,7 @@
                 ctx.restore();
             }
             $(document).ready(function() {
-                let initYear = '2022';
+                let initYear = '2023';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
                     const urlAreaNasional = "{{ url('/chart/area-nasional') }}";

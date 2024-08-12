@@ -328,6 +328,7 @@
                     <h6> Tahun 2020 : <span class="text-primary" id="total-ipk-nasional-2020"></span></h6>
                     <h6> Tahun 2021 : <span class="text-primary" id="total-ipk-nasional-2021"></span></h6>
                     <h6> Tahun 2022 : <span class="text-primary" id="total-ipk-nasional-2022"></span></h6>
+                    <h6> Tahun 2023 : <span class="text-primary" id="total-ipk-nasional-2023"></span></h6>
                 </div>
             </div>
     </div>
@@ -399,7 +400,7 @@
 @endsection
 @push('custom-scripts')
     <script>
-        const years = ['2018', '2019', '2020', '2021', '2022'];
+        const years = ['2018', '2019', '2020', '2021', '2022', '2023'];
         $(document).ready(function() {
             let labelYear = '2018';
             let initYear = '2018';
@@ -478,6 +479,14 @@
                                         borderColor: 'purple',
                                         backgroundColor: 'purple',
                                         label: 2022,
+                                        fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: 'orange',
+                                        backgroundColor: 'orange',
+                                        label: 2023,
                                         fill: false,
                                     }
                                 ]
@@ -947,7 +956,7 @@
                 // change button
                 let dimensionId = $(this).data('id');
                 let dimensionName = 'Dimensi ' + $(this).data('name');
-                $('#title-line').text(dimensionName + year);
+                $('#title-line').text(dimensionName + ' ' + year);
                 $('.dimension-action').removeClass('text-success');
                 $(this).addClass('text-success');
                 getDimensionIndicator(year, initProvince, dimensionId);
