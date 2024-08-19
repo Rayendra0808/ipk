@@ -310,7 +310,7 @@
             <div class="row">
                 <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
                 <div class="d-flex flex-row-reverse">
-                    <a href="{{ asset('assets/pdf/00 - Nasional 2018-2022.pdf') }}" target="_blank" class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
+                    <a href="{{ asset('assets/pdf/1001. Indoensia - 2023.pdf') }}" target="_blank" class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
             border-color: #6f42c1;">
                         <i class="fa fa-download"></i> Download
                     </a>
@@ -616,56 +616,31 @@
                                                         );
                                                 };
 
-                                                myChart
-                                                    .update();
-                                                    $.ajax({
-                                            url: urlAreaNasional +
-                                                '/' + '2022' +
-                                                '/province-id' +
-                                                '/' + provinceId,
-                                            success: function(
-                                                data2022) {
-                                                myChart.data
-                                                    .images = [];
-                                                myChart.data
-                                                    .labels = [];
-                                                for (let i =
-                                                        0; i <
-                                                    data2022
-                                                    .length; i++
-                                                ) {
-                                                    myChart.data
-                                                        .images
-                                                        .push(
-                                                            data[
-                                                                i
-                                                            ]
-                                                            .dimension_icon
-                                                        );
-                                                    myChart.data
-                                                        .labels
-                                                        .push(
-                                                            data[
-                                                                i
-                                                            ]
-                                                            .dimension_name
-                                                        );
-                                                    myChart.data
-                                                        .datasets[
-                                                            4]
-                                                        .data
-                                                        .push(
-                                                            data2022[
-                                                                i
-                                                            ]
-                                                            .dimension_value
-                                                        );
-                                                };
-
-                                                myChart
-                                                    .update();
-                                            }
-                                        });
+                                                myChart.update();
+                                                $.ajax({url: urlAreaNasional +'/' + '2022' +'/province-id' +'/' + provinceId,
+                                                    success: function(data2022) {
+                                                        myChart.data.images = [];
+                                                        myChart.data.labels = [];
+                                                        for (let i = 0; i < data2022.length; i++) {
+                                                            myChart.data.images.push(data[i].dimension_icon);
+                                                            myChart.data.labels.push(data[i].dimension_name);
+                                                            myChart.data.datasets[4].data.push(data2022[i].dimension_value);
+                                                        };
+                                                        myChart.update();
+                                                        $.ajax({url: urlAreaNasional +'/' + '2023' +'/province-id' +'/' + provinceId,
+                                                            success: function(data2023) {
+                                                                myChart.data.images = [];
+                                                                myChart.data.labels = [];
+                                                                for (let i = 0; i < data2023.length; i++) {
+                                                                    myChart.data.images.push(data[i].dimension_icon);
+                                                                    myChart.data.labels.push(data[i].dimension_name);
+                                                                    myChart.data.datasets[5].data.push(data2023[i].dimension_value);
+                                                                };
+                                                                myChart.update();
+                                                            }
+                                                        });
+                                                    }
+                                                });
                                             }
                                         });
                                     }

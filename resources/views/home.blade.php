@@ -71,10 +71,10 @@
                                                 "url" => asset('assets/pdf/IPK 2022 dan Analisis Komparatif IPK.pdf'), 
                                                 "label" => "IPK 2022 dan Analisis Komparatif IPK"
                                             ],
-                                            [ 
-                                                "url" => asset('assets/pdf/E-book IPK 2023.pdf'), 
-                                                "label" => "E-book IPK 2023"
-                                            ],
+                                            //[ 
+                                            //    "url" => asset('assets/pdf/E-book IPK 2023.pdf'), 
+                                            //    "label" => "E-book IPK 2023"
+                                            //],
                                         ] as $item)
                                             <a target="_blank" href="{{ $item['url'] }}"
                                                 class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>

@@ -729,47 +729,15 @@
                                                                 '/' + '2023' +
                                                                 '/province-id' +
                                                                 '/' + provinceId,
-                                                            success: function(
-                                                                data2023) {
-                                                                myChart.data
-                                                                    .images = [];
-                                                                myChart.data
-                                                                    .labels = [];
-                                                                for (let i =
-                                                                        0; i <
-                                                                    data2023
-                                                                    .length; i++
-                                                                ) {
-                                                                    myChart.data
-                                                                        .images
-                                                                        .push(
-                                                                            data[
-                                                                                i
-                                                                            ]
-                                                                            .dimension_icon
-                                                                        );
-                                                                    myChart.data
-                                                                        .labels
-                                                                        .push(
-                                                                            data[
-                                                                                i
-                                                                            ]
-                                                                            .dimension_name
-                                                                        );
-                                                                    myChart.data
-                                                                        .datasets[
-                                                                            4]
-                                                                        .data
-                                                                        .push(
-                                                                            data2023[
-                                                                                i
-                                                                            ]
-                                                                            .dimension_value
-                                                                        );
+                                                            success: function(data2023) {
+                                                                myChart.data.images = [];
+                                                                myChart.data.labels = [];
+                                                                for (let i = 0; i < data2023 .length; i++) {
+                                                                    myChart.data.images.push(data[i].dimension_icon);
+                                                                    myChart.data.labels.push(data[i].dimension_name);
+                                                                    myChart.data.datasets[5].data.push(data2023[i].dimension_value);
                                                                 };
-
-                                                                myChart
-                                                                    .update();
+                                                                myChart.update();
                                                             }
                                                         });
                                                     }

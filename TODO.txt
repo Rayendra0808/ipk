@@ -1,0 +1,19 @@
+1. ebook IPK 2023 itu belum ada, masih proses. Jadi uploadnya bisa disusulkan.
+- Tombol ebook IPK 2023 sudah dihilangkan
+2. untuk yang brosur IPK itu untuk update galeri, bukan di ebook2023. 
+- Sudah dimasukan ke slide show
+3. Jadi yg digaleri hanya ada yg youtube dan 2 slide brosur IPK, untuk gambar yg 2021 didrop aja
+- Sudah disesuaikan
+4. titik di jaring laba - laba kalau di arahin kursornya, belum muncul nilai 2023 (nasional dan semua provinsi)
+- Sudah ditambahkan
+5. file pdf nasional 2023 belum terupload (masih yg 2018-2022)
+- Sudah diubah
+6. Data pada grafik batang (dimensi) dan grafik garis (indikator) untuk Nasional dan Aceh sudah benar. Harusnya sih sudah bener semua ya klo tinggal manggil di database, tp untuk makesure lagi bisa ambil sample 1 provinsi setiap gugus pulau kali ya.
+- 
+7. logo bappenas klo bisa diganti sekalian aja
+- Sudah diubah
+
+Catatan rapat 14 agustus 2023 :
+1. Belajar
+2. Apresiasi
+3. IPK Nasional -> Download

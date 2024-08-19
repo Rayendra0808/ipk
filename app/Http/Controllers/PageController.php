@@ -19,10 +19,10 @@ class PageController extends Controller
     $titlePage = 'Indeks Pembangunan Kebudayaan | Beranda';
     $homeSlider = [];
     array_push($homeSlider, ['src' => 'https://www.youtube-nocookie.com/embed/ctTYfgDvngg', 'type' => 'youtube', 'isActive' => true]);
-    for ($i = 1; $i <= 10; $i++) {
+    for ($i = 1; $i <= 2; $i++) {
       array_push($homeSlider, [
-        'src' => asset('assets/img/home-slider/infografis IPKblue-' . $i . '-720x720.jpg'),
-        'dataLoad' => asset('assets/img/home-slider/infografis IPKblue-' . $i . '.png'),
+        'src' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
+        'dataLoad' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
         'alt' => 'Infografis IPK ' . $i,
         'type' => 'image',
         'isActive' => false,
