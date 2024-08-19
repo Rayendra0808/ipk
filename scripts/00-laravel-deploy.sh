@@ -4,6 +4,8 @@ composer install --no-dev --working-dir=/var/www/html
 
 mv .env.example .env
 
+php artisan key:generate
+
 echo "Caching config..."
 php artisan config:cache
 
