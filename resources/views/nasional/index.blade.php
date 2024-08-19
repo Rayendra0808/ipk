@@ -310,10 +310,24 @@
             <div class="row">
                 <h3 class="text-primary mt-5 text-center">Grafik Nilai IPK</h3>
                 <div class="d-flex flex-row-reverse">
-                    <a href="{{ asset('assets/pdf/1001. Indoensia - 2023.pdf') }}" target="_blank" class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
-            border-color: #6f42c1;">
+                    <button class="btn btn-primary" style="background: #6f42c1;margin-left:20px;border-color: #6f42c1;" data-bs-toggle="modal" data-bs-target="#unduhNasionalFile">
                         <i class="fa fa-download"></i> Download
-                    </a>
+                    </button>
+                    <div class="modal fade" id="unduhNasionalFile" tabindex="-1" aria-labelledby="unduhNasionalFileLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="unduhNasionalFileLabel">Unduh File Nasional</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <a href="{{ asset('assets/pdf/00 - Nasional 2018-2022.pdf') }}" class="btn btn-download" target="_blank">Data Hasil Perhitungan IPK Nasional 2018 - 2022</a>
+                                    <a href="{{ asset('assets/pdf/1001. Indonesia - 2023.pdf') }}" class="btn btn-download" target="_blank">Data Hasil Perhitungan IPK Nasional 2023</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h5 class="text-center text-primary">Silahkan klik tahun</h5>

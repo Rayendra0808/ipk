@@ -294,9 +294,7 @@
     <div class="container mb-5 mt-5">
         <h4 class="text-center">Pilih provinsi lainnya</h4>
         <div class="d-flex flex-row-reverse">
-            <button class="btn btn-primary" style="background: #6f42c1;margin-left:20px;
-    border-color: #6f42c1;"
-                data-bs-toggle="modal" data-bs-target="#unduhProvinceFile">
+            <button class="btn btn-primary" style="background: #6f42c1;margin-left:20px;border-color: #6f42c1;" data-bs-toggle="modal" data-bs-target="#unduhProvinceFile">
                 <i class="fa fa-download"></i> Download
             </button>
             <div class="modal fade" id="unduhProvinceFile" tabindex="-1" aria-labelledby="unduhProvinceFileLabel"
