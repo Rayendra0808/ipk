@@ -8,4 +8,4 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-php artisan serve --host=0.0.0.0 --port=53532
+php artisan serve --host=0.0.0.0 --port=10000
