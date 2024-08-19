@@ -2,6 +2,8 @@
 echo "Running composer"
 composer install --no-dev --working-dir=/var/www/html
 
+mv .env.example .env
+
 echo "Caching config..."
 php artisan config:cache
 
