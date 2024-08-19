@@ -13,3 +13,5 @@ php artisan migrate --force
 
 echo "Running seeder..."
 php artisan db:seed --force
+
+php artisan serve
