@@ -36,5 +36,7 @@ class DatabaseSeeder extends Seeder
             Dimension2023Seeder::class,
             Indicator2023Seeder::class,
         ]);
+        // new seeder 2022 additional        
+        $this->call(ProvinceFileTambahan2022Seeder::class);
     }
 }
