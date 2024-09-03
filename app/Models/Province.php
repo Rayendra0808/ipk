@@ -11,13 +11,17 @@ class Province extends Model
 
   public static function getAll()
   {
-    $data =  Province::where('id', '!=', '1001')->with(['files'])->get();
+    $data =  Province::where('id', '!=', '1001')->with(['files' => function($q){
+      return $q->orderBy('title', 'ASC');
+    }])->get();
     return $data;
   }
 
   public static function getProvince($id)
   {
-    $data =  Province::where('id', $id)->with(['files'])->first();
+    $data =  Province::where('id', $id)->with(['files' => function($q){
+      return $q->orderBy('title', 'ASC');
+    }])->first();
     return $data;
   }
 
