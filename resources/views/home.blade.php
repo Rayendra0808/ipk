@@ -71,10 +71,10 @@
                                                 "url" => asset('assets/pdf/IPK 2022 dan Analisis Komparatif IPK.pdf'), 
                                                 "label" => "IPK 2022 dan Analisis Komparatif IPK"
                                             ],
-                                            //[ 
-                                            //    "url" => asset('assets/pdf/E-book IPK 2023.pdf'), 
-                                            //    "label" => "E-book IPK 2023"
-                                            //],
+                                            [ 
+                                                "url" => asset('assets/pdf/E-book IPK 2023.pdf'), 
+                                                "label" => "E-book IPK 2023"
+                                            ],
                                         ] as $item)
                                             <a target="_blank" href="{{ $item['url'] }}"
                                                 class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
@@ -182,7 +182,7 @@
                 yang dapat digunakan sebagai basis formulasi kebijakan bidang kebudayaan,
                 serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan.
                 Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan dan data yang berkaitan
-                dengan pembangunan kebudayaan nasional.
+                dengan pembangunan kebudayaan nasional. belajar 1.
             </p>
             <h3 class="text-center text-primary mt-5">Konsep Dimensi IPK</h3>
             <p class="text-center">
