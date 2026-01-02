@@ -102,17 +102,17 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-4 col-md-6 footer-links">
-              <h4>Sekretariat Direktorat Jenderal</h4>
-              <h4>Direktorat Jenderal Kebudayaan</h4>
-              <h4>Kementrian Pendidikan, Kebudayaan, Riset dan Teknologi</h4>
+              <h4>Pusat Data dan Teknologi Informasi</h4>
+              <h4>Sekretariat Jenderal Kebudayaan</h4>
+              <h4>Kementerian Kebudayaan</h4>
             </div>
             <div class="col-lg-4 col-md-6 footer-contact">
-              <h4>Ditjen Kebudayaan</h4>
+              <!--<h4>Ditjen Kebudayaan</h4>-->
               <p>
-                Komplek Kemdikbud, Gedung E Lt.4 <br>
+                Komplek Kemdikbudristek, Gedung E Lt.10 <br>
                 Jln. Jenderal Sudirman, Senayan, Jakarta 10270<br>
                 <strong>Telepon:</strong> (021) 5731063, (021) 5725035<br>
-                <strong>Email:</strong> kebudayaan@kemdikbud.go.id<br>
+                <strong>Email:</strong> pusdatin@kemenbud.go.id<br>
                 <strong>Fax:</strong> (021) 5731063, (021) 5725578<br>
               </p>
               <div class="social-links">
@@ -130,7 +130,7 @@
 
       <div class="container">
         <div class="copyright">
-          &copy; <strong>Ditjen Kebudayaan</strong>.
+          &copy; <strong>Kementerian Kebudayaan</strong>.
         </div>
       </div>
     </footer><!-- #footer -->
