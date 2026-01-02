@@ -182,7 +182,7 @@
                 yang dapat digunakan sebagai basis formulasi kebijakan bidang kebudayaan,
                 serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan.
                 Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan dan data yang berkaitan
-                dengan pembangunan kebudayaan nasional.
+                dengan pembangunan kebudayaan nasional. belajar 1.
             </p>
             <h3 class="text-center text-primary mt-5">Konsep Dimensi IPK</h3>
             <p class="text-center">

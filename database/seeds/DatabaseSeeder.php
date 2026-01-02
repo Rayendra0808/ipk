@@ -38,5 +38,12 @@ class DatabaseSeeder extends Seeder
         ]);
         // new seeder 2022 additional        
         $this->call(ProvinceFileTambahan2022Seeder::class);
+        // new seeder 2024
+        $this->call([
+            Provinsi2024Seeder::class,
+            Dimensi2024Seeder::class,
+            Indikator2024Seeder::class,
+        ]);
+
     }
 }
