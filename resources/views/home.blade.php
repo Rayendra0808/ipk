@@ -288,9 +288,14 @@
                             aria-controls="home-jqvmap-tabs-2022" aria-selected="true">2022</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2023" data-bs-toggle="pill"
+                        <button class="nav-link" id="home-jqvmap-tabs-btns-2023" data-bs-toggle="pill"
                             data-bs-target="#home-jqvmap-tabs-2023" type="button" role="tab"
-                            aria-controls="home-jqvmap-tabs-2023" aria-selected="true">2023</button>
+                            aria-controls="home-jqvmap-tabs-2023" aria-selected="false">2023</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-jqvmap-tabs-btns-2024" data-bs-toggle="pill"
+                            data-bs-target="#home-jqvmap-tabs-2024" type="button" role="tab"
+                            aria-controls="home-jqvmap-tabs-2024" aria-selected="true">2024</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="home-jqvmap-tabs" style="width:100%;height:400px;">
@@ -304,7 +309,9 @@
                         style="width:100%;height:400px;"></div>
                     <div class="tab-pane fade show" id="home-jqvmap-tabs-2022" role="tabpanel"
                         style="width:100%;height:400px;"></div>
-                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2023" role="tabpanel"
+                    <div class="tab-pane fade" id="home-jqvmap-tabs-2023" role="tabpanel"
+                        style="width:100%;height:400px;"></div>
+                    <div class="tab-pane fade show active" id="home-jqvmap-tabs-2024" role="tabpanel"
                         style="width:100%;height:400px;"></div>
                 </div>
                 <div class="home-jqvmap-legend text-center fw-bolder mb-5"
@@ -348,6 +355,7 @@
                 await jQuery.getScript("{{ asset('assets/jqvmap/chroma.min.js') }}");
                 await jQuery.getScript("{{ asset('assets/jqvmap/jquery.vmap.js') }}");
                 await jQuery.getScript("{{ asset('assets/jqvmap/jquery.vmap.indonesia.js') }}");
+                await jQuery.getScript("{{ asset('assets/jqvmap/jquery.vmap.indonesia-2024.js') }}");
 
                 // init bootstrap carousel
                 $('.carousel').carousel({
@@ -393,6 +401,10 @@
                     "82": "82",
                     "91": "94",
                     "92": "91",
+                    "93": "95",
+                    "94": "96",
+                    "95": "97",
+                    "96": "92",
                 };
 
                 //Kode Dagri
@@ -433,6 +445,47 @@
                     "92": "Papua Barat"
                 };
 
+                const Provinsi_2024 = {
+                    "11": "Aceh",
+                    "12": "Sumatera Utara",
+                    "13": "Sumatera Barat",
+                    "14": "Riau",
+                    "15": "Jambi",
+                    "16": "Sumatera Selatan",
+                    "17": "Bengkulu",
+                    "18": "Lampung",
+                    "19": "Kep. Bangka Belitung",
+                    "21": "Kep. Riau",
+                    "31": "DKI Jakarta",
+                    "32": "Jawa Barat",
+                    "33": "Jawa Tengah",
+                    "34": "Yogyakarta",
+                    "35": "Jawa Timur",
+                    "36": "Banten",
+                    "51": "Bali",
+                    "52": "Nusa Tenggara Barat",
+                    "53": "Nusa Tenggara Timur",
+                    "61": "Kalimantan Barat",
+                    "62": "Kalimantan Tengah",
+                    "63": "Kalimantan Selatan",
+                    "64": "Kalimantan Timur",
+                    "65": "Kalimantan Utara",
+                    "71": "Sulawesi Utara",
+                    "72": "Sulawesi Tengah",
+                    "73": "Sulawesi Selatan",
+                    "74": "Sulawesi Tenggara",
+                    "75": "Gorontalo",
+                    "76": "Sulawesi Barat",
+                    "81": "Maluku",
+                    "82": "Maluku Utara",
+                    "91": "Papua",
+                    "92": "Papua Barat",
+                    "93": "Papua Selatan",
+                    "94": "Papua Tengah",
+                    "95": "Papua Pegunungan",
+                    "96": "Papua Barat Daya"
+                };
+
                 // ToDo: ambil dari db
                 const IPKs = [
                     '2018',
@@ -440,7 +493,8 @@
                     '2020',
                     '2021',
                     '2022',
-                    '2023'
+                    '2023',
+                    '2024'
                 ];
 
                 // sebelum ada api buat ambil data ya disini dulu
@@ -651,6 +705,10 @@
                     url: urlAreaNasional + '/' + '2023/total',
                     method: 'GET',
                 })
+                IPK_DATA['2024'] = await $.ajax({
+                    url: urlAreaNasional + '/' + '2024/total',
+                    method: 'GET',
+                })
                 const chromaGradientsHigh = chroma.scale(GRADIENTS_HIGH);
                 const chromaGradientsHighColor = function(percent) {
                     percent = parseInt(percent);
@@ -689,8 +747,8 @@
                     if (IPK_DATA.hasOwnProperty(tahun)) {
                         const data = IPK_DATA[tahun];
                         const bps = Dagri_BPS[code];
-
-                        label.html('<div>' + Provinsi[code] + ': ' + data.provinsi[bps] +
+                        const provinsi = (tahun == '2024') ? Provinsi_2024 : Provinsi;
+                        label.html('<div>' + provinsi[code] + ': ' + data.provinsi[bps] +
                             '</div><div>Nasional: ' + data.nasional + '</div>');
                     }
                 };
@@ -703,35 +761,63 @@
                         const data = IPK_DATA[tahun];
                         var min = null;
                         var max = null;
-                        Object.keys(Provinsi).forEach(function(code) {
-                            const bps = Dagri_BPS[code];
-                            if (!min) {
-                                min = data.provinsi[bps]
-                            };
-                            if (!max) {
-                                max = data.provinsi[bps]
-                            };
-                            min = Math.min(min, data.provinsi[bps]);
-                            max = Math.max(max, data.provinsi[bps]);
-                        });
-                        Object.keys(Provinsi).forEach(function(code) {
-                            const bps = Dagri_BPS[code];
-                            const ipk = data.provinsi[bps];
-                            if (data.nasional < ipk) {
-                                colors[code] = chromaGradientsHighColor(
-                                    ((ipk - data.nasional) / (max - data.nasional)) * 100
-                                );
-                            } else {
-                                colors[code] = chromaGradientsLowColor(
-                                    ((ipk - min) / (data.nasional - min)) * 100
-                                );
-                            }
-                        });
+                        if (tahun == '2024') {
+                            Object.keys(Provinsi_2024).forEach(function(code) {
+                                const bps = Dagri_BPS[code];
+                                if (!min) {
+                                    min = data.provinsi[bps]
+                                };
+                                if (!max) {
+                                    max = data.provinsi[bps]
+                                };
+                                min = Math.min(min, data.provinsi[bps]);
+                                max = Math.max(max, data.provinsi[bps]);
+                            });
+                            Object.keys(Provinsi_2024).forEach(function(code) {
+                                const bps = Dagri_BPS[code];
+                                const ipk = data.provinsi[bps];
+                                if (data.nasional < ipk) {
+                                    colors[code] = chromaGradientsHighColor(
+                                        ((ipk - data.nasional) / (max - data.nasional)) * 100
+                                    );
+                                } else {
+                                    colors[code] = chromaGradientsLowColor(
+                                        ((ipk - min) / (data.nasional - min)) * 100
+                                    );
+                                }
+                            });
+                        } else {
+                            Object.keys(Provinsi).forEach(function(code) {
+                                const bps = Dagri_BPS[code];
+                                if (!min) {
+                                    min = data.provinsi[bps]
+                                };
+                                if (!max) {
+                                    max = data.provinsi[bps]
+                                };
+                                min = Math.min(min, data.provinsi[bps]);
+                                max = Math.max(max, data.provinsi[bps]);
+                            });
+                            Object.keys(Provinsi).forEach(function(code) {
+                                const bps = Dagri_BPS[code];
+                                const ipk = data.provinsi[bps];
+                                if (data.nasional < ipk) {
+                                    colors[code] = chromaGradientsHighColor(
+                                        ((ipk - data.nasional) / (max - data.nasional)) * 100
+                                    );
+                                } else {
+                                    colors[code] = chromaGradientsLowColor(
+                                        ((ipk - min) / (data.nasional - min)) * 100
+                                    );
+                                }
+                            });
+                        }
+                        
                     }
 
                     // Create jqvmap
                     jQuery('#home-jqvmap-tabs-' + tahun).vectorMap({
-                        map: 'indonesia.id',
+                        map: (tahun === '2024') ? 'indonesia.id.2024' : 'indonesia.id',
                         enableZoom: false,
                         showTooltip: true,
 

@@ -1,0 +1,9 @@
+Dimensi ID,Kode,Indikator Deskripsi,Sumber Data,Min,Max
+1,X1.2,"Persentase pengeluaran konsumsi rumah tangga untuk kegiatan, barang dan jasa kebudayaan terhadap total pengeluaran konsumsi bukan makanan","Susenas KP",0,13
+2,X2.2,"Persentase guru yang mengajar bahasa dan budaya lokal (Bahasa Indonesia, Bahasa Daerah, Sejarah, Seni Budaya, dan/atau Muatan Lokal) terhadap total guru","Kemendikdasmen & Kemenag",0,55
+2,X2.3,"Persentase penduduk yang terlibat dalam kegiatan pelatihan dan/atau pembelajaran seni dan budaya yang bersifat nonformal dan informal","Survei Mandiri",0,90
+3,X3.1,"Persentase rumah tangga yang setuju jika ada perbedaan suku/agama lain di lingkungan sekitar tempat tinggal","Susenas Modul",0,100
+3,X3.2,"Persentase penduduk yang mengikuti kegiatan sosial kemasyarakatan di lingkungan sekitar","Susenas Modul",0,100
+3,X3.3,"Persentase rumah tangga yang merasa aman saat berjalan kaki sendirian pada malam hari di lingkungan sekitar rumah","Susenas Modul",0,100
+5,X5.3,"Persentase penduduk yang melakukan olahraga tradisional dan/atau permainan rakyat","Susenas Modul",0,33
+5,X5.4,"Persentase penduduk yang merasa aman dan diterima saat menampilkan identitas budaya (mengekspresikan budaya) di ruang publik",Survei Mandiri,0,100
