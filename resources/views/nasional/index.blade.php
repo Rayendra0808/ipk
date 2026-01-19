@@ -356,6 +356,7 @@
                     <h6> Tahun 2021 : <span class="text-primary" id="total-ipk-nasional-2021"></span></h6>
                     <h6> Tahun 2022 : <span class="text-primary" id="total-ipk-nasional-2022"></span></h6>
                     <h6> Tahun 2023 : <span class="text-primary" id="total-ipk-nasional-2023"></span></h6>
+                    <h6> Tahun 2024 : <span class="text-primary" id="total-ipk-nasional-2024"></span></h6>
                 </div>
             </div>
     </div>
@@ -427,7 +428,7 @@
 @endsection
 @push('custom-scripts')
     <script>
-        const years = ['2018', '2019', '2020', '2021', '2022', '2023'];
+        const years = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
         $(document).ready(function() {
             let labelYear = '2018';
             let initYear = '2018';
@@ -514,6 +515,14 @@
                                         borderColor: 'orange',
                                         backgroundColor: 'orange',
                                         label: 2023,
+                                        fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: '#0a9395',
+                                        backgroundColor: '#0a9395',
+                                        label: 2024,
                                         fill: false,
                                     }
                                 ]
@@ -664,6 +673,18 @@
                                                                     myChart.data.datasets[5].data.push(data2023[i].dimension_value);
                                                                 };
                                                                 myChart.update();
+                                                                $.ajax({url: urlAreaNasional +'/' + '2024' +'/province-id' +'/' + provinceId,
+                                                                    success: function(data2024) {
+                                                                        myChart.data.images = [];
+                                                                        myChart.data.labels = [];
+                                                                        for (let i = 0; i < data2024.length; i++) {
+                                                                            myChart.data.images.push(data[i].dimension_icon);
+                                                                            myChart.data.labels.push(data[i].dimension_name);
+                                                                            myChart.data.datasets[6].data.push(data2024[i].dimension_value);
+                                                                        };
+                                                                        myChart.update();
+                                                                    }
+                                                                });
                                                             }
                                                         });
                                                     }
@@ -709,7 +730,7 @@
 
                         function generateDescription(item, index) {
                             description +=
-                                `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
+                                `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code.split(".")[0]}.${index+1} </h6></div><p>${item.indicator_description}</p></div>
            <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
                         }
 

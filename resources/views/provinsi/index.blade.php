@@ -365,7 +365,7 @@
                                 <tr>
                                     <td>{{ $keyData }}</td>
                                     <td>{{ number_format($totalData[$keyData][0]['NASIONAL'], 2, '.', '') }}</td>
-                                    <td>{{ number_format((float) $totalData[$keyData][1][$provinsi->province_name], 2, '.', '') }}
+                                    <td>{{ number_format((float) isset($totalData[$keyData][1][$provinsi->province_name]) ? $totalData[$keyData][1][$provinsi->province_name] : 0, 2, '.', '') }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -554,6 +554,14 @@
                                         backgroundColor: 'orange',
                                         label: 2023,
                                         fill: false,
+                                    },
+                                    {
+                                        data: [],
+                                        borderWidth: 1,
+                                        borderColor: '#0a9395',
+                                        backgroundColor: '#0a9395',
+                                        label: 2024,
+                                        fill: false,
                                     }
                                 ]
                             },
@@ -736,6 +744,19 @@
                                                                     myChart.data.datasets[5].data.push(data2023[i].dimension_value);
                                                                 };
                                                                 myChart.update();
+                                                                $.ajax({
+                                                                    url: urlAreaNasional + '/' + '2024' +'/province-id' +'/' + provinceId,
+                                                                    success: function(data2024) {
+                                                                        myChart.data.images = [];
+                                                                        myChart.data.labels = [];
+                                                                        for (let i = 0; i < data2024.length; i++) {
+                                                                            myChart.data.images.push(data[i].dimension_icon);
+                                                                            myChart.data.labels.push(data[i].dimension_name);
+                                                                            myChart.data.datasets[6].data.push(data2024[i].dimension_value);
+                                                                        };
+                                                                        myChart.update();
+                                                                    }
+                                                                });
                                                             }
                                                         });
                                                     }
@@ -863,7 +884,7 @@
 
                                 function generateDescription(item, index) {
                                     description +=
-                                        `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
+                                        `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code.split(".")[0]}.${index+1} </h6></div><p>${item.indicator_description}</p></div>
            <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
                                 }
 

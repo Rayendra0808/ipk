@@ -38,13 +38,13 @@ class ChartController extends Controller
     $data = array_filter(iterator_to_array($data), function ($item) {
       return $item->province_id != '1001';
     });
-    $provinsi = null;
+    $provinsi = [];
     foreach ($data as $item) {
       $provinsi[$item->province_id] = $item->total;
     }
     return response()->json([
       "tahun" => (int) $year,
-      "nasional" => $nasional->total,
+      "nasional" => $nasional ? $nasional->total : 0,
       "provinsi" => $provinsi
     ], 200);
   }
