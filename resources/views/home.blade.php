@@ -859,7 +859,7 @@
             }
 
             // ipk-nasional-chart
-            let labelYear = '2023';
+            let labelYear = '2024';
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -884,7 +884,7 @@
                 ctx.restore();
             }
             $(document).ready(function() {
-                let initYear = '2023';
+                let initYear = '2024';
                 let initProvince = '1001';
                 const getDataAreaNasional = (year, provinceId) => {
                     const urlAreaNasional = "{{ url('/chart/area-nasional') }}";
