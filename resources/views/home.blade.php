@@ -739,6 +739,10 @@
                     // Go to prov page
                     if (code == 91) code = 94;
                     if (code == 92) code = 91;
+                    if (code == 93) code = 95;
+                    if (code == 94) code = 96;
+                    if (code == 95) code = 97;
+                    if (code == 96) code = 92;
                     window.location = "{{ url('/provinsi') }}" + '/' + code;
                 };
 

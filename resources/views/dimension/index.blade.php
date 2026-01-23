@@ -53,31 +53,78 @@
 </div>
 <div class="container">
   <h3 class="section-title mt-1"><b>Rincian Indikator dan Sumber Data</b></h3>
-  <div class="table-responsive">
-    <table class="table table-sm table-bordered">
-      <thead>
-        <tr>
-          <th class="mx-auto my-auto">Kode</th>
-          <th class="mx-auto my-auto">Indikator</th>
-          <th class="mx-auto my-auto">Nilai Minimum</th>
-          <th class="mx-auto my-auto">Nilai Maksimum</th>
-          <th class="mx-auto my-auto">Sumber Data</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach($data->dimensionIndicators as $valueIndicator)
-        <tr>
-          <td>{{$valueIndicator->indicator_code}}</td>
-          <td>{!!$valueIndicator->indicator_description !!}</td>
-          <td>{{$valueIndicator->min}}</td>
-          <td>{{$valueIndicator->max}}</td>
-          <td>{{$valueIndicator->indicator_source == null ? 'Susenas MSBP' : $valueIndicator->indicator_source}}</td>
-        </tr>
-        @endforeach
-    </table>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="tab" href="#tab20182023">2018-2023</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#tab2024">2024</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane container active" id="tab20182023">
+      <div class="table-responsive">
+        <br />
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th class="mx-auto my-auto">Kode</th>
+              <th class="mx-auto my-auto">Indikator</th>
+              <th class="mx-auto my-auto">Nilai Minimum</th>
+              <th class="mx-auto my-auto">Nilai Maksimum</th>
+              <th class="mx-auto my-auto">Sumber Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($data->dimensionIndicators as $valueIndicator)
+            @if(in_array($valueIndicator->id, config('app.indicator.2023')))
+            <tr>
+              <td>{{$valueIndicator->indicator_code}}</td>
+              <td>{!!$valueIndicator->indicator_description !!}</td>
+              <td>{{$valueIndicator->min}}</td>
+              <td>{{$valueIndicator->max}}</td>
+              <td>{{$valueIndicator->indicator_source == null ? 'Susenas MSBP' : $valueIndicator->indicator_source}}</td>
+            </tr>
+            @endif
+            @endforeach
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane container fade" id="tab2024">
+      <div class="table-responsive">
+        <br />
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th class="mx-auto my-auto">Kode</th>
+              <th class="mx-auto my-auto">Indikator</th>
+              <th class="mx-auto my-auto">Nilai Minimum</th>
+              <th class="mx-auto my-auto">Nilai Maksimum</th>
+              <th class="mx-auto my-auto">Sumber Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($data->dimensionIndicators as $valueIndicator)
+            @if(in_array($valueIndicator->id, config('app.indicator.2024')))
+            <tr>
+              <td>{{$valueIndicator->indicator_code}}</td>
+              <td>{!!$valueIndicator->indicator_description !!}</td>
+              <td>{{$valueIndicator->min}}</td>
+              <td>{{$valueIndicator->max}}</td>
+              <td>{{$valueIndicator->indicator_source == null ? 'Susenas MSBP' : $valueIndicator->indicator_source}}</td>
+            </tr>
+            @endif
+            @endforeach
+        </table>
+      </div>
+    </div>
   </div>
 </div>
-<div class="container mb-5">
+<!-- <div class="container mb-5">
   <h3 class="section-title mt-1"><b>Cara Menghitung Nilai Dimensi</b></h3>
   Nilai Pada Dimensi {{$data->dimension_name}} ({{$data->dimension_code}}) dapat diperoleh dengan rumus perhitungan sebagai berikut
   <div class="mt-3">
@@ -87,7 +134,7 @@
     </center>
     @endforeach
   </div>
-</div>
+</div> -->
 <div class="container mb-5 mt-5">
   <h3 class="text-center text-primary mt-5">Perkembangan Nilai Dimensi</h3>
   <h4 class="text-center">Pilih salah satu tahun data:</h3>

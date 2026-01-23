@@ -20,7 +20,7 @@ class Indikator2024Seeder extends Seeder
 
         // Mengisi table indicator_values dari kolom ke 2-31
         while ($data = fgetcsv($csvFile, 200, ",")) {
-            for ($i = 1; $i <= 25; $i++) {
+            for ($i = 1; $i <= 24; $i++) {
                 IndicatorValue::create([
                     "province_id" => $data[0],
                     "indicator_id" => $indicator[$i-1],
