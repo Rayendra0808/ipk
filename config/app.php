@@ -228,7 +228,12 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
+    'dob' => [
+        92,
+        95,
+        96,
+        97
+    ],
     'indicator' => [
         2023 => [
             1,

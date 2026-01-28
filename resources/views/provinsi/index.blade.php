@@ -347,11 +347,15 @@
             <div class="col-md-6">
                 <h5 class="text-center text-primary">Silahkan klik tahun</h5>
                 <div class="chart-nasional">
-                    <canvas id="ipk-nasional"></canvas>
+                    @if(in_array($provinsi->id, config('app.dob')))
+                        <canvas id="ipk-nasional-dob"></canvas>
+                    @else
+                        <canvas id="ipk-nasional"></canvas>
+                    @endif
                 </div>
             </div>
             <div class="col-md-4 offset-md-2 align-self-center">
-                <div class="table-responsive">
+                <div class="table-responsive" style="overflow: hidden;">
                     <table class="table border">
                         <thead>
                             <tr>
@@ -362,15 +366,22 @@
                         </thead>
                         <tbody>
                             @foreach ($totalData as $keyData => $dataValue)
+                            @if((float) isset($totalData[$keyData][1][$provinsi->province_name]) ? $totalData[$keyData][1][$provinsi->province_name] : 0 != 0)
                                 <tr>
                                     <td>{{ $keyData }}</td>
                                     <td>{{ number_format($totalData[$keyData][0]['NASIONAL'], 2, '.', '') }}</td>
                                     <td>{{ number_format((float) isset($totalData[$keyData][1][$provinsi->province_name]) ? $totalData[$keyData][1][$provinsi->province_name] : 0, 2, '.', '') }}
                                     </td>
                                 </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
+                    @if(in_array($provinsi->id, config('app.dob')))
+                    <div class="row">
+                        <p>{{ $provinsi->province_name }} merupakan provinsi baru dan mulai dihitung sejak tahun 2024</p>
+                    </div>  
+                    @endif
                 </div>
             </div>
         </div>
@@ -470,6 +481,7 @@
             let provinceSelected = "{{ $provinsi->id }}";
             let year = "{{ $year[0] }}";
             let yearBar = "{{ $year[0] }}";
+            let dob = JSON.parse("{{ json_encode(config('app.dob')) }}");
 
             function drawTextAtIndex(scale, index, icon, text, value) {
                 const offset = -5;
@@ -499,274 +511,355 @@
                 $.ajax({
                     url: urlAreaNasional + '/' + year + '/province-id' + '/' + provinceId,
                     success: function(data) {
-                        $('#ipk-nasional').remove();
-                        $('.chart-nasional').append('<canvas id="ipk-nasional"><canvas>');
-                        const ctx_live = document.getElementById("ipk-nasional");
-                        const myChart = new Chart(ctx_live, {
-                            type: 'radar',
-                            data: {
-                                labels: [],
-                                images: [],
-                                datasets: [{
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: 'green',
-                                        backgroundColor: 'green',
-                                        label: labelYear,
-                                        fill: false,
-                                    },
-                                    {
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: 'yellow',
-                                        backgroundColor: 'yellow',
-                                        label: 2019,
-                                        fill: false,
-                                    },
-                                    {
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: 'red',
-                                        backgroundColor: 'red',
-                                        label: 2020,
-                                        fill: false,
-                                    },
-                                    {
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: 'blue',
-                                        backgroundColor: 'blue',
-                                        label: 2021,
-                                        fill: false,
-                                    },
-                                    {
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: 'purple',
-                                        backgroundColor: 'purple',
-                                        label: 2022,
-                                        fill: false,
-                                    },
-                                    {
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: 'orange',
-                                        backgroundColor: 'orange',
-                                        label: 2023,
-                                        fill: false,
-                                    },
-                                    {
-                                        data: [],
-                                        borderWidth: 1,
-                                        borderColor: '#0a9395',
-                                        backgroundColor: '#0a9395',
-                                        label: 2024,
-                                        fill: false,
-                                    }
-                                ]
-                            },
-                            options: {
-                                scale: {
-                                    beginAtZero: true,
-                                    max: 100,
-                                    min: 0,
-                                    stepSize: 10
+                        if(dob.includes(parseInt(provinceId))){ 
+                            $('#ipk-nasional-dob').remove();
+                            $('.chart-nasional').append('<canvas id="ipk-nasional-dob"><canvas>');
+                            const ctx_live = document.getElementById("ipk-nasional-dob");
+                            const myChartDob = new Chart(ctx_live, {
+                                type: 'radar',
+                                data: {
+                                    labels: [],
+                                    images: [],
+                                    datasets: [
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: '#0a9395',
+                                            backgroundColor: '#0a9395',
+                                            label: 2024,
+                                            fill: false,
+                                        }
+                                    ]
                                 },
-                                responsive: true,
-                                interaction: {
-                                    mode: 'index'
-                                },
-                                elements: {
-                                    line: {
-                                        borderWidth: 3
+                                options: {
+                                    scale: {
+                                        beginAtZero: true,
+                                        max: 100,
+                                        min: 0,
+                                        stepSize: 10
+                                    },
+                                    responsive: true,
+                                    interaction: {
+                                        mode: 'index'
+                                    },
+                                    elements: {
+                                        line: {
+                                            borderWidth: 3
+                                        }
+                                    },
+                                    legend: {
+                                        display: true,
+                                        position: "bottom",
+                                        labels: {
+                                            fontColor: "#333",
+                                            fontSize: 24
+                                        }
                                     }
                                 },
-                                legend: {
-                                    display: true,
-                                    position: "bottom",
-                                    labels: {
-                                        fontColor: "#333",
-                                        fontSize: 24
-                                    }
-                                }
-                            },
-                            plugins: [{
-                                id: 'custom_labels',
-                                afterDraw: (chart, args) => {
-                                    const getLabel = chart.config._config.data
-                                        .labels;
-                                    getLabel.forEach((value, i) => {
-                                        const scale = chart.scales.r;
-                                        drawTextAtIndex(scale, i, chart
-                                            .config._config.data
-                                            .images[i], value, chart
-                                            .config._config.data
-                                            .datasets[0].data[i]);
-                                    });
-                                },
-                            }]
-                        })
-                        myChart.data.images = [];
-                        myChart.data.labels = [];
-                        for (let i = 0; i < data.length; i++) {
-                            myChart.data.images.push(data[i].dimension_icon);
-                            myChart.data.labels.push(data[i].dimension_name);
-                            myChart.data.datasets[0].data.push(data[i].dimension_value);
-                        };
-
-                        myChart.update();
-                        $.ajax({
-                            url: urlAreaNasional + '/' + '2019' + '/province-id' + '/' +
-                                provinceId,
-                            success: function(data2019) {
-                                myChart.data.images = [];
-                                myChart.data.labels = [];
-                                for (let i = 0; i < data2019.length; i++) {
-                                    myChart.data.images.push(data[i].dimension_icon);
-                                    myChart.data.labels.push(data[i].dimension_name);
-                                    myChart.data.datasets[1].data.push(data2019[i]
-                                        .dimension_value);
-                                };
-                                myChart.update();
-                                $.ajax({
-                                    url: urlAreaNasional + '/' + '2020' +
-                                        '/province-id' + '/' + provinceId,
-                                    success: function(data2020) {
-                                        myChart.data.images = [];
-                                        myChart.data.labels = [];
-                                        for (let i = 0; i < data2020
-                                            .length; i++) {
-                                            myChart.data.images.push(data[i]
-                                                .dimension_icon);
-                                            myChart.data.labels.push(data[i]
-                                                .dimension_name);
-                                            myChart.data.datasets[2].data
-                                                .push(data2020[i]
-                                                    .dimension_value);
-                                        };
-
-                                        myChart.update();
-                                        $.ajax({
-                                            url: urlAreaNasional +
-                                                '/' + '2021' +
-                                                '/province-id' +
-                                                '/' + provinceId,
-                                            success: function(
-                                                data2021) {
-                                                myChart.data
-                                                    .images = [];
-                                                myChart.data
-                                                    .labels = [];
-                                                for (let i = 0; i < data2021.length; i++
-                                                ) {
-                                                    myChart.data
-                                                        .images
-                                                        .push(
-                                                            data[i].dimension_icon
-                                                        );
-                                                    myChart.data
-                                                        .labels
-                                                        .push(
-                                                            data[
-                                                                i
-                                                            ]
-                                                            .dimension_name
-                                                        );
-                                                    myChart.data
-                                                        .datasets[
-                                                            3]
-                                                        .data
-                                                        .push(
-                                                            data2021[
-                                                                i
-                                                            ]
-                                                            .dimension_value
-                                                        );
-                                                };
-
-                                                myChart.update();
-                                                $.ajax({
-                                                    url: urlAreaNasional +
-                                                        '/' + '2022' +
-                                                        '/province-id' +
-                                                        '/' + provinceId,
-                                                    success: function(
-                                                        data2022) {
-                                                        myChart.data
-                                                            .images = [];
-                                                        myChart.data
-                                                            .labels = [];
-                                                        for (let i =
-                                                                0; i <
-                                                            data2022
-                                                            .length; i++
-                                                        ) {
-                                                            myChart.data
-                                                                .images
-                                                                .push(
-                                                                    data[
-                                                                        i
-                                                                    ]
-                                                                    .dimension_icon
-                                                                );
-                                                            myChart.data
-                                                                .labels
-                                                                .push(
-                                                                    data[
-                                                                        i
-                                                                    ]
-                                                                    .dimension_name
-                                                                );
-                                                            myChart.data
-                                                                .datasets[
-                                                                    4]
-                                                                .data
-                                                                .push(
-                                                                    data2022[
-                                                                        i
-                                                                    ]
-                                                                    .dimension_value
-                                                                );
-                                                        };
-
-                                                        myChart.update();
-                                                        $.ajax({
-                                                            url: urlAreaNasional +
-                                                                '/' + '2023' +
-                                                                '/province-id' +
-                                                                '/' + provinceId,
-                                                            success: function(data2023) {
-                                                                myChart.data.images = [];
-                                                                myChart.data.labels = [];
-                                                                for (let i = 0; i < data2023 .length; i++) {
-                                                                    myChart.data.images.push(data[i].dimension_icon);
-                                                                    myChart.data.labels.push(data[i].dimension_name);
-                                                                    myChart.data.datasets[5].data.push(data2023[i].dimension_value);
-                                                                };
-                                                                myChart.update();
-                                                                $.ajax({
-                                                                    url: urlAreaNasional + '/' + '2024' +'/province-id' +'/' + provinceId,
-                                                                    success: function(data2024) {
-                                                                        myChart.data.images = [];
-                                                                        myChart.data.labels = [];
-                                                                        for (let i = 0; i < data2024.length; i++) {
-                                                                            myChart.data.images.push(data[i].dimension_icon);
-                                                                            myChart.data.labels.push(data[i].dimension_name);
-                                                                            myChart.data.datasets[6].data.push(data2024[i].dimension_value);
-                                                                        };
-                                                                        myChart.update();
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
-                                                    }
-                                                });
-                                            }
+                                plugins: [{
+                                    id: 'custom_labels',
+                                    afterDraw: (chart, args) => {
+                                        const getLabel = chart.config._config.data
+                                            .labels;
+                                        getLabel.forEach((value, i) => {
+                                            const scale = chart.scales.r;
+                                            drawTextAtIndex(scale, i, chart
+                                                .config._config.data
+                                                .images[i], value, chart
+                                                .config._config.data
+                                                .datasets[0].data[i]);
                                         });
+                                    },
+                                }]
+                            })
+                            myChartDob.data.images = [];
+                            myChartDob.data.labels = [];
+
+                            myChartDob.update();
+                            $.ajax({
+                                url: urlAreaNasional + '/' + '2024' +'/province-id' +'/' + provinceId,
+                                success: function(data2024) {
+                                    myChartDob.data.images = [];
+                                    myChartDob.data.labels = [];
+                                    for (let i = 0; i < data2024.length; i++) {
+                                        myChartDob.data.images.push(data[i].dimension_icon);
+                                        myChartDob.data.labels.push(data[i].dimension_name);
+                                        myChartDob.data.datasets[0].data.push(data2024[i].dimension_value);
+                                    };
+                                    myChartDob.update();
+                                }
+                            });
+                        }else{
+                            console.log('bukan dob');
+                            $('#ipk-nasional').remove();
+                            $('.chart-nasional').append('<canvas id="ipk-nasional"><canvas>');
+                            const ctx_live = document.getElementById("ipk-nasional");
+                            const myChart = new Chart(ctx_live, {
+                                type: 'radar',
+                                data: {
+                                    labels: [],
+                                    images: [],
+                                    datasets: [{
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: 'green',
+                                            backgroundColor: 'green',
+                                            label: labelYear,
+                                            fill: false,
+                                        },
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: 'yellow',
+                                            backgroundColor: 'yellow',
+                                            label: 2019,
+                                            fill: false,
+                                        },
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: 'red',
+                                            backgroundColor: 'red',
+                                            label: 2020,
+                                            fill: false,
+                                        },
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: 'blue',
+                                            backgroundColor: 'blue',
+                                            label: 2021,
+                                            fill: false,
+                                        },
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: 'purple',
+                                            backgroundColor: 'purple',
+                                            label: 2022,
+                                            fill: false,
+                                        },
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: 'orange',
+                                            backgroundColor: 'orange',
+                                            label: 2023,
+                                            fill: false,
+                                        },
+                                        {
+                                            data: [],
+                                            borderWidth: 1,
+                                            borderColor: '#0a9395',
+                                            backgroundColor: '#0a9395',
+                                            label: 2024,
+                                            fill: false,
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    scale: {
+                                        beginAtZero: true,
+                                        max: 100,
+                                        min: 0,
+                                        stepSize: 10
+                                    },
+                                    responsive: true,
+                                    interaction: {
+                                        mode: 'index'
+                                    },
+                                    elements: {
+                                        line: {
+                                            borderWidth: 3
+                                        }
+                                    },
+                                    legend: {
+                                        display: true,
+                                        position: "bottom",
+                                        labels: {
+                                            fontColor: "#333",
+                                            fontSize: 24
+                                        }
                                     }
-                                });
-                            }
-                        });
+                                },
+                                plugins: [{
+                                    id: 'custom_labels',
+                                    afterDraw: (chart, args) => {
+                                        const getLabel = chart.config._config.data
+                                            .labels;
+                                        getLabel.forEach((value, i) => {
+                                            const scale = chart.scales.r;
+                                            drawTextAtIndex(scale, i, chart
+                                                .config._config.data
+                                                .images[i], value, chart
+                                                .config._config.data
+                                                .datasets[0].data[i]);
+                                        });
+                                    },
+                                }]
+                            })
+                            myChart.data.images = [];
+                            myChart.data.labels = [];
+                            for (let i = 0; i < data.length; i++) {
+                                myChart.data.images.push(data[i].dimension_icon);
+                                myChart.data.labels.push(data[i].dimension_name);
+                                myChart.data.datasets[0].data.push(data[i].dimension_value);
+                            };
+
+                            myChart.update();
+                            $.ajax({
+                                url: urlAreaNasional + '/' + '2019' + '/province-id' + '/' +
+                                    provinceId,
+                                success: function(data2019) {
+                                    myChart.data.images = [];
+                                    myChart.data.labels = [];
+                                    for (let i = 0; i < data2019.length; i++) {
+                                        myChart.data.images.push(data[i].dimension_icon);
+                                        myChart.data.labels.push(data[i].dimension_name);
+                                        myChart.data.datasets[1].data.push(data2019[i]
+                                            .dimension_value);
+                                    };
+                                    myChart.update();
+                                    $.ajax({
+                                        url: urlAreaNasional + '/' + '2020' +
+                                            '/province-id' + '/' + provinceId,
+                                        success: function(data2020) {
+                                            myChart.data.images = [];
+                                            myChart.data.labels = [];
+                                            for (let i = 0; i < data2020
+                                                .length; i++) {
+                                                myChart.data.images.push(data[i]
+                                                    .dimension_icon);
+                                                myChart.data.labels.push(data[i]
+                                                    .dimension_name);
+                                                myChart.data.datasets[2].data
+                                                    .push(data2020[i]
+                                                        .dimension_value);
+                                            };
+
+                                            myChart.update();
+                                            $.ajax({
+                                                url: urlAreaNasional +
+                                                    '/' + '2021' +
+                                                    '/province-id' +
+                                                    '/' + provinceId,
+                                                success: function(
+                                                    data2021) {
+                                                    myChart.data
+                                                        .images = [];
+                                                    myChart.data
+                                                        .labels = [];
+                                                    for (let i = 0; i < data2021.length; i++
+                                                    ) {
+                                                        myChart.data
+                                                            .images
+                                                            .push(
+                                                                data[i].dimension_icon
+                                                            );
+                                                        myChart.data
+                                                            .labels
+                                                            .push(
+                                                                data[
+                                                                    i
+                                                                ]
+                                                                .dimension_name
+                                                            );
+                                                        myChart.data
+                                                            .datasets[
+                                                                3]
+                                                            .data
+                                                            .push(
+                                                                data2021[
+                                                                    i
+                                                                ]
+                                                                .dimension_value
+                                                            );
+                                                    };
+
+                                                    myChart.update();
+                                                    $.ajax({
+                                                        url: urlAreaNasional +
+                                                            '/' + '2022' +
+                                                            '/province-id' +
+                                                            '/' + provinceId,
+                                                        success: function(
+                                                            data2022) {
+                                                            myChart.data
+                                                                .images = [];
+                                                            myChart.data
+                                                                .labels = [];
+                                                            for (let i =
+                                                                    0; i <
+                                                                data2022
+                                                                .length; i++
+                                                            ) {
+                                                                myChart.data
+                                                                    .images
+                                                                    .push(
+                                                                        data[
+                                                                            i
+                                                                        ]
+                                                                        .dimension_icon
+                                                                    );
+                                                                myChart.data
+                                                                    .labels
+                                                                    .push(
+                                                                        data[
+                                                                            i
+                                                                        ]
+                                                                        .dimension_name
+                                                                    );
+                                                                myChart.data
+                                                                    .datasets[
+                                                                        4]
+                                                                    .data
+                                                                    .push(
+                                                                        data2022[
+                                                                            i
+                                                                        ]
+                                                                        .dimension_value
+                                                                    );
+                                                            };
+
+                                                            myChart.update();
+                                                            $.ajax({
+                                                                url: urlAreaNasional +
+                                                                    '/' + '2023' +
+                                                                    '/province-id' +
+                                                                    '/' + provinceId,
+                                                                success: function(data2023) {
+                                                                    myChart.data.images = [];
+                                                                    myChart.data.labels = [];
+                                                                    for (let i = 0; i < data2023 .length; i++) {
+                                                                        myChart.data.images.push(data[i].dimension_icon);
+                                                                        myChart.data.labels.push(data[i].dimension_name);
+                                                                        myChart.data.datasets[5].data.push(data2023[i].dimension_value);
+                                                                    };
+                                                                    myChart.update();
+                                                                    $.ajax({
+                                                                        url: urlAreaNasional + '/' + '2024' +'/province-id' +'/' + provinceId,
+                                                                        success: function(data2024) {
+                                                                            myChart.data.images = [];
+                                                                            myChart.data.labels = [];
+                                                                            for (let i = 0; i < data2024.length; i++) {
+                                                                                myChart.data.images.push(data[i].dimension_icon);
+                                                                                myChart.data.labels.push(data[i].dimension_name);
+                                                                                myChart.data.datasets[6].data.push(data2024[i].dimension_value);
+                                                                            };
+                                                                            myChart.update();
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
                 });
             };
@@ -892,9 +985,7 @@
                                     const nMin = item.min;
                                     const nMax = item.max;
 
-                                    const indicatorCtx = $("body").find(
-                                        '#chart-indicator-' + index);
-                                    // const indicatorCtx = document.getElementById('chart-indicator-0');
+                                    const indicatorCtx = $("body").find('#chart-indicator-' + index);
                                     const indicatorLine = new Chart(indicatorCtx, {
                                         type: 'line',
                                         plugins: [ChartDataLabels],
@@ -902,12 +993,7 @@
                                             labels: [''],
                                             images: [],
                                             datasets: [
-                                                // {
-                                                //   label: item.min,
-                                                //   data: [item.min, item.indicator_target_value, item.indicator_value, item.max],
-                                                // },
                                                 {
-                                                    // type: 'line',
                                                     label: 'Min',
                                                     data: [item.min],
                                                     backgroundColor: 'black',
@@ -917,10 +1003,7 @@
                                                         offset: -70,
                                                         align: 'top',
                                                         anchor: 'end',
-                                                        formatter: (val) =>
-                                                            (
-                                                                `       Min\n         ${nMin}`
-                                                            ),
+                                                        formatter: (val) =>(`Min\n${nMin}`),
                                                         labels: {
                                                             value: {
                                                                 color: 'black',
@@ -932,7 +1015,6 @@
                                                     }
                                                 },
                                                 {
-                                                    // type: 'line',
                                                     label: "{{ $provinsi->province_name }}",
                                                     backgroundColor: '#204498',
                                                     pointRadius: 5,
@@ -945,8 +1027,7 @@
                                                         offset: 8,
                                                         align: 'top',
                                                         anchor: 'end',
-                                                        formatter: (val) =>
-                                                            (`${val}`),
+                                                        formatter: (val) =>(`${val}`),
                                                         labels: {
                                                             value: {
                                                                 color: '#204498',
@@ -958,7 +1039,6 @@
                                                     }
                                                 },
                                                 {
-                                                    // type: 'line',
                                                     label: 'Nasional',
                                                     backgroundColor: '#444444',
                                                     pointRadius: 6,
@@ -971,8 +1051,7 @@
                                                         offset: -35,
                                                         align: 'top',
                                                         anchor: 'end',
-                                                        formatter: (val) =>
-                                                            (`${val}`),
+                                                        formatter: (val) =>(`${val}`),
                                                         labels: {
                                                             value: {
                                                                 color: '#444444',
@@ -984,21 +1063,17 @@
                                                     }
                                                 },
                                                 {
-                                                    // type: 'line',
                                                     label: 'Proyeksi 2024',
                                                     pointRadius: 5,
                                                     pointHoverRadius: 5,
                                                     backgroundColor: 'rgb(236 127 118)',
                                                     borderColor: 'rgb(236 127 118)',
-                                                    data: [item
-                                                        .indicator_target_value
-                                                    ],
+                                                    data: [item.indicator_target_value > 0 ? item.indicator_target_value : null],
                                                     datalabels: {
                                                         offset: 25,
                                                         align: 'top',
                                                         anchor: 'end',
-                                                        formatter: (val) =>
-                                                            (`${val}`),
+                                                        formatter: (val) =>(val > 0 ? `${val}` : ''),
                                                         labels: {
                                                             value: {
                                                                 color: 'rgb(236 127 118)',
@@ -1021,9 +1096,7 @@
                                                         offset: -70,
                                                         align: 'top',
                                                         anchor: 'end',
-                                                        formatter: (val) =>
-                                                            ('\nMax\n ' +
-                                                                nMax),
+                                                        formatter: (val) =>(`\nMax\n ${nMax}`),
                                                         labels: {
                                                             value: {
                                                                 color: 'black',
@@ -1086,9 +1159,7 @@
 
                                 }
                                 dataProvince.forEach(generateDescription);
-
-                                document.getElementById("line-chart-new").innerHTML =
-                                    description;
+                                document.getElementById("line-chart-new").innerHTML = description;
                                 dataProvince.forEach(generateChart);
                             }
                         });

@@ -92,6 +92,17 @@
             @endif
             @endforeach
         </table>
+        <div class="container mb-5">
+          <h3 class="section-title mt-1"><b>Cara Menghitung Nilai Dimensi</b></h3>
+          Nilai Pada Dimensi {{$data->dimension_name}} ({{$data->dimension_code}}) dapat diperoleh dengan rumus perhitungan sebagai berikut
+          <div class="mt-3">
+            @foreach($data->dimensionQualities as $valueQualities)
+            <center>
+              <img class="img img-fluid" src="{{asset('assets/img/')}}/{{$valueQualities->formula}}">
+            </center>
+            @endforeach
+          </div>
+        </div>
       </div>
     </div>
     <div class="tab-pane container fade" id="tab2024">
@@ -108,10 +119,11 @@
             </tr>
           </thead>
           <tbody>
+            @php $index = 1 @endphp
             @foreach($data->dimensionIndicators as $valueIndicator)
             @if(in_array($valueIndicator->id, config('app.indicator.2024')))
             <tr>
-              <td>{{$valueIndicator->indicator_code}}</td>
+              <td>{{explode(".", $valueIndicator->indicator_code)[0] . "." . $index++}}</td>
               <td>{!!$valueIndicator->indicator_description !!}</td>
               <td>{{$valueIndicator->min}}</td>
               <td>{{$valueIndicator->max}}</td>
@@ -124,17 +136,6 @@
     </div>
   </div>
 </div>
-<!-- <div class="container mb-5">
-  <h3 class="section-title mt-1"><b>Cara Menghitung Nilai Dimensi</b></h3>
-  Nilai Pada Dimensi {{$data->dimension_name}} ({{$data->dimension_code}}) dapat diperoleh dengan rumus perhitungan sebagai berikut
-  <div class="mt-3">
-    @foreach($data->dimensionQualities as $valueQualities)
-    <center>
-      <img class="img img-fluid" src="{{asset('assets/img/')}}/{{$valueQualities->formula}}">
-    </center>
-    @endforeach
-  </div>
-</div> -->
 <div class="container mb-5 mt-5">
   <h3 class="text-center text-primary mt-5">Perkembangan Nilai Dimensi</h3>
   <h4 class="text-center">Pilih salah satu tahun data:</h3>
