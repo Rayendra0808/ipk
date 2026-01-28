@@ -737,13 +737,21 @@
 
                 const onRegionClick = function(element, code, region, tahun) {
                     // Go to prov page
-                    if (code == 91) code = 94;
-                    if (code == 92) code = 91;
-                    if (code == 93) code = 95;
-                    if (code == 94) code = 96;
-                    if (code == 95) code = 97;
-                    if (code == 96) code = 92;
-                    window.location = "{{ url('/provinsi') }}" + '/' + code;
+                    if (code == 91){
+                        window.location = "{{ url('/provinsi') }}" + '/' + 94;
+                    }else if(code == 92){
+                        window.location = "{{ url('/provinsi') }}" + '/' + 91;
+                    }else if(code == 93){
+                        window.location = "{{ url('/provinsi') }}" + '/' + 95;
+                    }else if(code == 94){
+                        window.location = "{{ url('/provinsi') }}" + '/' + 96;
+                    }else if(code == 95){
+                        window.location = "{{ url('/provinsi') }}" + '/' + 97;
+                    }else if(code == 96){
+                        window.location = "{{ url('/provinsi') }}" + '/' + 92;
+                    }else{
+                        window.location = "{{ url('/provinsi') }}" + '/' + code;
+                    }
                 };
 
                 const onLabelShow = function(event, label, code, tahun) {
