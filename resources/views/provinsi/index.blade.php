@@ -306,12 +306,22 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            
-                            @foreach ($provinsi->files as $file)
-                                @if($file->getFile())
-                                    <a href="{{ $file->getFile() }}" class="btn btn-download" target="_blank">
-                                        @include('icons/pdf-icon')
-                                        {{ $file->title }}</a>
+                            @php $tahun = ['2018-2020', '2021', '2022', '2023', '2024']; @endphp
+                            @foreach ($tahun as $t)
+                                @if(in_array($provinsi->id, config('app.dob')))
+                                    @if($t == '2024')
+                                        <div class="file-item">
+                                            <span class="btn label-pdf">Data Hasil Perhitungan IPK Provinsi {{ $provinsi->province_name }} {{ $t }}</span>
+                                            <a href="{{ URL::to('assets/provinsi-file/pdf') }}/{{ $provinsi->id }} - {{ $provinsi->province_name }} {{ $t }}.pdf" class="btn btn-download" target="_blank">@include('icons/pdf-icon')</a>
+                                            <a href="{{ URL::to('assets/provinsi-file/excel') }}/{{ $provinsi->id }} - {{ $provinsi->province_name }} {{ $t }}.xlsx" class="btn btn-downloadexc" target="_blank">@include('icons/excel-icon')</a>    
+                                        </div>
+                                    @endif
+                                @else
+                                    <div class="file-item">
+                                        <span class="btn label-pdf">Data Hasil Perhitungan IPK Provinsi {{ $provinsi->province_name }} {{ $t }}</span>
+                                        <a href="{{ URL::to('assets/provinsi-file/pdf') }}/{{ $provinsi->id }} - {{ $provinsi->province_name }} {{ $t }}.pdf" class="btn btn-download" target="_blank">@include('icons/pdf-icon')</a>
+                                        <a href="{{ URL::to('assets/provinsi-file/excel') }}/{{ $provinsi->id }} - {{ $provinsi->province_name }} {{ $t }}.xlsx" class="btn btn-downloadexc" target="_blank">@include('icons/excel-icon')</a>    
+                                    </div>
                                 @endif
                             @endforeach
                         </div>

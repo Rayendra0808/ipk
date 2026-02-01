@@ -114,6 +114,10 @@
                                                     "url" => asset('assets/pdf/regulations/03. Kepmendikbudristek Nomor 248_M_2024 CAP (Hasil2023).pdf'),
                                                     "label" => 'Kepmendikbudristek No. 248 2024 (Hasil 2023)',
                                                 ],
+                                                [
+                                                    "url" => asset('assets/pdf/regulations/04. Kepmen IPK Tahun 2024 (hasil2024).pdf'),
+                                                    "label" => 'Kepmenbud No. 215 2025 (Hasil 2024)',
+                                                ],
                                             ] as $item)
                                             <a target="_blank" href="{{ $item['url'] }}"
                                                 class="btn btn-download">@include('icons/pdf-icon') {{ $item['label'] }}</a>
