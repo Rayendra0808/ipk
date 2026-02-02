@@ -157,7 +157,7 @@
 </div>
 <div class="d-flex flex-row-reverse">
   <p style="font-size:12px;margin-right:25px">
-    * Disclaimer untuk nilai 2024 (hanya perhitungan berdasarkan series data sebelumnya)
+    * Disclaimer : nilai proyeksi 2024 merupakan hasil perhitungan berdasarkan serias data sebelumnya.
   </p>
 </div>
 @endsection
