@@ -132,6 +132,17 @@
             @endif
             @endforeach
         </table>
+        <div class="container mb-5">
+          <h3 class="section-title mt-1"><b>Cara Menghitung Nilai Dimensi</b></h3>
+          Nilai Pada Dimensi {{$data->dimension_name}} ({{$data->dimension_code}}) dapat diperoleh dengan rumus perhitungan sebagai berikut
+          <div class="mt-3">
+            @foreach($data->dimensionQualities as $valueQualities)
+            <center>
+              <img class="img img-fluid" src="{{asset('assets/img/')}}/2024/{{str_replace('.jpeg', '.png', $valueQualities->formula)}}">
+            </center>
+            @endforeach
+          </div>
+        </div>
       </div>
     </div>
   </div>
