@@ -1,9 +1,25 @@
 Dimensi ID,Kode,Indikator Deskripsi,Sumber Data,Min,Max
-1,X1.2,"Persentase pengeluaran konsumsi rumah tangga untuk kegiatan, barang dan jasa kebudayaan terhadap total pengeluaran konsumsi bukan makanan","Susenas KP",0,13
-2,X2.2,"Persentase guru yang mengajar bahasa dan budaya lokal (Bahasa Indonesia, Bahasa Daerah, Sejarah, Seni Budaya, dan/atau Muatan Lokal) terhadap total guru","Kemendikdasmen & Kemenag",0,55
+1,X1.1,"Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukan seni yang menjadikan keterlibatannya itu sebagai sumber penghasilan","Susenas Modul",0,1
+1,X1.2,"Persentase pengeluaran konsumsi rumah tangga untuk kegiatan, barang dan jasa kebudayaan terhadap total pengeluaran konsumsi","Susenas KP",0,13
+2,X2.1,"Persentase satuan pendidikan yang mempunyai guru yang mengajar muatan lokal bahasa daerah dan/atau ekskul kesenian","Kemendikbud (DAPODIK)",0,96
+2,X2.2,"Persentase guru yang mengajar bahasa dan budaya lokal terhadap total guru","Kemendikdasmen & Kemenag",0,55
 2,X2.3,"Persentase penduduk yang terlibat dalam kegiatan pelatihan dan/atau pembelajaran seni dan budaya yang bersifat nonformal dan informal","Survei Mandiri",0,90
-3,X3.1,"Persentase rumah tangga yang setuju jika ada perbedaan suku/agama lain di lingkungan sekitar tempat tinggal","Susenas Modul",0,100
+3,X3.1,"Persentase rumah tangga yang setuju jika ada sekelompok orang dari suku lain yang melakukan kegiatan di lingkungan sekitar tempat tinggal","Susenas Modul",0,100
 3,X3.2,"Persentase penduduk yang mengikuti kegiatan sosial kemasyarakatan di lingkungan sekitar","Susenas Modul",0,100
 3,X3.3,"Persentase rumah tangga yang merasa aman saat berjalan kaki sendirian pada malam hari di lingkungan sekitar rumah","Susenas Modul",0,100
+4,X4.1,"Persentase benda, bangunan, struktur, situs dan kawasan cagar budaya yang telah ditetapkan terhadap total pendaftaran","Kemenbud (DAPOBUD)",0,50
+4,X4.2,"Persentase warisan budaya takbenda yang telah ditetapkan terhadap total pencatatan","Kemenbud (DAPOBUD)",0,50
+4,X4.3,"Persentase penduduk yang menggunakan bahasa daerah di rumah atau dalam pergaulan sehari-hari","Susenas Modul",0,100
+4,X4.4,"Persentase penduduk yang menonton secara langsung pertunjukkan seni","Susenas Modul",0,100
+4,X4.5,"Persentase penduduk yang mengunjungi peninggalan sejarah/warisan dunia","Susenas Modul",0,35
+4,X4.6,"Persentase rumah tangga yang menggunakan produk tradisional","Susenas Modul",0,100
+5,X5.1,"Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni","Susenas Modul",0,20
+5,X5.2,"Persentase rumah tangga yang menyelenggarakan upacara adat","Susenas Modul",0,60
 5,X5.3,"Persentase penduduk yang melakukan olahraga tradisional dan/atau permainan rakyat","Susenas Modul",0,33
-5,X5.4,"Persentase penduduk yang merasa aman dan diterima saat menampilkan identitas budaya (mengekspresikan budaya) di ruang publik",Survei Mandiri,0,100
+5,X5.4,"Persentase penduduk yang merasa aman dan diterima saat menampilkan identitas budaya (mengekspresikan budaya) di ruang publik","Survei Mandiri",0,100
+6,X6.1,"Persentase penduduk yang membaca selain kitab suci baik cetak maupun elektronik","Susenas Modul",0,72
+6,X6.2,"Persentase penduduk yang mengakses internet","Susenas KOR",0,98
+6,X6.3,"Persentase penduduk yang mengunjungi perpustakaan/memanfaatkan taman bacaan masyarakat","Susenas Modul",0,25
+7,X7.1,"Rasio tingkat partisipasi angkatan kerja perempuan terhadap laki-laki","Sakernas",0,100
+7,X7.2,"Rasio penduduk perempuan terhadap laki-laki yang memiliki ijazah minimal SMA/Sederajat","Susenas KOR",0,100
+7,X7.3,"Rasio anggota parlemen perempuan terhadap anggota parlemen laki-laki","KPU; BPS",0,100

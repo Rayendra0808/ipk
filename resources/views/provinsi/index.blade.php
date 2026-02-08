@@ -1013,7 +1013,10 @@
                                                         offset: -70,
                                                         align: 'top',
                                                         anchor: 'end',
-                                                        formatter: (val) =>(`Min\n${nMin}`),
+                                                        formatter: (val) =>
+                                                            (
+                                                                `      Min\n        ${nMin}`
+                                                            ),
                                                         labels: {
                                                             value: {
                                                                 color: 'black',
