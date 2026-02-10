@@ -9,6 +9,10 @@ class Indicator extends Model
   protected $table = 'indicators';
   protected $primaryKey = 'id';
 
+  public function dimension(){
+    return $this->belongsTo(Dimension::class);
+  }
+
   public function indicatorValues(){
     return $this->hasMany(IndicatorValue::class);
   }

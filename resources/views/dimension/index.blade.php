@@ -123,7 +123,7 @@
             @foreach($data->dimensionIndicators as $valueIndicator)
             @if(in_array($valueIndicator->id, config('app.indicator.2024')))
             <tr>
-              <td>{{explode(".", $valueIndicator->indicator_code)[0] . "." . $index++}}</td>
+              <td>{{$valueIndicator->indicator_code}}</td>
               <td>{!!$valueIndicator->indicator_description !!}</td>
               <td>{{$valueIndicator->min}}</td>
               <td>{{$valueIndicator->max}}</td>

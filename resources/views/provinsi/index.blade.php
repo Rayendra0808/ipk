@@ -1,4 +1,7 @@
 @extends('app')
+@push('custom-css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+@endpush
 @section('content')
     <style>
         .title-page {
@@ -600,7 +603,6 @@
                                 }
                             });
                         }else{
-                            console.log('bukan dob');
                             $('#ipk-nasional').remove();
                             $('.chart-nasional').append('<canvas id="ipk-nasional"><canvas>');
                             const ctx_live = document.getElementById("ipk-nasional");
@@ -987,7 +989,7 @@
 
                                 function generateDescription(item, index) {
                                     description +=
-                                        `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code.split(".")[0]}.${index+1} </h6></div><p>${item.indicator_description}</p></div>
+                                        `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} <i class="bi bi-info-circle" style="cursor: pointer;" data-bs-toggle="popover" data-bs-trigger="click hover focus" data-bs-title="Metadata Indikator" data-bs-content="Uhuy"></i></h6></div><p>${item.indicator_description}</p></div>
            <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
                                 }
 

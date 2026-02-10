@@ -1,0 +1,329 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Rest API - IPK",
+        "description": "Dokumentasi penggunaan Rest API untuk berbagi pakai data Indeks Pembangunan Kebudayaan (IPK)",
+        "contact": {
+            "email": "pusdatin@kemenbud.go.id"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Server API"
+        }
+    ],
+    "paths": {
+        "/api/data/dimensi-nasional": {
+            "get": {
+                "tags": [
+                    "3. Data"
+                ],
+                "summary": "Data dimensi nasional",
+                "description": "1. Mengembalikan semua data dimensi nasional",
+                "operationId": "getDimensiNasional",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/data/dimensi-provinsi": {
+            "get": {
+                "tags": [
+                    "3. Data"
+                ],
+                "summary": "Data dimensi provinsi",
+                "description": "1. Mengembalikan semua data dimensi provinsi",
+                "operationId": "getDimensiProvinsi",
+                "parameters": [
+                    {
+                        "name": "kode",
+                        "in": "query",
+                        "description": "Kode provinsi",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/data/indikator-nasional": {
+            "get": {
+                "tags": [
+                    "3. Data"
+                ],
+                "summary": "Data indikator nasional",
+                "description": "1. Mengembalikan semua data indikator nasional",
+                "operationId": "getIndikatorNasional",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/data/indikator-provinsi": {
+            "get": {
+                "tags": [
+                    "3. Data"
+                ],
+                "summary": "Data indikator provinsi",
+                "description": "1. Mengembalikan semua data indikator provinsi",
+                "operationId": "getIndikatorProvinsi",
+                "parameters": [
+                    {
+                        "name": "kode",
+                        "in": "query",
+                        "description": "Kode provinsi",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/dokumen/buku": {
+            "get": {
+                "tags": [
+                    "4. Dokumen"
+                ],
+                "summary": "Dokumen Buku",
+                "description": "1. Mengembalikan semua dokumen buku",
+                "operationId": "getDokumenBuku",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/dokumen/regulasi": {
+            "get": {
+                "tags": [
+                    "4. Dokumen"
+                ],
+                "summary": "Dokumen Regulasi",
+                "description": "2. Mengembalikan semua dokumen regulasi",
+                "operationId": "getDokumenRegulasi",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/dokumen/hasil-perhitungan-nasional": {
+            "get": {
+                "tags": [
+                    "4. Dokumen"
+                ],
+                "summary": "Dokumen Hasil Perhitungan Nasional",
+                "description": "3. Mengembalikan semua dokumen hasil perhitungan nasional",
+                "operationId": "getDokumenHasilPerhitunganNasional",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/dokumen/hasil-perhitungan-provinsi": {
+            "get": {
+                "tags": [
+                    "4. Dokumen"
+                ],
+                "summary": "Dokumen Hasil Perhitungan Provinsi",
+                "description": "4. Mengembalikan semua dokumen hasil perhitungan provinsi",
+                "operationId": "getDokumenHasilPerhitunganProvinsi",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/proyeksi/dimensi-nasional": {
+            "get": {
+                "tags": [
+                    "2. Proyeksi"
+                ],
+                "summary": "Data proyeksi dimensi nasional",
+                "description": "1. Mengembalikan semua data proyeksi dimensi nasional",
+                "operationId": "getProyeksiDimensiNasional",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/proyeksi/dimensi-provinsi": {
+            "get": {
+                "tags": [
+                    "2. Proyeksi"
+                ],
+                "summary": "Data proyeksi dimensi provinsi",
+                "description": "1. Mengembalikan semua data proyeksi dimensi provinsi",
+                "operationId": "getProyeksiDimensiProvinsi",
+                "parameters": [
+                    {
+                        "name": "kode",
+                        "in": "query",
+                        "description": "Kode provinsi",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/proyeksi/indikator-nasional": {
+            "get": {
+                "tags": [
+                    "2. Proyeksi"
+                ],
+                "summary": "Data proyeksi indikator nasional",
+                "description": "1. Mengembalikan semua data proyeksi indikator nasional",
+                "operationId": "getProyeksiIndikatorNasional",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/proyeksi/indikator-provinsi": {
+            "get": {
+                "tags": [
+                    "2. Proyeksi"
+                ],
+                "summary": "Data proyeksi indikator provinsi",
+                "description": "1. Mengembalikan semua data proyeksi indikator provinsi",
+                "operationId": "getProyeksiIndikatorProvinsi",
+                "parameters": [
+                    {
+                        "name": "kode",
+                        "in": "query",
+                        "description": "Kode provinsi",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/referensi/tahun": {
+            "get": {
+                "tags": [
+                    "1. Referensi"
+                ],
+                "summary": "Data referensi tahun",
+                "description": "1. Mengembalikan semua data referensi tahun",
+                "operationId": "getReferensiTahunList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/referensi/provinsi": {
+            "get": {
+                "tags": [
+                    "1. Referensi"
+                ],
+                "summary": "Data referensi provinsi",
+                "description": "2. Mengembalikan semua data referensi provinsi",
+                "operationId": "getReferensiProvinsiList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/referensi/dimensi": {
+            "get": {
+                "tags": [
+                    "1. Referensi"
+                ],
+                "summary": "Data referensi dimensi",
+                "description": "3. Mengembalikan semua data referensi dimensi",
+                "operationId": "getReferensiDimensiList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/referensi/indikator": {
+            "get": {
+                "tags": [
+                    "1. Referensi"
+                ],
+                "summary": "Data referensi indikator",
+                "description": "4. Mengembalikan semua data referensi indikator",
+                "operationId": "getReferensiIndikatorList",
+                "parameters": [
+                    {
+                        "name": "tahun",
+                        "in": "query",
+                        "description": "Tahun data",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    }
+}

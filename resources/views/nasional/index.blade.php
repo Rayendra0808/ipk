@@ -730,7 +730,7 @@
 
                         function generateDescription(item, index) {
                             description +=
-                                `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code.split(".")[0]}.${index+1} </h6></div><p>${item.indicator_description}</p></div>
+                                `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} </h6></div><p>${item.indicator_description}</p></div>
            <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
                         }
 
