@@ -94,8 +94,8 @@ class ReferensiController extends Controller
                     ];
                 }
             });
-            $item->nilai_minimum = 0;
-            $item->nilai_maksimum = 100;
+            $item->min = 0;
+            $item->max = 100;
             unset($item->dimensionQualities); // Remove dimensionQualities from output after loading relation
             return $item;
         });
