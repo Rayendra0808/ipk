@@ -41,3 +41,4 @@ Route::get('dokumen/buku', 'Api\DokumenController@buku');
 Route::get('dokumen/regulasi', 'Api\DokumenController@regulasi');
 Route::get('dokumen/hasil-perhitungan-nasional', 'Api\DokumenController@hasilPerhitunganNasional');
 Route::get('dokumen/hasil-perhitungan-provinsi', 'Api\DokumenController@hasilPerhitunganProvinsi');
+Route::get('dokumen/metadata-indikator', 'Api\DokumenController@metadataIndikator');

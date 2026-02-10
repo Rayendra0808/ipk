@@ -187,6 +187,33 @@ class DokumenController extends Controller
             'status' => 'success',
             'message' => 'Dokumen Hasil Perhitungan Provinsi',
             'data' => $data
+        ]);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/api/dokumen/metadata-indikator",
+     * operationId="getDokumenMetadataIndikator",
+     * tags={"4. Dokumen"},
+     * summary="Dokumen Metadata Indikator",
+     * description="5. Mengembalikan semua dokumen metadata indikator",
+     * @OA\Response(
+     * response=200,
+     * description="Successful operation",
+     * ),
+     * )
+     */
+    public function metadataIndikator()
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Dokumen Metadata Indikator',
+            'data' => [
+                [
+                    "judul" => 'Metadata Indikator Tahun 2024',
+                    "link" => asset('assets/pdf/metadata-indikator-IPK-2024.pdf'),
+                ],
+            ]
         ]); 
     }
 }

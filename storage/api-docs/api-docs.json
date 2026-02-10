@@ -163,6 +163,21 @@
                 }
             }
         },
+        "/api/dokumen/metadata-indikator": {
+            "get": {
+                "tags": [
+                    "4. Dokumen"
+                ],
+                "summary": "Dokumen Metadata Indikator",
+                "description": "5. Mengembalikan semua dokumen metadata indikator",
+                "operationId": "getDokumenMetadataIndikator",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
         "/api/proyeksi/dimensi-nasional": {
             "get": {
                 "tags": [
