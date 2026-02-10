@@ -26,6 +26,14 @@
       margin:0;
       background: #fafafa;
     }
+
+    .swagger-ui .topbar {
+        display: none;
+    }
+
+    .scheme-container {
+        display: none;
+    }
   </style>
 </head>
 
