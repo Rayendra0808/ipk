@@ -994,7 +994,7 @@
                                 function generateDescription(item, index) {
                                     if (year == 2024) {
                                         description +=
-                                            `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} <i class="bi bi-info-circle" style="cursor: pointer;" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Metadata" data-bs-html="true" data-bs-content="<div class='text-center'><img src='/assets/img/metadata/X1.1.jpeg' class='img-fluid mb-2' style='width: 100%; max-width: 800px;'><br><a href='/assets/pdf/metadata-indikator-IPK-2024.pdf' target='_blank' class='btn btn-primary btn-sm text-white' style='text-decoration: none;'><i class='bi bi-download'></i> Unduh Dokumen Metadata</a></div>"></i></h6></div><p>${item.indicator_description}</p></div>
+                                            `<div class="col-md-6 pt-5"><div style="padding-bottom:15px;"><h6 class="fw-bold"> Indikator ${item.indicator_code} <i class="bi bi-info-circle" style="cursor: pointer;" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover focus" data-bs-title="Metadata ${item.indicator_description}" data-bs-html="true" data-bs-content="<div class='text-center'><img src='/assets/img/metadata/${item.indicator_code}.jpg' class='img-fluid mb-2' style='width: 100%; max-width: 900px;'><br><a href='/assets/pdf/metadata-indikator-IPK-2024.pdf' target='_blank' class='btn btn-primary btn-sm text-white' style='text-decoration: none;'><i class='bi bi-download'></i> Unduh Dokumen Metadata</a></div>"></i></h6></div><p>${item.indicator_description}</p></div>
            <div class="col-md-6 pt-5"><canvas height="200" class="chart-line-new" id="chart-indicator-${index}"></canvas></div>`;
                                     }else{
                                         description +=
@@ -1187,7 +1187,9 @@
                                 document.getElementById("line-chart-new").innerHTML = description;
                                 const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
                                 const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                                  return new bootstrap.Popover(popoverTriggerEl)
+                                    return new bootstrap.Popover(popoverTriggerEl, {
+                                        fallbackPlacements: [] // Mencegah flip ke posisi lain
+                                    })
                                 })
                                 dataProvince.forEach(generateChart);
                             }

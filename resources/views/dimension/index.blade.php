@@ -129,7 +129,7 @@
             @foreach($data->dimensionIndicators as $valueIndicator)
             @if(in_array($valueIndicator->id, config('app.indicator.2024')))
             <tr>
-              <td>{{$valueIndicator->indicator_code}} <i class="bi bi-info-circle" style="cursor: pointer;" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Metadata" data-bs-html="true" data-bs-content="<div class='text-center'><img src='/assets/img/metadata/X1.1.jpeg' class='img-fluid mb-2' style='width: 100%; max-width: 800px;'><br><a href='/assets/pdf/metadata-indikator-IPK-2024.pdf' target='_blank' class='btn btn-primary btn-sm text-white' style='text-decoration: none;'><i class='bi bi-download'></i> Unduh Dokumen Metadata</a></div>"></i></td>
+              <td>{{$valueIndicator->indicator_code}} <i class="bi bi-info-circle" style="cursor: pointer;" tabindex="0" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover focus" data-bs-title="Metadata {{$valueIndicator->indicator_description}}" data-bs-html="true" data-bs-content="<div class='text-center'><img src='/assets/img/metadata/{{$valueIndicator->indicator_code}}.jpg' class='img-fluid mb-2' style='width: 100%; max-width: 900px;'><br><a href='/assets/pdf/metadata-indikator-IPK-2024.pdf' target='_blank' class='btn btn-primary btn-sm text-white' style='text-decoration: none;'><i class='bi bi-download'></i> Unduh Dokumen Metadata</a></div>"></i></td>
               <td>{!!$valueIndicator->indicator_description !!}</td>
               <td>{{$valueIndicator->min}}</td>
               <td>{{$valueIndicator->max}}</td>
@@ -317,7 +317,9 @@
   });
   const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl)
+    return new bootstrap.Popover(popoverTriggerEl, {
+        fallbackPlacements: [] // Mencegah flip ke posisi lain
+    })
   })
 </script>
 @endpush
