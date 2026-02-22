@@ -10,7 +10,7 @@ Dimensi ID,Kode,Indikator Deskripsi,Sumber Data,Min,Max
 4,X4.1,"Persentase benda, bangunan, struktur, situs dan kawasan cagar budaya yang telah ditetapkan terhadap total pendaftaran","Kemenbud (DAPOBUD)",0,50
 4,X4.2,"Persentase warisan budaya takbenda yang telah ditetapkan terhadap total pencatatan","Kemenbud (DAPOBUD)",0,50
 4,X4.3,"Persentase penduduk yang menggunakan bahasa daerah di rumah atau dalam pergaulan sehari-hari","Susenas Modul",0,100
-4,X4.4,"Persentase penduduk yang menonton secara langsung pertunjukkan seni","Susenas Modul",0,100
+4,X4.4,"Persentase penduduk yang menonton pertunjukkan seni","Susenas Modul",0,100
 4,X4.5,"Persentase penduduk yang mengunjungi peninggalan sejarah/warisan dunia","Susenas Modul",0,35
 4,X4.6,"Persentase rumah tangga yang menggunakan produk tradisional","Susenas Modul",0,100
 5,X5.1,"Persentase penduduk yang pernah terlibat sebagai pelaku/pendukung pertunjukkan seni","Susenas Modul",0,20

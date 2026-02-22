@@ -109,11 +109,10 @@
             <div class="col-lg-4 col-md-6 footer-contact">
               <!--<h4>Ditjen Kebudayaan</h4>-->
               <p>
-                Komplek Kemdikbudristek, Gedung E Lt.10 <br>
-                Jln. Jenderal Sudirman, Senayan, Jakarta 10270<br>
-                <strong>Telepon:</strong> (021) 5731063, (021) 5725035<br>
+                Gedung Graha Kebudayaan <br>
+                Jln. R.E Martadinata Km 15,5 Ciputat, Tangerang Selatan, Banten.<br>
+                <strong>Telepon:</strong> (021) 3062 0100<br>
                 <strong>Email:</strong> pusdatin@kemenbud.go.id<br>
-                <strong>Fax:</strong> (021) 5731063, (021) 5725578<br>
               </p>
               <div class="social-links">
                 <a href="https://twitter.com/budayasaya" class="twitter"><i class="fa fa-twitter text-white"></i></a>
