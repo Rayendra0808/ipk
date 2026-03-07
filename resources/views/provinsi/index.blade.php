@@ -484,8 +484,8 @@
         </div>
     </div>
     <div class="d-flex flex-row-reverse">
-        <p style="font-size:12px;margin-right:25px">
-            * Disclaimer : nilai proyeksi 2024 merupakan hasil perhitungan berdasarkan serias data sebelumnya.
+        <p style="font-size:12px;margin-right:25px" id="disclaimer">
+            
         </p>
     </div>
 @endsection
@@ -1205,6 +1205,14 @@
                 year = $('#change-year-indicator').find(":selected").val();
                 $('#line-chart').hide();
                 $('.dimension-action').removeClass('text-success');
+
+                if (year === '2024') {
+                    $('#def-op-text').text($('#def-op-2024').text());
+                    $('#disclaimer').text('');
+                } else {
+                    $('#def-op-text').text($('#def-op-20182023').text());
+                    $('#disclaimer').text('* Disclaimer : nilai proyeksi 2024 merupakan hasil perhitungan berdasarkan serias data sebelumnya.');
+                }
             });
 
             $('.dimension-action').on('click', function() {

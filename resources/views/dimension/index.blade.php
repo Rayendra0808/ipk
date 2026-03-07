@@ -26,6 +26,17 @@
     top: 100px !important;
   }
 </style>
+@php
+$definisiDimensi = [
+  'ekonomi-budaya' => 'Kontribusi aktivitas ekonomi kebudayaan terhadap perekonomian dan kesejahteraan yang berkelanjutan',
+  'pendidikan' => 'Kontribusi kebudayaan melalui bidang pendidikan untuk menciptakan pembangunan kebudayaan yang inklusif dalam keberagaman yang lestari',
+  'ketahanan-sosial-budaya' => 'Kontribusi kebudayaan terhadap pengembangan identitias social kebangsaan melalui kegiatan yang membangun rasa toleransi dan kohesi sosial',
+  'warisan-budaya' => 'Upaya pemajuan kebudayaan berkelanjutan melalui pelestarian objek benda dan takbenda',
+  'ekspresi-budaya' => 'Interaksi dinamis dan kondusif dalam masyarakat sebagai bentuk kebebasan berekspresi dan promosi budaya',
+  'budaya-literasi' => 'Kemampuan dan disiplin masyarakat dalam mencari, memperoleh dan memanfaatkan ilmu pengetahuan dalam mendukung pembangunan berkelanjutan',
+  'gender' => 'Kesetaraan hak, kesempatan, dan tanggung jawab di antara masyarakat untuk berpartisipasi dalam pembangunan kebudayaan berkelanjutan',
+];
+@endphp
 <div class="container pt-5 mt-5">
   <center>
     <div class="owl-carousel owl-theme">
@@ -55,7 +66,11 @@
 </div>
 <div class="container">
   <h3 class="section-title mt-5"><b>Definisi Operasional</b></h3>
-  <p> Definisi Operasional: {{$data->dimension_description}} </p>
+  <p id="definisi-operasional"> Definisi Operasional: 
+    <span id="def-op-text">{{$data->dimension_description}}</span> 
+  </p>
+  <span id="def-op-20182023" style="display:none;">{{$data->dimension_description}}</span>
+  <span id="def-op-2024" style="display:none;">{{$definisiDimensi[$data->dimension_slug]}}</span>
 </div>
 <div class="container">
   <h3 class="section-title mt-1"><b>Rincian Indikator dan Sumber Data</b></h3>
@@ -173,7 +188,7 @@
     </div>
 </div>
 <div class="d-flex flex-row-reverse">
-  <p style="font-size:12px;margin-right:25px">
+  <p style="font-size:12px;margin-right:25px" id="disclaimer">
     * Disclaimer : nilai proyeksi 2024 merupakan hasil perhitungan berdasarkan serias data sebelumnya.
   </p>
 </div>
@@ -315,6 +330,18 @@
     const year = $(this).data('year');
     getDimensionProvinceTotal(year);
   });
+
+  $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+    let target = $(e.target).attr("href"); // activated tab
+    if (target === '#tab2024') {
+      $('#def-op-text').text($('#def-op-2024').text());
+      $('#disclaimer').text('');
+    } else {
+      $('#def-op-text').text($('#def-op-20182023').text());
+      $('#disclaimer').text('* Disclaimer : nilai proyeksi 2024 merupakan hasil perhitungan berdasarkan serias data sebelumnya.');
+    }
+  });
+
   const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl, {
