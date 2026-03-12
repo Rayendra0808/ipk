@@ -339,6 +339,11 @@
                                     <a href="{{ asset('assets/pdf/1001. Indonesia - 2023.pdf') }}" class="btn btn-download" target="_blank">@include('icons/pdf-icon')</a>
                                     <a href="{{ asset('assets/excel/00 - Nasional 2023.xlsx') }}" class="btn btn-downloadexc" target="_blank">@include('icons/excel-icon')</a>    
                                     </div>
+                                    <div class="file-item">
+                                        <span class="btn label-pdf">Data Hasil Perhitungan IPK Nasional 2024</span>
+                                        <a href="{{ asset('assets/pdf/00 - Nasional 2024.pdf') }}" class="btn btn-download" target="_blank">@include('icons/pdf-icon')</a>
+                                        <a href="{{ asset('assets/excel/00 - Nasional 2024.xlsx') }}" class="btn btn-downloadexc" target="_blank">@include('icons/excel-icon')</a>    
+                                    </div>
                                     <!--<a href="{{ asset('assets/pdf/1001. Indonesia - 2023.pdf') }}" class="btn btn-download" target="_blank">@include('icons/pdf-icon')Data Hasil Perhitungan IPK Nasional 2023</a>
                                     <h6>File Excel</h6>
                                     <a href="{{ asset('assets/pdf/00 - Nasional 2018-2022.pdf') }}" class="btn btn-downloadexc" target="_blank">@include('icons/excel-icon') Data Hasil Perhitungan IPK Nasional 2018 - 2022</a>
