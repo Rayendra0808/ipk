@@ -18,14 +18,16 @@ class PageController extends Controller
     $province = Province::getAll();
     $titlePage = 'Indeks Pembangunan Kebudayaan | Beranda';
     $homeSlider = [];
-    array_push($homeSlider, ['src' => 'https://www.youtube-nocookie.com/embed/ctTYfgDvngg', 'type' => 'youtube', 'isActive' => true]);
+    //array_push($homeSlider, ['src' => 'https://www.youtube-nocookie.com/embed/ctTYfgDvngg', 'type' => 'youtube', 'isActive' => true]);
     for ($i = 1; $i <= 2; $i++) {
       array_push($homeSlider, [
-        'src' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
-        'dataLoad' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
+        //'src' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
+        //'dataLoad' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
+        'src' => asset('assets/img/home-slider/Infografis-2024-' . $i . '.png'),
+        'dataLoad' => asset('assets/img/home-slider/Infografis-2024-' . $i . '.png'),
         'alt' => 'Infografis IPK ' . $i,
         'type' => 'image',
-        'isActive' => false,
+        'isActive' => $i == 1,
       ]);
     }
     return view('home', compact('dimensi', 'province', 'year', 'titlePage', 'homeSlider'));
