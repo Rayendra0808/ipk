@@ -21,6 +21,7 @@ class PageController extends Controller
     //array_push($homeSlider, ['src' => 'https://www.youtube-nocookie.com/embed/ctTYfgDvngg', 'type' => 'youtube', 'isActive' => true]);
     for ($i = 1; $i <= 2; $i++) {
       array_push($homeSlider, [
+        //mencoba merubah slider
         //'src' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
         //'dataLoad' => asset('assets/img/home-slider/infografis-2023-' . $i . '.webp'),
         'src' => asset('assets/img/home-slider/Infografis-2024-' . $i . '.png'),

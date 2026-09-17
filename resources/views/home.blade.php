@@ -1,5 +1,4 @@
 @extends('app')
-@push('custom-css')
     <link rel="stylesheet" href="{{ asset('assets/css/image-pop-up.css') }}">
 @endpush
 
