@@ -139,22 +139,31 @@
                             @endforeach
                         </div>
                         <div class="carousel-inner">
-                            @foreach ($homeSlider as $slider)
-                                <div class="carousel-item {{ $slider['isActive'] ? 'active' : '' }}">
-                                    <div class="d-block w-100 text-center">
-                                        @if ($slider['type'] == 'youtube')
-                                            <iframe width="100%" height="315" src="{{ $slider['src'] }}"
-                                                title="YouTube video player" frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen></iframe>
-                                        @elseif($slider['type'] == 'image')
-                                            <img class="image-pop-up" src="{{ $slider['src'] }}"
-                                                data-load="{{ $slider['dataLoad'] }}" alt="{{ $slider['alt'] }}">
-                                        @endif
+                                @foreach ($homeSlider as $slider)
+                                    <div class="carousel-item {{ $slider['isActive'] ? 'active' : '' }}">
+                                        <div class="d-block w-100 text-center">
+                                            <img class="image-pop-up" src="{{ $slider['src'] }}" data-load="{{ $slider['dataLoad'] ?? '' }}" alt="{{ $slider['alt'] ?? '' }}">
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                            <!--<div class="carousel-inner">
+                                @foreach ($homeSlider as $slider)
+                                    <div class="carousel-item {{ $slider['isActive'] ? 'active' : '' }}">
+                                        <div class="d-block w-100 text-center">
+                                            @if ($slider['type'] == 'youtube')
+                                                <iframe width="100%" height="315" src="{{ $slider['src'] }}"
+                                                    title="YouTube video player" frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+                                            @elseif($slider['type'] == 'image')
+                                                <img class="image-pop-up" src="{{ $slider['src'] }}"
+                                                    data-load="{{ $slider['dataLoad'] }}" alt="{{ $slider['alt'] }}">
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div> -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#intro-carousel"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -186,7 +195,7 @@
                 yang dapat digunakan sebagai basis formulasi kebijakan bidang kebudayaan,
                 serta menjadi acuan dalam koordinasi lintas sektor dalam pelaksanaan pemajuan kebudayaan.
                 Penyusunan indeks tersebut melibatkan berbagai pemangku kebijakan dan data yang berkaitan
-                dengan pembangunan kebudayaan nasional. belajar 1.
+                dengan pembangunan kebudayaan nasional.
             </p>
             <h3 class="text-center text-primary mt-5">Konsep Dimensi IPK</h3>
             <p class="text-center">
